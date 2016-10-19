@@ -9,11 +9,21 @@ include( "${wxWidgets_USE_FILE}" )
 
 file(GLOB SRCS *.cpp *.hpp)
 
+if(APPLE)
+    set(SRCS ${SRCS} *.rc)
+    # add '-mt' to the end of lboost_system and thread for mac, don't for linux
+    set(CMAKE_CXX_FLAGS "-std=c++11 -lboost_system-mt -lboost_thread-mt -lpthread")
+endif(APPLE)
 if(WIN32)
     set(SRCS ${SRCS} *.rc)
+    # add '-mt' to the end of lboost_system and thread for mac, don't for linux
+    set(CMAKE_CXX_FLAGS "-std=c++11 -lboost_system-mt -lboost_thread-mt -lpthread")
 endif(WIN32)
+if(UNIX)
+    # add '-mt' to the end of lboost_system and thread for mac, don't for linux
+    set(CMAKE_CXX_FLAGS "-std=c++11 -lboost_system -lboost_thread -lpthread")
+endif(UNIX)
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -lboost_system -lboost_thread -lpthread")
 
 #This tells CMake to run test.cpp and name it hello
 add_executable(client WIN32 ${SRCS})
