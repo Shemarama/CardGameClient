@@ -1,0 +1,3 @@
+/home/barbie/Documents/c++/CardGameClient/build/CMakeFiles/rebuild_cache.dir
+/home/barbie/Documents/c++/CardGameClient/build/CMakeFiles/edit_cache.dir
+/home/barbie/Documents/c++/CardGameClient/build/CMakeFiles/client.dir
