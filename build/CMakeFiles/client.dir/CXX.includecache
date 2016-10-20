@@ -7,8 +7,18 @@
 #IncludeRegexTransform: 
 
 /Users/Ryan/Documents/CS3450/clientGui/CardGameClient/client.cpp
-iostream
+wx/wxprec.h
 -
+wx/wx.h
+-
+gameScreen.h
+/Users/Ryan/Documents/CS3450/clientGui/CardGameClient/gameScreen.h
+
+/Users/Ryan/Documents/CS3450/clientGui/CardGameClient/gameScreen.cpp
+gameScreen.h
+/Users/Ryan/Documents/CS3450/clientGui/CardGameClient/gameScreen.h
+
+/Users/Ryan/Documents/CS3450/clientGui/CardGameClient/gameScreen.h
 wx/wxprec.h
 -
 wx/wx.h

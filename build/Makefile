@@ -150,6 +150,33 @@ client.cpp.s:
 	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client.cpp.s
 .PHONY : client.cpp.s
 
+gameScreen.o: gameScreen.cpp.o
+
+.PHONY : gameScreen.o
+
+# target to build an object file
+gameScreen.cpp.o:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/gameScreen.cpp.o
+.PHONY : gameScreen.cpp.o
+
+gameScreen.i: gameScreen.cpp.i
+
+.PHONY : gameScreen.i
+
+# target to preprocess a source file
+gameScreen.cpp.i:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/gameScreen.cpp.i
+.PHONY : gameScreen.cpp.i
+
+gameScreen.s: gameScreen.cpp.s
+
+.PHONY : gameScreen.s
+
+# target to generate assembly for a file
+gameScreen.cpp.s:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/gameScreen.cpp.s
+.PHONY : gameScreen.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -162,6 +189,9 @@ help:
 	@echo "... client.o"
 	@echo "... client.i"
 	@echo "... client.s"
+	@echo "... gameScreen.o"
+	@echo "... gameScreen.i"
+	@echo "... gameScreen.s"
 .PHONY : help
 
 
