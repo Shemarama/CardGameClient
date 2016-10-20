@@ -1,1 +1,0 @@
-/usr/bin/c++   -std=c++11 -lboost_system -lboost_thread -lpthread   CMakeFiles/client.dir/client.cpp.o  -o client -rdynamic -pthread -lwx_gtk2u_core-3.0 -lwx_baseu-3.0 
