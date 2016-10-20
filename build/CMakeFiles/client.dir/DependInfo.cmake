@@ -4,21 +4,24 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/barbie/Documents/c++/CardGameClient/client.cpp" "/home/barbie/Documents/c++/CardGameClient/build/CMakeFiles/client.dir/client.cpp.o"
+  "/Users/Ryan/Documents/CS3450/clientGui/CardGameClient/client.cpp" "/Users/Ryan/Documents/CS3450/clientGui/CardGameClient/build/CMakeFiles/client.dir/client.cpp.o"
   )
-set(CMAKE_CXX_COMPILER_ID "GNU")
+set(CMAKE_CXX_COMPILER_ID "Clang")
 
 # Preprocessor definitions for this target.
 set(CMAKE_TARGET_DEFINITIONS_CXX
   "WXUSINGDLL"
   "_FILE_OFFSET_BITS=64"
-  "__WXGTK__"
+  "__WXMAC__"
+  "__WXOSX_COCOA__"
+  "__WXOSX__"
+  "wxDEBUG_LEVEL=0"
   )
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/usr/lib/wx/include/gtk2-unicode-3.0"
-  "/usr/include/wx-3.0"
+  "/usr/local/lib/wx/include/osx_cocoa-unicode-3.0"
+  "/usr/local/include/wx-3.0"
   )
 
 # Targets to which this target links.

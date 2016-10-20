@@ -19,7 +19,7 @@ if(UNIX)
     set(CMAKE_CXX_FLAGS "-std=c++11 -lboost_system -lboost_thread -lpthread")
 endif(UNIX)
 if(APPLE)
-    set(SRCS ${SRCS} *.rc)
+    set(SRCS ${SRCS} )
     # add '-mt' to the end of lboost_system and thread for mac, don't for linux
     set(CMAKE_CXX_FLAGS "-std=c++11 -lboost_system-mt -lboost_thread-mt -lpthread")
 endif(APPLE)

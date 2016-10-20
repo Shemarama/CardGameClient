@@ -45,19 +45,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /Applications/CMake.app/Contents/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E remove -f
+RM = /Applications/CMake.app/Contents/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/barbie/Documents/c++/CardGameClient
+CMAKE_SOURCE_DIR = /Users/Ryan/Documents/CS3450/clientGui/CardGameClient
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/barbie/Documents/c++/CardGameClient/build
+CMAKE_BINARY_DIR = /Users/Ryan/Documents/CS3450/clientGui/CardGameClient/build
 
 #=============================================================================
 # Target rules for target CMakeFiles/client.dir
@@ -66,7 +66,7 @@ CMAKE_BINARY_DIR = /home/barbie/Documents/c++/CardGameClient/build
 CMakeFiles/client.dir/all:
 	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/depend
 	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/barbie/Documents/c++/CardGameClient/build/CMakeFiles --progress-num=1,2 "Built target client"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/Ryan/Documents/CS3450/clientGui/CardGameClient/build/CMakeFiles --progress-num=1,2 "Built target client"
 .PHONY : CMakeFiles/client.dir/all
 
 # Include target in all.
@@ -76,9 +76,9 @@ all: CMakeFiles/client.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/client.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/barbie/Documents/c++/CardGameClient/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/Ryan/Documents/CS3450/clientGui/CardGameClient/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/client.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/barbie/Documents/c++/CardGameClient/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/Ryan/Documents/CS3450/clientGui/CardGameClient/build/CMakeFiles 0
 .PHONY : CMakeFiles/client.dir/rule
 
 # Convenience name for target.
