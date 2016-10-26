@@ -9,6 +9,7 @@
 #include <wx/gbsizer.h>
 #include <wx/colour.h>
 #include <wx/sizer.h>
+#include <vector>
 
 class GameScreen : public wxFrame
 {
