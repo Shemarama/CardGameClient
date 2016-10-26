@@ -1,4 +1,4 @@
 # CardGameClient
 Client for our Card Game
 
-Test
+Allows for Crazy Eights and Hearts to be played
