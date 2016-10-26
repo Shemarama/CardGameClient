@@ -1,60 +1,179 @@
-#include"gameScreen.h"
+#include "gameScreen.h"
 
+// the wxImagePanel class is taken from https://wiki.wxwidgets.org/An_image_panel
+class wxImagePanel : public wxPanel {
+  wxImage image;
+  wxBitmap resized;
+  int w, h;
 
-GameScreen::GameScreen(const wxString& title, const wxPoint& pos, const wxSize& size)
-  : wxFrame(NULL, wxID_ANY, title, pos, size)
-{
-  // file menu
-  wxMenu* menuFile = new wxMenu;
-  // first string is displayed in menu slot
-  // second string is displayed in bottom of window
-  menuFile->Append(ID_Hello, "&Hello...\tCtrl-H",
-                   "Help string shown in status bar for this menu item");
+public:
+  wxImagePanel(wxPanel *parent, wxString file, wxBitmapType format);
 
-  menuFile->AppendSeparator();
-  menuFile->Append(wxID_EXIT);
+  void paintEvent(wxPaintEvent &evt);
+  void paintNow();
+  void OnSize(wxSizeEvent &event);
+  void render(wxDC &dc);
 
-  // help menu
-  wxMenu* menuHelp = new wxMenu;
-  menuHelp->Append(wxID_ABOUT);
+  // some useful events
+  /*
+          void mouseMoved(wxMouseEvent& event);
+               void mouseDown(wxMouseEvent& event);
+                    void mouseWheelMoved(wxMouseEvent& event);
+                         void mouseReleased(wxMouseEvent& event);
+                              void rightClick(wxMouseEvent& event);
+                                   void mouseLeftWindow(wxMouseEvent& event);
+                                        void keyPressed(wxKeyEvent& event);
+                                             void keyReleased(wxKeyEvent&
+     event);
+                                                  */
 
-  // holds all the menus
-  wxMenuBar* menuBar = new wxMenuBar;
-  menuBar->Append(menuFile, "&File");
-  menuBar->Append(menuHelp, "&Help");
+  DECLARE_EVENT_TABLE()
+};
 
-  SetMenuBar(menuBar);
+BEGIN_EVENT_TABLE(wxImagePanel, wxPanel)
+// some useful events
+/*
+    EVT_MOTION(wxImagePanel::mouseMoved)
+     EVT_LEFT_DOWN(wxImagePanel::mouseDown)
+      EVT_LEFT_UP(wxImagePanel::mouseReleased)
+       EVT_RIGHT_DOWN(wxImagePanel::rightClick)
+        EVT_LEAVE_WINDOW(wxImagePanel::mouseLeftWindow)
+         EVT_KEY_DOWN(wxImagePanel::keyPressed)
+          EVT_KEY_UP(wxImagePanel::keyReleased)
+           EVT_MOUSEWHEEL(wxImagePanel::mouseWheelMoved)
+            */
 
-  CreateStatusBar();
-  SetStatusText("Welcome to wxWidgets!");
+// catch paint events
+EVT_PAINT(wxImagePanel::paintEvent)
+// Size event
+EVT_SIZE(wxImagePanel::OnSize)
+END_EVENT_TABLE()
+
+// some useful events
+/*
+    void wxImagePanel::mouseMoved(wxMouseEvent& event) {}
+     void wxImagePanel::mouseDown(wxMouseEvent& event) {}
+      void wxImagePanel::mouseWheelMoved(wxMouseEvent& event) {}
+       void wxImagePanel::mouseReleased(wxMouseEvent& event) {}
+        void wxImagePanel::rightClick(wxMouseEvent& event) {}
+         void wxImagePanel::mouseLeftWindow(wxMouseEvent& event) {}
+          void wxImagePanel::keyPressed(wxKeyEvent& event) {}
+           void wxImagePanel::keyReleased(wxKeyEvent& event) {}
+            */
+
+wxImagePanel::wxImagePanel(wxPanel *parent, wxString file, wxBitmapType format)
+    : wxPanel(parent) {
+  // load the file... ideally add a check to see if loading was successful
+  image.LoadFile(file, format);
+  w = -1;
+  h = -1;
 }
 
-void
-GameScreen::OnExit(wxCommandEvent& event)
-{
+/*
+    * Called by the system of by wxWidgets when the panel needs
+     * to be redrawn. You can also trigger this call by
+      * calling Refresh()/Update().
+       */
+
+void wxImagePanel::paintEvent(wxPaintEvent &evt) {
+  // depending on your system you may need to look at double-buffered dcs
+  wxPaintDC dc(this);
+  render(dc);
+}
+
+/*
+    * Alternatively, you can use a clientDC to paint on the panel
+     * at any time. Using this generally does not free you from
+      * catching paint events, since it is possible that e.g. the window
+       * manager throws away your drawing when the window comes to the
+        * background, and expects you will redraw it when the window comes
+         * back (by sending a paint event).
+          */
+void wxImagePanel::paintNow() {
+  // depending on your system you may need to look at double-buffered dcs
+  wxClientDC dc(this);
+  render(dc);
+}
+
+/*
+    * Here we do the actual rendering. I put it in a separate
+     * method so that it can work no matter what type of DC
+      * (e.g. wxPaintDC or wxClientDC) is used.
+       */
+void wxImagePanel::render(wxDC &dc) {
+  int neww, newh;
+  dc.GetSize(&neww, &newh);
+
+  if (neww != w || newh != h) {
+    resized = wxBitmap(image.Scale(neww, newh /*, wxIMAGE_QUALITY_HIGH*/));
+    w = neww;
+    h = newh;
+    dc.DrawBitmap(resized, 0, 0, true);
+  } else {
+    dc.DrawBitmap(resized, 0, 0, true);
+  }
+}
+
+/*
+    * Here we call refresh to tell the panel to draw itself again.
+     * So when the user resizes the image panel the image should be resized too.
+      */
+void wxImagePanel::OnSize(wxSizeEvent &event) {
+  Refresh();
+  // skip the event.
+  event.Skip();
+}
+
+GameScreen::GameScreen(const wxString &title, const wxPoint &pos,
+                       const wxSize &size)
+    : wxFrame(NULL, wxID_ANY, title, pos, size) {
+
+  wxTopLevelWindow::Maximize(true);
+  wxPanel *panel = new wxPanel(this, -1);
+
+  wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
+
+  wxImagePanel *table = new wxImagePanel(
+      panel, wxT("../resources/pictures/cardtable.png"), wxBITMAP_TYPE_PNG);
+
+  wxGridBagSizer *gbs = new wxGridBagSizer(3, 3);
+  gbs->SetEmptyCellSize(wxSize(10, 20));
+
+  //wxButton *button =
+  //    new wxButton(table, wxID_EXIT, wxT("Quit"), wxPoint(20, 20));
+  //Connect(wxEVT_COMMAND_BUTTON_CLICKED,
+  //        wxCommandEventHandler(GameScreen::OnExit));
+  //gbs->Add(button, wxGBPosition(1, 1), wxGBSpan(1, 1), wxALIGN_CENTER, 50);
+
+  //table->SetOwnBackgroundColour(wxColour(0, 0, 0, 1));
+  table->SetSizer(gbs);
+
+  hbox->Add(table, 1, wxALL | wxEXPAND, 140);
+  panel->SetSizer(hbox);
+  //panel->SetOwnBackgroundColour(wxColour(0,0,0,1));
+
+  // CreateStatusBar();
+  Centre();
+}
+
+void GameScreen::OnExit(wxCommandEvent &event) {
   // true forces quit
   Close(true);
 }
 
-void
-GameScreen::OnAbout(wxCommandEvent& event)
-{
+void GameScreen::OnAbout(wxCommandEvent &event) {
   // pop up window
   // body text, title, icons
   wxMessageBox("This is a wxWidgets' Hello world sample", "About Hello World",
                wxOK | wxICON_INFORMATION);
 }
 
-void
-GameScreen::OnHello(wxCommandEvent& event)
-{
+void GameScreen::OnHello(wxCommandEvent &event) {
   // pop up window with message
   wxLogMessage("Hello world from wxWidgets!");
 }
 
-
 // maps unique identifiers to event handlers
 wxBEGIN_EVENT_TABLE(GameScreen, wxFrame) EVT_MENU(ID_Hello, GameScreen::OnHello)
-  EVT_MENU(wxID_EXIT, GameScreen::OnExit) EVT_MENU(wxID_ABOUT, GameScreen::OnAbout)
-wxEND_EVENT_TABLE()
-
+    EVT_MENU(wxID_EXIT, GameScreen::OnExit)
+        EVT_MENU(wxID_ABOUT, GameScreen::OnAbout) wxEND_EVENT_TABLE()
