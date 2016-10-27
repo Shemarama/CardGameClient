@@ -1,5 +1,7 @@
 #include "gameScreen.h"
 
+enum Suit {HEARTS, SPADES, CLUBS, DIAMONDS, UNDEFINED};
+
 // the wxImagePanel class is taken from
 // https://wiki.wxwidgets.org/An_image_panel
 class wxImagePanel : public wxPanel
@@ -9,8 +11,9 @@ class wxImagePanel : public wxPanel
   int w, h;
 
 public:
-  wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format);
+  wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format, bool rotate90);
 
+  virtual void mouseReleased(wxMouseEvent& evt);
   void paintEvent(wxPaintEvent& evt);
   void paintNow();
   void OnSize(wxSizeEvent& event);
@@ -49,6 +52,8 @@ BEGIN_EVENT_TABLE(wxImagePanel, wxPanel)
 EVT_PAINT(wxImagePanel::paintEvent)
 // Size event
 EVT_SIZE(wxImagePanel::OnSize)
+// catch left mouse release
+EVT_LEFT_UP(wxImagePanel::mouseReleased)
 END_EVENT_TABLE()
 
 // some useful events
@@ -63,15 +68,22 @@ END_EVENT_TABLE()
            void wxImagePanel::keyReleased(wxKeyEvent& event) {}
             */
 
-wxImagePanel::wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format)
+wxImagePanel::wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format, bool rotate90)
   : wxPanel(parent)
 {
   // load the file... ideally add a check to see if loading was successful
   image.LoadFile(file, format);
+  if(rotate90)
+    image = image.Rotate90(true);
   w = -1;
   h = -1;
 }
 
+
+void wxImagePanel::mouseReleased(wxMouseEvent& evt)
+{
+    std::cout << "clicked...\n";
+}
 /*
     * Called by the system of by wxWidgets when the panel needs
      * to be redrawn. You can also trigger this call by
@@ -135,9 +147,114 @@ wxImagePanel::OnSize(wxSizeEvent& event)
   event.Skip();
 }
 
+
+class Card : public wxImagePanel
+{
+  private:
+    Suit suit;
+    int rank;
+
+  public:
+    Card(wxPanel* parent, Suit suit, int rank, wxString file, wxBitmapType format, bool rotate90);
+
+    void mouseReleased(wxMouseEvent& evt);
+};
+
+Card::Card(wxPanel* parent, Suit suit, int rank, wxString file, wxBitmapType format, bool rotate90)
+    : wxImagePanel(parent, file, format, rotate90)
+{
+  this->suit = suit;
+  this->rank = rank;
+  if(rotate90)
+  {
+    this->SetMinSize(wxSize(80, 60));
+    this->SetMaxSize(wxSize(80, 60));
+  }
+  else
+  {
+    this->SetMinSize(wxSize(60, 80));
+    this->SetMaxSize(wxSize(60, 80));
+  }
+}
+
+void Card::mouseReleased(wxMouseEvent& evt)
+{
+    std::cout << "Suit: ";
+
+    switch(suit)
+    {
+        case Suit::HEARTS:
+            std::cout << "Hearts\n";
+            break;
+        case Suit::SPADES:
+            std::cout << "Spades\n";
+            break;
+        case Suit::CLUBS:
+            std::cout << "Clubs\n";
+            break;
+        case Suit::DIAMONDS:
+            std::cout << "Diamonds\n";
+            break;
+        case Suit::UNDEFINED:
+        default:
+            std::cout << "Undefined\n";
+            break;
+    }
+
+    std::cout << "Rank: ";
+
+    switch(rank)
+    {
+        case 2:
+            std::cout << "2\n";
+            break;
+        case 3:
+            std::cout << "3\n";
+            break;
+        case 4:
+            std::cout << "4\n";
+            break;
+        case 5:
+            std::cout << "5\n";
+            break;
+        case 6:
+            std::cout << "6\n";
+            break;
+        case 7:
+            std::cout << "7\n";
+            break;
+        case 8:
+            std::cout << "8\n";
+            break;
+        case 9:
+            std::cout << "9\n";
+            break;
+        case 10:
+            std::cout << "10\n";
+            break;
+        case 11:
+            std::cout << "Jack\n";
+            break;
+        case 12:
+            std::cout << "Queen\n";
+            break;
+        case 13:
+            std::cout << "King\n";
+            break;
+        case 14:
+            std::cout << "Ace\n";
+            break;
+        default:
+            std::cout << "Undefined\n";
+            break;
+        
+    }
+}
+
+
 GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
                        const wxSize& size)
-  : wxFrame(NULL, wxID_ANY, title, pos, size)
+  : wxFrame(NULL, wxID_ANY, title, pos, size, wxDEFAULT_FRAME_STYLE & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX))
 {
 
   // root panel
@@ -148,7 +265,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 
   // card table
   wxImagePanel* table = new wxImagePanel(
-    panel, wxT("../resources/pictures/cardtable.png"), wxBITMAP_TYPE_PNG);
+    panel, wxT("../resources/pictures/cardtable.png"), wxBITMAP_TYPE_PNG, false);
 
   // card table horizontal container
   wxBoxSizer* tableHBox = new wxBoxSizer(wxHORIZONTAL);
@@ -165,6 +282,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   
   
   // buttons for left side
+  /*
   wxButton *button1 =
      new wxButton(table, wxID_EXIT, wxT("Left"), wxPoint(20, 20));
   Connect(wxEVT_COMMAND_BUTTON_CLICKED,
@@ -174,9 +292,24 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
      new wxButton(table, wxID_EXIT, wxT("Left"), wxPoint(20, 20));
   Connect(wxEVT_COMMAND_BUTTON_CLICKED,
          wxCommandEventHandler(GameScreen::OnExit));
+  */
 
-  tableVBoxLeft->Add(button1, 1, wxTOP|wxRIGHT, 10);
-  tableVBoxLeft->Add(button2, 1, wxBOTTOM|wxRIGHT, 10);
+  //tableVBoxLeft->Add(button1, 1, wxTOP|wxRIGHT, 10);
+  //tableVBoxLeft->Add(button2, 1, wxBOTTOM|wxRIGHT, 10);
+  std::vector<Card*> leftPlayerHand;
+  int s = 5;
+  for(int i=0; i<s; i++)
+  {
+    Card *btn = new Card(
+      table, Suit::CLUBS, 2, wxT("../resources/pictures/card2Clubs.png"), wxBITMAP_TYPE_PNG, true);
+    leftPlayerHand.push_back(btn);
+    //tableVBoxLeft->Add(btn, 1, wxALIGN_CENTER, 0);
+  }
+
+  for(int i=0; i<leftPlayerHand.size(); i++)
+  {
+    tableVBoxLeft->Add(leftPlayerHand[i], 1, wxEXPAND|wxALIGN_CENTER_VERTICAL, 10);
+  }
 
   tableVBoxLeft->SetSizeHints(table);
 
@@ -197,6 +330,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   */
 
   // up
+  /*
   std::vector<wxButton*> buttons;
   int s = 4;
   for(int i=0; i<s; i++)
@@ -206,27 +340,53 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
             wxCommandEventHandler(GameScreen::OnExit));
     tableHBoxUp->Add(btn, 1, wxALIGN_CENTER, 0);
   }
+  */
+
+  std::vector<Card*> topPlayerHand;
+  s = 10;
+  for(int i=0; i<s; i++)
+  {
+    Card *btn = new Card(
+      table, Suit::CLUBS, 2, wxT("../resources/pictures/card2Clubs.png"), wxBITMAP_TYPE_PNG, false);
+    topPlayerHand.push_back(btn);
+    //tableHBoxUp->Add(btn, 1, wxALIGN_CENTER, 0);
+  }
+
+  for(int i=0; i<topPlayerHand.size(); i++)
+  {
+    tableHBoxUp->Add(topPlayerHand[i], 1, wxEXPAND, 0);
+  }
+  
 
   tableHBoxUp->SetSizeHints(table);
 
   // decks
-  wxButton *button9 =
-     new wxButton(table, wxID_EXIT, wxT("Decks"), wxPoint(20, 20));
+  
+  //Card *button9 =
+  //   new Card(table, wxID_EXIT, wxT("Decks"), wxT("../resources/pictures/cardAClubs.png"), wxBITMAP_TYPE_PNG);
+  Card *button9 = new Card(
+    table, Suit::CLUBS, 2, wxT("../resources/pictures/card2Clubs.png"), wxBITMAP_TYPE_PNG, false);
+  
   Connect(wxEVT_COMMAND_BUTTON_CLICKED,
          wxCommandEventHandler(GameScreen::OnExit));
+  
+  Card *button10 = new Card(
+    table, Suit::CLUBS, 14, wxT("../resources/pictures/cardAClubs.png"), wxBITMAP_TYPE_PNG, true);
+  //wxButton *button10 =
+  //   new wxButton(table, wxID_EXIT, wxT("Decks"), wxPoint(20, 20));
+  Connect(wxEVT_LEFT_UP,
+         wxMouseEventHandler(Card::mouseReleased));
 
-  wxButton *button10 =
-     new wxButton(table, wxID_EXIT, wxT("Decks"), wxPoint(20, 20));
-  Connect(wxEVT_COMMAND_BUTTON_CLICKED,
-         wxCommandEventHandler(GameScreen::OnExit));
+  //button9->SetMinSize(wxSize(30, 80));
+  button10->SetMinSize(wxSize(30, 80));
 
-  tableHBoxDecks->Add(button9, 1, wxALL, 10);
-  tableHBoxDecks->Add(button10, 1, wxALL, 10);
+  tableHBoxDecks->Add(button9, 1, wxALL|wxEXPAND, 50);
+  tableHBoxDecks->Add(button10, 1, wxALL|wxEXPAND, 50);
   
   tableHBoxDecks->SetSizeHints(table);
   
   // down
-  wxButton *button7 =
+  /*wxButton *button7 =
      new wxButton(table, wxID_EXIT, wxT("Down"), wxPoint(20, 20));
   Connect(wxEVT_COMMAND_BUTTON_CLICKED,
          wxCommandEventHandler(GameScreen::OnExit));
@@ -236,8 +396,23 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   Connect(wxEVT_COMMAND_BUTTON_CLICKED,
          wxCommandEventHandler(GameScreen::OnExit));
 
-  tableHBoxDown->Add(button7, 1, wxALIGN_CENTER, 0);
-  tableHBoxDown->Add(button8, 1, wxALIGN_CENTER, 0);
+         */
+  //tableHBoxDown->Add(button7, 1, wxALIGN_CENTER, 0);
+  //tableHBoxDown->Add(button8, 1, wxALIGN_CENTER, 0);
+  std::vector<Card*> bottomPlayerHand;
+  s = 10;
+  for(int i=0; i<s; i++)
+  {
+    Card *btn = new Card(
+      table, Suit::CLUBS, 2, wxT("../resources/pictures/card2Clubs.png"), wxBITMAP_TYPE_PNG, false);
+    bottomPlayerHand.push_back(btn);
+    //tableHBoxDown->Add(btn, 1, wxALIGN_CENTER, 0);
+  }
+
+  for(int i=0; i<bottomPlayerHand.size(); i++)
+  {
+    tableHBoxDown->Add(bottomPlayerHand[i], 1, wxEXPAND, 0);
+  }
   
   tableHBoxDown->SetSizeHints(table);
 
@@ -249,7 +424,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 
   
   // buttons for right side
-  wxButton *button5 =
+  /*wxButton *button5 =
      new wxButton(table, wxID_EXIT, wxT("Right"), wxPoint(20, 20));
   Connect(wxEVT_COMMAND_BUTTON_CLICKED,
          wxCommandEventHandler(GameScreen::OnExit));
@@ -258,15 +433,36 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
      new wxButton(table, wxID_EXIT, wxT("Right"), wxPoint(20, 20));
   Connect(wxEVT_COMMAND_BUTTON_CLICKED,
          wxCommandEventHandler(GameScreen::OnExit));
+  */
 
-  tableVBoxRight->Add(button5, 1, wxTOP|wxLEFT, 10);
-  tableVBoxRight->Add(button6, 1, wxBOTTOM|wxLEFT, 10);
+  //tableVBoxRight->Add(button5, 1, wxALIGN_CENTER, 0);
+  //tableVBoxRight->Add(button6, 1, wxALIGN_CENTER, 0);
+  std::vector<Card*> rightPlayerHand;
+  s = 5;
+  for(int i=0; i<s; i++)
+  {
+    Card *btn = new Card(
+      table, Suit::CLUBS, 2, wxT("../resources/pictures/card2Clubs.png"), wxBITMAP_TYPE_PNG, true);
+    rightPlayerHand.push_back(btn);
+    //tableVBoxRight->Add(btn, 1, wxALIGN_CENTER, 0);
+  }
+
+  for(int i=0; i<rightPlayerHand.size(); i++)
+  {
+    if(i == 0)
+      tableVBoxRight->Add(rightPlayerHand[i], 1, wxEXPAND|wxLEFT|wxRIGHT|wxTOP, 10);
+    else if(i == rightPlayerHand.size()-1)
+      tableVBoxRight->Add(rightPlayerHand[i], 1, wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM, 10);
+    else
+      tableVBoxRight->Add(rightPlayerHand[i], 1, wxEXPAND|wxLEFT|wxRIGHT|wxTOP, 10);
+    
+  }
 
   tableVBoxRight->SetSizeHints(table);
 
-  tableHBox->Add(tableVBoxLeft, 1, wxEXPAND|wxALL, 10);
-  tableHBox->Add(tableVBoxMid, 2, wxEXPAND|wxALL, 10);
-  tableHBox->Add(tableVBoxRight, 1, wxEXPAND|wxALL, 10);
+  tableHBox->Add(tableVBoxLeft, 1, wxEXPAND|wxALL, 0);
+  tableHBox->Add(tableVBoxMid, 2, wxEXPAND|wxALL, 0);
+  tableHBox->Add(tableVBoxRight, 1, wxEXPAND|wxALL, 0);
 
   tableHBox->SetSizeHints(table);
 
@@ -291,6 +487,14 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 
   // CreateStatusBar();
   Centre();
+}
+
+void
+GameScreen::OnExit(wxMouseEvent& event)
+{
+  // true forces quit
+  std::cout << "clicked exit\n";
+  Close(true);
 }
 
 void
