@@ -6,6 +6,7 @@
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
 #endif
+
 #include"gameScreen.h"
 
 
@@ -23,8 +24,9 @@ public:
 bool
 MyApp::OnInit()
 {
+  wxInitAllImageHandlers();
   GameScreen* frame =
-    new GameScreen("Hello World", wxPoint(50, 50), wxSize(450, 340));
+    new GameScreen("Card Game", wxPoint(50, 50), wxSize(1080, 680));
   frame->Show(true);
   return true;
 }
