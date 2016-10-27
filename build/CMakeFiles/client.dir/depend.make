@@ -511,3 +511,5 @@ CMakeFiles/client.dir/gameScreen.cpp.o: /usr/local/include/wx-3.0/wx/xtiprop.h
 CMakeFiles/client.dir/gameScreen.cpp.o: /usr/local/include/wx-3.0/wx/xtitypes.h
 CMakeFiles/client.dir/gameScreen.cpp.o: /usr/local/lib/wx/include/osx_cocoa-unicode-3.0/wx/setup.h
 
+CMakeFiles/client.dir/loginWindow.cpp.o: ../loginWindow.cpp
+

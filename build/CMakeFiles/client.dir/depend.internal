@@ -511,3 +511,5 @@ CMakeFiles/client.dir/gameScreen.cpp.o
  /usr/local/include/wx-3.0/wx/xtiprop.h
  /usr/local/include/wx-3.0/wx/xtitypes.h
  /usr/local/lib/wx/include/osx_cocoa-unicode-3.0/wx/setup.h
+CMakeFiles/client.dir/loginWindow.cpp.o
+ /Users/Ryan/Documents/CS3450/clientGui/CardGameClient/loginWindow.cpp

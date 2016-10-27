@@ -177,6 +177,33 @@ gameScreen.cpp.s:
 	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/gameScreen.cpp.s
 .PHONY : gameScreen.cpp.s
 
+loginWindow.o: loginWindow.cpp.o
+
+.PHONY : loginWindow.o
+
+# target to build an object file
+loginWindow.cpp.o:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/loginWindow.cpp.o
+.PHONY : loginWindow.cpp.o
+
+loginWindow.i: loginWindow.cpp.i
+
+.PHONY : loginWindow.i
+
+# target to preprocess a source file
+loginWindow.cpp.i:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/loginWindow.cpp.i
+.PHONY : loginWindow.cpp.i
+
+loginWindow.s: loginWindow.cpp.s
+
+.PHONY : loginWindow.s
+
+# target to generate assembly for a file
+loginWindow.cpp.s:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/loginWindow.cpp.s
+.PHONY : loginWindow.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -192,6 +219,9 @@ help:
 	@echo "... gameScreen.o"
 	@echo "... gameScreen.i"
 	@echo "... gameScreen.s"
+	@echo "... loginWindow.o"
+	@echo "... loginWindow.i"
+	@echo "... loginWindow.s"
 .PHONY : help
 
 

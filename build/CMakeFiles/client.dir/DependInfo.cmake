@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/Ryan/Documents/CS3450/clientGui/CardGameClient/client.cpp" "/Users/Ryan/Documents/CS3450/clientGui/CardGameClient/build/CMakeFiles/client.dir/client.cpp.o"
   "/Users/Ryan/Documents/CS3450/clientGui/CardGameClient/gameScreen.cpp" "/Users/Ryan/Documents/CS3450/clientGui/CardGameClient/build/CMakeFiles/client.dir/gameScreen.cpp.o"
+  "/Users/Ryan/Documents/CS3450/clientGui/CardGameClient/loginWindow.cpp" "/Users/Ryan/Documents/CS3450/clientGui/CardGameClient/build/CMakeFiles/client.dir/loginWindow.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "Clang")
 
