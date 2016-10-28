@@ -381,7 +381,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
     Card *btn;
     if(i == s-1)
       btn = new Card(
-        table, Suit::DIAMONDS, 2, wxT("../resources/pictures/cards/cardDiamond2.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
+        table, Suit::SPADES, 7, wxT("../resources/pictures/cards/cardSpade7.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
     else
       btn = new Card(
         table, Suit::DIAMONDS, 2, wxT("../resources/pictures/cards/cardDiamond2Half.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardHalfWidth, cardHalfHeight);
