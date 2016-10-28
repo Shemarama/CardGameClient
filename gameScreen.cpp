@@ -315,10 +315,10 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
     Card *btn;
     if(i == s-1)
       btn = new Card(
-        table, Suit::CLUBS, 2, wxT("../resources/pictures/cards/cardClub2.png"), wxBITMAP_TYPE_PNG, Direction::RIGHT, 60, 80);
+        table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::RIGHT, cardWidth, cardHeight);
     else
       btn = new Card(
-        table, Suit::CLUBS, 2, wxT("../resources/pictures/cards/cardClub2Half.png"), wxBITMAP_TYPE_PNG, Direction::RIGHT, 20, 80);
+        table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::RIGHT, cardHalfWidth, cardHalfHeight);
       
     leftPlayerHand.push_back(btn);
   }
@@ -337,12 +337,12 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   for(int i=0; i<s; i++)
   {
     Card *btn;
-    if(i == s-1)
+    if(i == 0)
       btn = new Card(
-        table, Suit::SPADES, 2, wxT("../resources/pictures/cards/cardSpade2.png"), wxBITMAP_TYPE_PNG, Direction::DOWN, 60, 80);
+        table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::DOWN, cardWidth, cardHeight);
     else
       btn = new Card(
-        table, Suit::SPADES, 2, wxT("../resources/pictures/cards/cardSpade2Half.png"), wxBITMAP_TYPE_PNG, Direction::DOWN, 20, 80);
+        table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::DOWN, cardHalfWidth, cardHalfHeight);
       
     topPlayerHand.push_back(btn);
   }
@@ -358,18 +358,18 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   // decks
   
   Card *button9 = new Card(
-    table, Suit::HEARTS, 2, wxT("../resources/pictures/cards/cardHeart2.png"), wxBITMAP_TYPE_PNG, Direction::UP, 60, 80);
+    table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
   
   Connect(wxEVT_COMMAND_BUTTON_CLICKED,
          wxCommandEventHandler(GameScreen::OnExit));
   
   Card *button10 = new Card(
-    table, Suit::HEARTS, 14, wxT("../resources/pictures/cards/cardHeartA.png"), wxBITMAP_TYPE_PNG, Direction::UP, 60, 80);
+    table, Suit::HEARTS, 14, wxT("../resources/pictures/cards/cardHeartA.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
   Connect(wxEVT_LEFT_UP,
          wxMouseEventHandler(Card::mouseReleased));
 
-  tableHBoxDecks->Add(button9, 1, wxALL|wxEXPAND, 50);
-  tableHBoxDecks->Add(button10, 1, wxALL|wxEXPAND, 50);
+  tableHBoxDecks->Add(button9, 1, wxALL|wxEXPAND, 20);
+  tableHBoxDecks->Add(button10, 1, wxALL|wxEXPAND, 20);
   
   tableHBoxDecks->SetSizeHints(table);
   
@@ -381,10 +381,10 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
     Card *btn;
     if(i == s-1)
       btn = new Card(
-        table, Suit::DIAMONDS, 2, wxT("../resources/pictures/cards/cardDiamond2.png"), wxBITMAP_TYPE_PNG, Direction::UP, 60, 80);
+        table, Suit::DIAMONDS, 2, wxT("../resources/pictures/cards/cardDiamond2.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
     else
       btn = new Card(
-        table, Suit::DIAMONDS, 2, wxT("../resources/pictures/cards/cardDiamond2Half.png"), wxBITMAP_TYPE_PNG, Direction::UP, 20, 80);
+        table, Suit::DIAMONDS, 2, wxT("../resources/pictures/cards/cardDiamond2Half.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardHalfWidth, cardHalfHeight);
     
     bottomPlayerHand.push_back(btn);
   }
@@ -409,10 +409,10 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   for(int i=0; i<s; i++)
   {
     Card *btn;
-    if(i == s-1)
-      btn = new Card(table, Suit::SPADES, 5, wxT("../resources/pictures/cards/cardSpade5.png"), wxBITMAP_TYPE_PNG, Direction::LEFT, 60, 80);
+    if(i == 0)
+      btn = new Card(table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::LEFT, cardWidth, cardHeight);
     else
-      btn = new Card(table, Suit::HEARTS, 7, wxT("../resources/pictures/cards/cardHeart7Half.png"), wxBITMAP_TYPE_PNG, Direction::LEFT, 20, 80);
+      btn = new Card(table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::LEFT, cardHalfWidth, cardHalfHeight);
       
     rightPlayerHand.push_back(btn);
   }
