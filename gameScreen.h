@@ -6,6 +6,8 @@
 #include <wx/wx.h>
 #endif
 
+#include "card.h"
+#include "imagePanel.h"
 #include <wx/gbsizer.h>
 #include <wx/colour.h>
 #include <wx/sizer.h>
