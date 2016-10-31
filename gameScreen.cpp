@@ -48,10 +48,11 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
       
     leftPlayerHand.push_back(btn);
   }
-
-  for(int i=0; i<leftPlayerHand.size(); i++)
+  
+  for(unsigned int i=0; i<leftPlayerHand.size(); i++)
   {
-    tableVBoxLeft->Add(leftPlayerHand[i], 1, wxEXPAND|wxALIGN_CENTER_VERTICAL, 10);
+    //tableVBoxLeft->Add(leftPlayerHand[i], 1, wxEXPAND|wxALIGN_CENTER_VERTICAL, 10);
+    tableVBoxLeft->Add(leftPlayerHand[i], 0, wxALIGN_CENTER, 0);
   }
 
   tableVBoxLeft->SetSizeHints(table);
@@ -73,9 +74,10 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
     topPlayerHand.push_back(btn);
   }
 
-  for(int i=0; i<topPlayerHand.size(); i++)
+  for(unsigned int i=0; i<topPlayerHand.size(); i++)
   {
-    tableHBoxUp->Add(topPlayerHand[i], 1, wxEXPAND, 0);
+    //tableHBoxUp->Add(topPlayerHand[i], 1, wxEXPAND, 0);
+    tableHBoxUp->Add(topPlayerHand[i], 0, wxALIGN_CENTER, 0);
   }
   
 
@@ -94,8 +96,8 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   Connect(wxEVT_LEFT_UP,
          wxMouseEventHandler(Card::mouseReleased));
 
-  tableHBoxDecks->Add(button9, 1, wxALL|wxEXPAND, 20);
-  tableHBoxDecks->Add(button10, 1, wxALL|wxEXPAND, 20);
+  tableHBoxDecks->Add(button9, 0, wxALL, 20);
+  tableHBoxDecks->Add(button10, 0, wxALL, 20);
   
   tableHBoxDecks->SetSizeHints(table);
   
@@ -115,9 +117,10 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
     bottomPlayerHand.push_back(btn);
   }
 
-  for(int i=0; i<bottomPlayerHand.size(); i++)
+  for(unsigned int i=0; i<bottomPlayerHand.size(); i++)
   {
-    tableHBoxDown->Add(bottomPlayerHand[i], 1, wxEXPAND, 0);
+    //tableHBoxDown->Add(bottomPlayerHand[i], 1, wxEXPAND, 0);
+    tableHBoxDown->Add(bottomPlayerHand[i], 0, wxALIGN_CENTER, 0);
   }
   
   tableHBoxDown->SetSizeHints(table);
@@ -143,9 +146,10 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
     rightPlayerHand.push_back(btn);
   }
 
-  for(int i=0; i<rightPlayerHand.size(); i++)
+  for(unsigned int i=0; i<rightPlayerHand.size(); i++)
   {
-    tableVBoxRight->Add(rightPlayerHand[i], 1, wxEXPAND|wxALIGN_CENTER_VERTICAL, 10);
+    //tableVBoxRight->Add(rightPlayerHand[i], 1, wxEXPAND|wxALIGN_CENTER_VERTICAL, 10);
+    tableVBoxRight->Add(rightPlayerHand[i], 0, wxALIGN_CENTER, 0);
   }
 
   tableVBoxRight->SetSizeHints(table);
@@ -158,7 +162,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 
   table->SetSizer(tableHBox);
 
-  hbox->Add(table, 1, wxALL | wxEXPAND, 50);
+  hbox->Add(table, 0, wxALL, 50);
   hbox->SetSizeHints(panel);
   panel->SetSizer(hbox);
   
