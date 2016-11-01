@@ -6,6 +6,8 @@
 #include <wx/wx.h>
 #endif
 
+#include "card.h"
+#include "imagePanel.h"
 #include <wx/gbsizer.h>
 #include <wx/colour.h>
 #include <wx/sizer.h>
@@ -20,6 +22,11 @@ public:
   GameScreen(const wxString& title, const wxPoint& pos, const wxSize& size);
 
 private:
+  const int cardWidth = 70;
+  const int cardHeight = 98;
+  const int cardHalfWidth = 25;
+  const int cardHalfHeight = 98;
+  
   // event handlers
   void OnHello(wxCommandEvent& event);
   void OnExit(wxMouseEvent& event);
