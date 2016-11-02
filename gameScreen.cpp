@@ -4,7 +4,7 @@
 // constructor
 GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
                        const wxSize& size)
-  : wxFrame(NULL, wxID_ANY, title, pos, size, wxDEFAULT_FRAME_STYLE & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX))
+  : wxFrame(NULL, wxID_ANY, title, pos, size, wxDEFAULT_FRAME_STYLE | wxMAXIMIZE_BOX)
 {
 
   // root panel
@@ -25,7 +25,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 
   // card table
   wxImagePanel* table = new wxImagePanel(
-    rootPanel, wxT("../resources/pictures/cardtableRect.png"), wxBITMAP_TYPE_PNG, Direction::UP);
+    panel, wxT("../resources/pictures/table/cardtableRect.png"), wxBITMAP_TYPE_PNG, Direction::UP);
 
   // card table horizontal container
   wxBoxSizer* tableHBox = new wxBoxSizer(wxHORIZONTAL);
@@ -152,9 +152,9 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   
   tableHBoxDown->SetSizeHints(table);
 
-  tableVBoxMid->Add(tableHBoxUp, 0, wxALL, 5);
-  tableVBoxMid->Add(tableHBoxDecks, 0, wxALL, 5);
-  tableVBoxMid->Add(tableHBoxDown, 0, wxALL, 5);
+  tableVBoxMid->Add(tableHBoxUp, 0, wxALL | wxEXPAND, 5);
+  tableVBoxMid->Add(tableHBoxDecks, 0, wxALL | wxEXPAND, 5);
+  tableVBoxMid->Add(tableHBoxDown, 0, wxALL | wxEXPAND, 5);
 
   tableVBoxMid->SetSizeHints(table);
 
