@@ -25,7 +25,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 
   // card table
   wxImagePanel* table = new wxImagePanel(
-    panel, wxT("../resources/pictures/table/cardtableRect.png"), wxBITMAP_TYPE_PNG, Direction::UP);
+    rootPanel, wxT("../resources/pictures/table/cardtableRect.png"), wxBITMAP_TYPE_PNG, Direction::UP);
 
   // card table horizontal container
   wxBoxSizer* tableHBox = new wxBoxSizer(wxHORIZONTAL);
