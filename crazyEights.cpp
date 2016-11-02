@@ -28,8 +28,11 @@ void CrazyEights::setDeck()
     for(auto && suit : suits)
     {
         for(int i = 2; i < 15: i++)
-            drawpile.   
+            drawPile.push_back(new Card(suit, static_cast<Value>(i)));
     }
+    std::random_device rd;
+    std::mt19937 generator(rd());
+    std::shuffle(drawPile.begin(), drawPile.end(), generator);
 }
 
 void CrazyEights::dealCard()

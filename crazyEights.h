@@ -6,13 +6,12 @@
 class CrazyEights 
 {
     private:
-
-      std::vector<Card* > drawPile;
-      std::vector<Card* > discardPile;
+      std::vector<Card> drawPile;
+      std::vector<Card> discardPile;
 
       std::vector<Player> players;
       int turn; //index for player vecotor
-     bool gameOver;
+      bool gameOver;
       Suit currentSuit;
 
 public:
