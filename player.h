@@ -13,6 +13,10 @@ class Player
     wxPanel* playerHandPanel;
     //This hold the player icon and name
     wxPanel* playerInfo; 
+    // box sizer for player's hand
+    wxBoxSizer* playerHandSizer;
+    // box sizer for player's info
+    wxBoxSizer* playerInfoSizer;
     // player's hand
     std::vector<Card*> playerHand; 
     // player's name

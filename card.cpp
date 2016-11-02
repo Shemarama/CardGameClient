@@ -5,6 +5,7 @@ Card::Card(wxPanel* parent, Suit suit, int rank, wxString file, wxBitmapType for
 {
   this->suit = suit;
   this->rank = rank;
+  this->direction = dir;
   // switches width and height depending on direction
   switch(dir)
   {
@@ -95,4 +96,29 @@ void Card::mouseReleased(wxMouseEvent& evt)
             break;
         
     }
+}
+
+Suit Card::getSuit()
+{
+  return suit;
+}
+
+int Card::getRank()
+{
+  return rank;
+}
+
+Direction Card::getDirection()
+{
+  return direction;
+}
+
+int Card::getWidth()
+{
+  return width;
+}
+
+int Card::getHeight()
+{
+  return height;
 }
