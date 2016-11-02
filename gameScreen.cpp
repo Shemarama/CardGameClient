@@ -1,8 +1,6 @@
 #include "gameScreen.h"
 
 
-
-
 // constructor
 GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
                        const wxSize& size)
@@ -10,7 +8,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 {
 
   // root panel
-  wxPanel* panel = new wxPanel(this, -1);
+  wxPanel* rootPanel = new wxPanel(this, -1);
 
   // root horizontal container
   wxBoxSizer* hbox = new wxBoxSizer(wxHORIZONTAL);
@@ -27,7 +25,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 
   // card table
   wxImagePanel* table = new wxImagePanel(
-    panel, wxT("../resources/pictures/cardtableRect.png"), wxBITMAP_TYPE_PNG, Direction::UP);
+    rootPanel, wxT("../resources/pictures/cardtableRect.png"), wxBITMAP_TYPE_PNG, Direction::UP);
 
   // card table horizontal container
   wxBoxSizer* tableHBox = new wxBoxSizer(wxHORIZONTAL);
@@ -198,13 +196,13 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 
   
   Card *button11 = new Card(
-    panel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
+    rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
   Card *button12 = new Card(
-    panel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
+    rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
   Card *button13 = new Card(
-    panel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
+    rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
   Card *button14 = new Card(
-    panel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
+    rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
 
   rootVBoxLeft->Add(button11, 0, wxLEFT, 10);
   rootHBoxUp->Add(button13, 0, wxALL|wxEXPAND, 10);
@@ -222,8 +220,12 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   hbox->Add(rootVBoxRight, 1, wxEXPAND, 10);
 
 
-  hbox->SetSizeHints(panel);
-  panel->SetSizer(hbox);
+  hbox->SetSizeHints(rootPanel);
+  rootPanel->SetSizer(hbox);
+  //table->SetBackgroundColour(wxColour(203,71,255));
+  //rootPanel->SetBackgroundColour(wxColour(203,71,255));
+  table->SetBackgroundColour(wxColour(136,20,11));
+  rootPanel->SetBackgroundColour(wxColour(136,20,11));
   
   Centre();
 }
