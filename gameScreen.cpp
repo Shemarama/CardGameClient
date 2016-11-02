@@ -25,7 +25,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 
   // card table
   wxImagePanel* table = new wxImagePanel(
-    panel, wxT("../resources/pictures/table/cardtableRect.png"), wxBITMAP_TYPE_PNG, Direction::UP);
+    rootPanel, wxT("../resources/pictures/table/cardtableRect.png"), wxBITMAP_TYPE_PNG, Direction::UP);
 
   // card table horizontal container
   wxBoxSizer* tableHBox = new wxBoxSizer(wxHORIZONTAL);
@@ -224,8 +224,8 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   rootPanel->SetSizer(hbox);
   //table->SetBackgroundColour(wxColour(203,71,255));
   //rootPanel->SetBackgroundColour(wxColour(203,71,255));
-  table->SetBackgroundColour(wxColour(136,20,11));
-  rootPanel->SetBackgroundColour(wxColour(136,20,11));
+  table->SetBackgroundColour(wxColour( 214,125,0 ));
+  rootPanel->SetBackgroundColour(wxColour( 214,125,0 ));
   
   Centre();
 }
