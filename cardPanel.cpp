@@ -5,23 +5,6 @@ CardPanel::CardPanel(wxPanel* parent, Card card, wxString file, wxBitmapType for
 {
   this->card = card;
   this->direction = dir;
-  /*
-  // switches width and height depending on direction
-  switch(dir)
-  {
-    case UP:
-    case DOWN:
-        //this->SetMinSize(wxSize(width, height));
-        this->SetMaxSize(wxSize(width, height));
-        break;
-    case LEFT:
-    case RIGHT:
-        //this->SetMinSize(wxSize(height, width));
-        this->SetMaxSize(wxSize(height, width));
-        break;
-    default:
-        break;
-  }*/
 }
 
 void CardPanel::mouseReleased(wxMouseEvent& evt)

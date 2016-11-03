@@ -158,26 +158,29 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   players.push_back(Player(table, rootPanel, wxT("Cameron"), Direction::LEFT));
   players.push_back(Player(table, rootPanel, wxT("Nick"), Direction::UP));
   players.push_back(Player(table, rootPanel, wxT("Shem"), Direction::RIGHT));
+  CrazyEights crazyEights = CrazyEights(players, table, table);
   
-  tableHBoxLeftMid->Add(players[1].getHandPanel(), 0, wxEXPAND, 0);
-  tableVBoxLeft->Add(tableHBoxLeftTop, 0, wxEXPAND, 0);
-  tableVBoxLeft->Add(tableHBoxLeftMid, 0, wxEXPAND, 0);
-  tableVBoxLeft->Add(tableHBoxLeftBot, 0, wxEXPAND, 0);
+  tableHBoxLeftMid->Add(players[1].getHandPanel(), 0, wxALL|wxEXPAND, 0);
+  tableVBoxLeft->Add(tableHBoxLeftTop, 1, wxALL|wxEXPAND, 0);
+  tableVBoxLeft->Add(tableHBoxLeftMid, 1, wxALL|wxEXPAND, 0);
+  tableVBoxLeft->Add(tableHBoxLeftBot, 1, wxALL|wxEXPAND, 0);
   
-  tableHBoxMidTop->Add(players[2].getHandPanel(), 0, wxEXPAND, 0);
-  tableHBoxMidBot->Add(players[0].getHandPanel(), 0, wxEXPAND, 0);
-  tableVBoxMid->Add(tableHBoxMidTop, 0, wxEXPAND, 0);
-  tableVBoxMid->Add(tableHBoxMidMid, 0, wxEXPAND, 0);
-  tableVBoxMid->Add(tableHBoxMidBot, 0, wxEXPAND, 0);
+  tableHBoxMidTop->Add(players[2].getHandPanel(), 0, wxALL|wxEXPAND, 0);
+  tableHBoxMidMid->Add(crazyEights.getDrawPilePanel(), 0, wxALL|wxEXPAND, 0);
+  tableHBoxMidMid->Add(crazyEights.getDiscardPilePanel(), 0, wxALL|wxEXPAND, 0);
+  tableHBoxMidBot->Add(players[0].getHandPanel(), 0, wxALL|wxEXPAND, 0);
+  tableVBoxMid->Add(tableHBoxMidTop, 1, wxALL|wxEXPAND, 0);
+  tableVBoxMid->Add(tableHBoxMidMid, 1, wxALL|wxEXPAND, 10);
+  tableVBoxMid->Add(tableHBoxMidBot, 1, wxALL|wxEXPAND, 0);
   
   tableHBoxRightMid->Add(players[3].getHandPanel(), 0, wxEXPAND, 0);
-  tableVBoxRight->Add(tableHBoxRightTop, 0, wxEXPAND, 0);
-  tableVBoxRight->Add(tableHBoxRightMid, 0, wxEXPAND, 0);
-  tableVBoxRight->Add(tableHBoxRightBot, 0, wxEXPAND, 0);
+  tableVBoxRight->Add(tableHBoxRightTop, 1, wxALL|wxEXPAND, 0);
+  tableVBoxRight->Add(tableHBoxRightMid, 1, wxALL|wxEXPAND, 0);
+  tableVBoxRight->Add(tableHBoxRightBot, 1, wxALL|wxEXPAND, 0);
 
-  tableHBox->Add(tableVBoxLeft, 0, wxEXPAND, 0);
-  tableHBox->Add(tableVBoxMid, 0, wxEXPAND, 0);
-  tableHBox->Add(tableVBoxRight, 0, wxEXPAND, 0);
+  tableHBox->Add(tableVBoxLeft, 1, wxALL|wxEXPAND, 10);
+  tableHBox->Add(tableVBoxMid, 1, wxALL|wxEXPAND, 10);
+  tableHBox->Add(tableVBoxRight, 1, wxALL|wxEXPAND, 10);
 
   tableHBox->SetSizeHints(table);
   table->SetSizer(tableHBox);
@@ -185,31 +188,35 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   //wxPanel* blankPanel = new wxPanel(rootPanel, -1);
   //wxBoxSizer* blankSizer = new wxBoxSizer(wxHORIZONTAL);
   //rootHBoxLeftTop->Add(blankPanel, 0, wxEXPAND, 0);
-  rootHBoxLeftMid->Add(players[1].getInfoPanel(), 0, wxALL, 0);
+  rootHBoxLeftTop->AddSpacer(50);
+  rootHBoxLeftMid->Add(players[1].getInfoPanel(), 1, wxALL|wxALIGN_CENTER, 0);
+  rootHBoxLeftBot->AddSpacer(50);
   //rootHBoxLeftBot->Add(blankPanel, 0, wxEXPAND, 0);
 
   //blankSizer->SetSizeHints(blankPanel);
   //blankPanel->SetSizer(blankSizer);
 
-  rootVBoxLeft->Add(rootHBoxLeftTop, 0, wxEXPAND, 0);
-  rootVBoxLeft->Add(rootHBoxLeftMid, 0, wxEXPAND, 0);
-  rootVBoxLeft->Add(rootHBoxLeftBot, 0, wxEXPAND, 0);
+  rootVBoxLeft->Add(rootHBoxLeftTop, 1, wxALL|wxEXPAND, 0);
+  rootVBoxLeft->Add(rootHBoxLeftMid, 1, wxALL|wxALIGN_CENTER, 0);
+  rootVBoxLeft->Add(rootHBoxLeftBot, 1, wxALL|wxEXPAND, 0);
   
-  rootHBoxMidTop->Add(players[2].getInfoPanel(), 0, wxALL, 0);
-  rootHBoxMidMid->Add(table, 0, wxALL, 50);
-  rootHBoxMidBot->Add(players[0].getInfoPanel(), 0, wxALL, 0);
-  rootVBoxMid->Add(rootHBoxMidTop, 0, wxALL, 5);
-  rootVBoxMid->Add(rootHBoxMidMid, 0, wxALL, 5);
-  rootVBoxMid->Add(rootHBoxMidBot, 0, wxALL, 5);
+  rootHBoxMidTop->Add(players[2].getInfoPanel(), 1, wxALL|wxALIGN_CENTER, 0);
+  rootHBoxMidMid->Add(table, 1, wxALL|wxEXPAND, 10);
+  rootHBoxMidBot->Add(players[0].getInfoPanel(), 1, wxALL, 0);
+  rootVBoxMid->Add(rootHBoxMidTop, 1, wxALL|wxALIGN_CENTER, 5);
+  rootVBoxMid->Add(rootHBoxMidMid, 2, wxALL|wxEXPAND|wxALIGN_CENTER, 5);
+  rootVBoxMid->Add(rootHBoxMidBot, 1, wxALL|wxALIGN_CENTER, 5);
   
-  rootHBoxRightMid->Add(players[3].getInfoPanel(), 0, wxALL, 0);
-  rootVBoxRight->Add(rootHBoxRightTop, 0, wxEXPAND, 0);
-  rootVBoxRight->Add(rootHBoxRightMid, 0, wxEXPAND, 0);
-  rootVBoxRight->Add(rootHBoxRightBot, 0, wxEXPAND, 0);
+  rootHBoxRightTop->AddSpacer(50);
+  rootHBoxRightMid->Add(players[3].getInfoPanel(), 1, wxALL|wxALIGN_CENTER, 0);
+  rootHBoxRightBot->AddSpacer(50);
+  rootVBoxRight->Add(rootHBoxRightTop, 1, wxALL|wxEXPAND, 0);
+  rootVBoxRight->Add(rootHBoxRightMid, 1, wxALL|wxALIGN_CENTER, 0);
+  rootVBoxRight->Add(rootHBoxRightBot, 1, wxALL|wxEXPAND, 0);
 
-  rootHBox->Add(rootVBoxLeft, 1, wxEXPAND, 0);
-  rootHBox->Add(rootVBoxMid, 2, wxEXPAND, 0);
-  rootHBox->Add(rootVBoxRight, 1, wxEXPAND, 0);
+  rootHBox->Add(rootVBoxLeft, 1, wxALL|wxEXPAND, 20);
+  rootHBox->Add(rootVBoxMid, 2, wxALL|wxEXPAND, 20);
+  rootHBox->Add(rootVBoxRight, 1, wxALL|wxEXPAND, 20);
 
   // add sizer to root panel
   rootHBox->SetSizeHints(rootPanel);
@@ -219,15 +226,14 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   //table->SetBackgroundColour(wxColour(214,125,0));
   rootPanel->SetBackgroundColour(wxColour(0,65,225));
 
-  //CrazyEights crazyEights = CrazyEights(players, table, table);
   // test displaying cards
-  //crazyEights.setDeck();
-  //crazyEights.dealCards();
-  //crazyEights.updateDecks();
+  crazyEights.setDeck();
+  crazyEights.dealCards();
+  crazyEights.updateDecks();
   for(unsigned int i=0; i<4; i++)
   {
-    //crazyEights.getPlayers()[i].updatePlayerInfo();
-    //crazyEights.getPlayers()[i].updatePlayerHand();
+    crazyEights.getPlayers()[i].updatePlayerInfo();
+    crazyEights.getPlayers()[i].updatePlayerHand();
   }
   
   //Connect(wxEVT_LEFT_UP,

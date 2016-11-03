@@ -92,7 +92,7 @@ void Player::updatePlayerHand()
           if(i == 0)
             playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::DOWN, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
           else
-            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::DOWN, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
+            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::DOWN, cardHalfWidth, cardHalfHeight), 0, wxALIGN_CENTER, 1);
         }
         break;
     case DOWN:
@@ -101,7 +101,7 @@ void Player::updatePlayerHand()
           if(i == playerHand.size()-1)
             playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardSpade7.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
           else
-            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardDiamond2Half.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
+            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardDiamond2Half.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardHalfWidth, cardHalfHeight), 0, wxALIGN_CENTER, 1);
         }
         break;
     case LEFT:
@@ -110,7 +110,7 @@ void Player::updatePlayerHand()
           if(i == playerHand.size()-1)
             playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::RIGHT, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
           else
-            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::RIGHT, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
+            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::RIGHT, cardHalfWidth, cardHalfHeight), 0, wxALIGN_CENTER, 1);
         }
         break;
     case RIGHT:
@@ -119,7 +119,7 @@ void Player::updatePlayerHand()
           if(i == 0)
             playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::LEFT, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
           else
-            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::LEFT, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
+            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::LEFT, cardHalfWidth, cardHalfHeight), 0, wxALIGN_CENTER, 1);
         }
         break;
     default:
@@ -131,7 +131,7 @@ void Player::updatePlayerHand()
 
 void Player::updatePlayerInfo()
 {
-  playerInfoSizer->Clear(true); // remove all children
+  playerInfoSizer->Clear(false); // remove all children
   playerInfoSizer->Add(readyButton, 0, wxALIGN_CENTER|wxSHAPED, 1);
   playerInfoSizer->Add(playerImage, 0, wxALIGN_CENTER|wxSHAPED, 1);
   playerInfoSizer->Add(playerName, 0, wxALIGN_CENTER|wxSHAPED, 1);
