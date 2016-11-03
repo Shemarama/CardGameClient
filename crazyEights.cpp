@@ -63,11 +63,13 @@ void CrazyEights::dealCards()
   {
     for(auto i=0; i<5; ++i)
     {
-      player.addCard(drawPile.pop_back()); // remove card from deck to each player
+      player.addCard(drawPile.back()); // remove card from deck to each player
+      drawPile.pop_back();
     }
   }
 
-  discardPile.push_back(drawPile.pop_back()); // present first playable card
+  discardPile.push_back(drawPile.back()); // present first playable card
+  drawPile.pop_back();
 }
 
 bool CrazyEights::isGameOver()
@@ -108,10 +110,12 @@ void CrazyEights::gameOver()
 void CrazyEights::updateDecks()
 {
   drawPileSizer->Clear(true); // remove all children
-  drawPileSizer->Add(new CardPanel(drawPilePanel, drawPile[drawPile.size()-1], wxT("../resources/pictures/card/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 0);
+  drawPileSizer->Add(new CardPanel(drawPilePanel, drawPile[drawPile.size()-1], wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
   drawPileSizer->SetSizeHints(drawPilePanel);
+  drawPileSizer->Layout();
 
   discardPileSizer->Clear(true); // remove all children
-  discardPileSizer->Add(new CardPanel(discardPilePanel, discardPile[discardPile.size()-1], wxT("../resources/pictures/card/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 0);
+  discardPileSizer->Add(new CardPanel(discardPilePanel, discardPile[discardPile.size()-1], wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
   discardPileSizer->SetSizeHints(discardPilePanel);
+  discardPileSizer->Layout();
 }

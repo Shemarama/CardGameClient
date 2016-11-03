@@ -2,11 +2,16 @@
 
 Player::Player(wxPanel* handParent, wxPanel* infoParent, wxString newName, Direction dir)
 {
+  cardWidth = 70;
+  cardHeight = 98;
+  cardHalfWidth = 25;
+  cardHalfHeight = 98;
+
   this->playerHandPanel = new wxPanel(handParent,wxID_ANY);
   this->playerInfoPanel = new wxPanel(infoParent, wxID_ANY);
-  this->playerImage = new wxImagePanel(infoParent,wxT("../resources/pictures/player/playerIcon.png"),wxBITMAP_TYPE_PNG,Direction::UP);
-  this->playerName = newName;
-  this->readyButton = new wxButton(infoParent, wxID_ANY, wxT("Ready"));
+  this->playerImage = new wxImagePanel(playerInfoPanel,wxT("../resources/pictures/player/playerIcon.png"),wxBITMAP_TYPE_PNG,Direction::UP, 55, 55);
+  this->playerName = new wxStaticText(playerInfoPanel, wxID_ANY, newName);
+  this->readyButton = new wxButton(playerInfoPanel, wxID_ANY, wxT("Ready"));
   this->playerDirection = dir;
   
   switch(playerDirection)
@@ -23,8 +28,14 @@ Player::Player(wxPanel* handParent, wxPanel* infoParent, wxString newName, Direc
         playerHandSizer = new wxBoxSizer(wxHORIZONTAL);
         break;
   }
+  playerHandSizer->SetSizeHints(playerHandPanel);
   playerHandPanel->SetSizer(playerHandSizer);
+  
   playerInfoSizer = new wxBoxSizer(wxVERTICAL);
+  playerInfoSizer->Add(readyButton, 0, wxALIGN_CENTER|wxSHAPED, 1);
+  playerInfoSizer->Add(playerImage, 0, wxALIGN_CENTER|wxSHAPED, 1);
+  playerInfoSizer->Add(playerName, 0, wxALIGN_CENTER|wxSHAPED, 1);
+  playerInfoSizer->SetSizeHints(playerInfoPanel);
   playerInfoPanel->SetSizer(playerInfoSizer);
 } 
 
@@ -44,7 +55,7 @@ std::vector<Card> Player::getPlayerHand()
   return playerHand;
 }
 
-void Player:setTurn(bool isTurn)
+void Player::setTurn(bool isTurn)
 {
   isMyTurn = isTurn;
 }
@@ -54,14 +65,19 @@ bool Player::getTurn()
   return isMyTurn;
 }
 
-wxPanel* getHandPanel()
+wxString Player::getPlayerName()
+{
+  return playerName->GetLabel();
+}
+
+wxPanel* Player::getHandPanel()
 {
   return playerHandPanel;
 }
 
-wxPanel* getInfoPanel()
+wxPanel* Player::getInfoPanel()
 {
-  return playerInfoPanel();
+  return playerInfoPanel;
 }
 
 void Player::updatePlayerHand()
@@ -71,52 +87,59 @@ void Player::updatePlayerHand()
   switch(playerDirection)
   {
     case UP:
-        for(auto i=0; i<playerHand.size())
+        for(unsigned int i=0; i<playerHand.size(); ++i)
         {
           if(i == 0)
-            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/card/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::DOWN, cardWidth, cardHeight), 0, wxALIGN_CENTER, 0);
+            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::DOWN, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
           else
-            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/card/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::DOWN, cardWidth, cardHeight), 0, wxALIGN_CENTER, 0);
+            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::DOWN, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
         }
         break;
     case DOWN:
-        for(auto i=0; i<playerHand.size())
+        for(unsigned int i=0; i<playerHand.size(); ++i)
         {
           if(i == playerHand.size()-1)
-            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/card/cardSpade7.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 0);
+            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardSpade7.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
           else
-            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/card/cardDiamond2Half.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 0);
+            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardDiamond2Half.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
         }
         break;
     case LEFT:
-        for(auto i=0; i<playerHand.size())
+        for(unsigned int i=0; i<playerHand.size(); ++i)
         {
           if(i == playerHand.size()-1)
-            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/card/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::RIGHT, cardWidth, cardHeight), 0, wxALIGN_CENTER, 0);
+            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::RIGHT, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
           else
-            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/card/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::RIGHT, cardWidth, cardHeight), 0, wxALIGN_CENTER, 0);
+            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::RIGHT, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
         }
         break;
     case RIGHT:
-        for(auto i=0; i<playerHand.size())
+        for(unsigned int i=0; i<playerHand.size(); ++i)
         {
           if(i == 0)
-            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/card/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::LEFT, cardWidth, cardHeight), 0, wxALIGN_CENTER, 0);
+            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::LEFT, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
           else
-            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/card/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::LEFT, cardWidth, cardHeight), 0, wxALIGN_CENTER, 0);
+            playerHandSizer->Add(new CardPanel(playerHandPanel, playerHand[i], wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::LEFT, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
         }
         break;
     default:
         break;
   }
   playerHandSizer->SetSizeHints(playerHandPanel);
+  playerHandSizer->Layout();
 }
 
 void Player::updatePlayerInfo()
 {
   playerInfoSizer->Clear(true); // remove all children
-  playerInfoSizer->Add(readyButton, 0, wxALIGN_CENTER, 0);
-  playerInfoSizer->Add(playerImage, 0, wxALIGN_CENTER, 0);
-  playerInfoSizer->Add(playerName, 0, wxALIGN_CENTER, 0);
+  playerInfoSizer->Add(readyButton, 0, wxALIGN_CENTER|wxSHAPED, 1);
+  playerInfoSizer->Add(playerImage, 0, wxALIGN_CENTER|wxSHAPED, 1);
+  playerInfoSizer->Add(playerName, 0, wxALIGN_CENTER|wxSHAPED, 1);
   playerInfoSizer->SetSizeHints(playerInfoPanel);
+  playerInfoSizer->Layout();
+}
+
+void Player::mouseReleased(wxMouseEvent& evt)
+{
+  std::cout << "testing\n";
 }
