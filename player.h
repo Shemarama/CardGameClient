@@ -18,12 +18,12 @@ class Player
     std::vector<Card> playerHand; 
     wxStaticText* playerName;
     wxImagePanel* playerImage;
-    wxButton* = readyButton;
+    wxButton* readyButton;
     bool isMyTurn = false;
    
    public:
     Player( wxPanel* handParent, wxPanel* infoParent,wxImagePanel* playerImage, wxString newName); 
-    void setPlayerHand(std::vector<Cards>& newHand); //set hand when ready button is pressed
+    void setPlayerHand(std::vector<Card>& newHand); //set hand when ready button is pressed
     void setTurn(bool isTurn);
     bool getTurn(); //will let us know when its is our turn
 };

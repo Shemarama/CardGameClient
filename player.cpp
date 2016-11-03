@@ -4,8 +4,8 @@ Player::Player( wxPanel* handParent, wxPanel* infoParent,wxImagePanel* playerIma
 {
 
 this->playerHandPanel = new wxPanel(handParent,-1);
-this->playerInfo = new wxPanel(infoParent, wx_ID_ANY);
+this->playerInfo = new wxPanel(infoParent, wxID_ANY);
 this->playerImage = new wxImagePanel(infoParent,wxT("../resources/pictures/player/playerIcon.png"),wxBITMAP_TYPE_PNG,Direction::UP);
-this->playerName = newName;
+this->playerName = new wxStaticText(playerInfo, wxID_ANY, newName);
 
 } 
