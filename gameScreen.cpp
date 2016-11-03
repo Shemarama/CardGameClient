@@ -224,8 +224,8 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   rootPanel->SetSizer(hbox);
   //table->SetBackgroundColour(wxColour(203,71,255));
   //rootPanel->SetBackgroundColour(wxColour(203,71,255));
-  table->SetBackgroundColour(wxColour(214,125,0));
-  rootPanel->SetBackgroundColour(wxColour(214,125,0));
+  table->SetBackgroundColour(wxColour(0,65,225));
+  rootPanel->SetBackgroundColour(wxColour(0,65,225)); //this is blue background
   
   Centre();
 }
