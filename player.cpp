@@ -3,8 +3,8 @@
 Player::Player(wxPanel* handParent, wxPanel* infoParent,wxImagePanel* playerImage, wxString newName, Direction dir)
 {
 
-  this->playerHandPanel = new wxPanel(handParent,-1);
-  this->playerInfo = new wxPanel(infoParent, wxID_ANY);
+  this->playerHandPanel = new wxPanel(handParent,wxID_ANY);
+  this->playerInfoPanel = new wxPanel(infoParent, wxID_ANY);
   this->playerImage = new wxImagePanel(infoParent,wxT("../resources/pictures/player/playerIcon.png"),wxBITMAP_TYPE_PNG,Direction::UP);
   this->playerName = newName;
   this->readyButton = new wxButton(infoParent, wxID_ANY, wxT("Ready"));
@@ -26,13 +26,18 @@ Player::Player(wxPanel* handParent, wxPanel* infoParent,wxImagePanel* playerImag
   }
   playerHandPanel->SetSizer(playerHandSizer);
   playerInfoSizer = new wxBoxSizer(wxVERTICAL);
-  playerInfo->SetSizer(playerInfoSizer);
+  playerInfoPanel->SetSizer(playerInfoSizer);
 } 
+
+void Player::AddCard(Card& card)
+{
+  playerHand.push_back(card);
+}
 
 void Player::setPlayerHand(std::vector<Card> &newHand)
 {
   this->playerHand = newHand;
-  updatePlayerHand();
+  updatePlayerHand(); // update hand graphics
 }
 
 std::vector<Card> Player::getPlayerHand()
@@ -40,9 +45,19 @@ std::vector<Card> Player::getPlayerHand()
   return playerHand;
 }
 
+void Player:setTurn(bool isTurn)
+{
+  isMyTurn = isTurn;
+}
+
+bool Player::getTurn()
+{
+  return isMyTurn;
+}
+
 void Player::updatePlayerHand()
 {
-  playerHandPanel->Clear(true); // remove all children
+  playerHandSizer->Clear(true); // remove all children
   // update card display depending on player's position
   switch(playerDirection)
   {
@@ -85,14 +100,14 @@ void Player::updatePlayerHand()
     default:
         break;
   }
+  playerHandSizer->SetSizeHints(playerHandPanel);
 }
 
-void Player:setTurn(bool isTurn)
+void Player::updatePlayerInfo()
 {
-  isMyTurn = isTurn;
-}
-
-bool Player::getTurn()
-{
-  return isMyTurn;
+  playerInfoSizer->Clear(true); // remove all children
+  playerInfoSizer->Add(readyButton, 0, wxALIGN_CENTER, 0);
+  playerInfoSizer->Add(playerImage, 0, wxALIGN_CENTER, 0);
+  playerInfoSizer->Add(playerName, 0, wxALIGN_CENTER, 0);
+  playerInfoSizer->SetSizeHints(playerInfoPanel);
 }

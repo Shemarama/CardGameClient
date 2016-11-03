@@ -13,7 +13,7 @@ class Player
     //This holds the hand and is what we will reference when we render a players hand
     wxPanel* playerHandPanel;
     //This hold the player icon and name
-    wxPanel* playerInfo; 
+    wxPanel* playerInfoPanel; 
     // box sizer for player's hand
     wxBoxSizer* playerHandSizer;
     // box sizer for player's info
@@ -34,10 +34,12 @@ class Player
    public:
     Player(wxPanel* handParent, wxPanel* infoParent, wxImagePanel* playerImage, wxString newName, Direction dir); 
     
+    void addCard(Card card);
     void setPlayerHand(std::vector<Card>& newHand); //set hand when ready button is pressed
     std::vector<Card> getPlayerHand();
     void setTurn(bool isTurn);
     bool getTurn(); //will let us know when it's is our turn
     void updatePlayerHand();
+    void updatePlayerInfo();
 };
 #endif

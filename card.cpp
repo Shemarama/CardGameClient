@@ -1,6 +1,6 @@
 #include "card.h"
 
-Card::Card(Suit suit, int rank)
+Card::Card(Suit suit, Value rank)
 {
   this->suit = suit;
   this->rank = rank;
@@ -11,7 +11,7 @@ Suit Card::getSuit()
   return suit;
 }
 
-int Card::getRank()
+Value Card::getRank()
 {
   return rank;
 }

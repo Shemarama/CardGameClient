@@ -8,17 +8,21 @@ class CrazyEights
     private:
       std::vector<Card> drawPile;
       std::vector<Card> discardPile;
+      wxPanel* drawPilePanel;
+      wxPanel* discardPilePanel;
+      wxBoxSizer* drawPileSizer;
+      wxBoxSizer* discardPileSizer;
 
       std::vector<Player> players;
-      int turn; //index for player vecotor
+      int turn; //index for player vector
       bool gameOver;
       Suit currentSuit;
 
 public:
-    CrazyEights(std::vector<Player>& players);
+    CrazyEights(std::vector<Player>& players, wxPanel* drawParent, wxPanel* discardParent);
     void setCurrentSuit(Suit newSuit);
     Suit getCurrentSuit(); 
-    void dealCard(); //will use drawPile, deal 5 cards to each 
+    void dealCards(); //will use drawPile, deal 5 cards to each 
     void setDeck();  //sets up the deck for the game 
     bool isGameOver();
     bool isValidMove();
@@ -27,6 +31,7 @@ public:
     void drawCard();
     void updateState(); //updates the entire field
     void gameOver();// show end game screen
+    void updateDecks();
 }
 
 #endif
