@@ -31,9 +31,10 @@ class Card
     Suit suit;
     Value rank;
   public:
+    Card();
     Card(Suit suit, Value rank);
     Suit getSuit();
     Value getRank();
-}
+};
 
 #endif

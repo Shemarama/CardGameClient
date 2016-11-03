@@ -97,7 +97,7 @@ void CardPanel::mouseReleased(wxMouseEvent& evt)
     }
 }
 
-Card getCard()
+Card CardPanel::getCard()
 {
   return card;
 }

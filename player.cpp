@@ -1,8 +1,7 @@
 #include"player.h"
 
-Player::Player(wxPanel* handParent, wxPanel* infoParent,wxImagePanel* playerImage, wxString newName, Direction dir)
+Player::Player(wxPanel* handParent, wxPanel* infoParent, wxString newName, Direction dir)
 {
-
   this->playerHandPanel = new wxPanel(handParent,wxID_ANY);
   this->playerInfoPanel = new wxPanel(infoParent, wxID_ANY);
   this->playerImage = new wxImagePanel(infoParent,wxT("../resources/pictures/player/playerIcon.png"),wxBITMAP_TYPE_PNG,Direction::UP);
@@ -29,7 +28,7 @@ Player::Player(wxPanel* handParent, wxPanel* infoParent,wxImagePanel* playerImag
   playerInfoPanel->SetSizer(playerInfoSizer);
 } 
 
-void Player::AddCard(Card& card)
+void Player::addCard(Card& card)
 {
   playerHand.push_back(card);
 }
@@ -53,6 +52,16 @@ void Player:setTurn(bool isTurn)
 bool Player::getTurn()
 {
   return isMyTurn;
+}
+
+wxPanel* getHandPanel()
+{
+  return playerHandPanel;
+}
+
+wxPanel* getInfoPanel()
+{
+  return playerInfoPanel();
 }
 
 void Player::updatePlayerHand()

@@ -6,7 +6,6 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
                        const wxSize& size)
   : wxFrame(NULL, wxID_ANY, title, pos, size, wxDEFAULT_FRAME_STYLE | wxMAXIMIZE_BOX)
 {
-
   // root panel
   wxPanel* rootPanel = new wxPanel(this, -1);
 
@@ -40,7 +39,17 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   wxBoxSizer* tableHBoxDecks = new wxBoxSizer(wxHORIZONTAL);
   wxBoxSizer* tableHBoxDown = new wxBoxSizer(wxHORIZONTAL);
   
+  // create players
+  std::vector<Player> players();
+  players.push_back(Player(table, rootPanel, wxT("Me"), Direction::DOWN));
+  players.push_back(Player(table, rootPanel, wxT("Bob"), Direction::LEFT));
+  players.push_back(Player(table, rootPanel, wxT("Bob1"), Direction::UP));
+  players.push_back(Player(table, rootPanel, wxT("Bob2"), Direction::RIGHT));
   
+  // create game controller
+  CrazyEights crazyEights = CrazyEights(players, table, table);
+  
+  /*
   // buttons for left side
   std::vector<Card*> leftPlayerHand;
   int s = 10;
@@ -67,10 +76,12 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   }
 
   tableVBoxLeft->Add(leftBox, 0, wxALL, 20);
+  */
+  tableVBoxLeft->Add(crazyEights.getPlayers()[1].getHandPanel(), 0, wxALL, 20);
 
   tableVBoxLeft->SetSizeHints(table);
 
-  
+  /*
   // up
   std::vector<Card*> topPlayerHand;
   s = 10;
@@ -97,33 +108,36 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   }
   
   tableHBoxUp->Add(upBox, 0, wxALL, 20);
+  */
+  tableHBoxUp->Add(crazyEights.getPlayers()[2].getHandPanel(), 0, wxALL, 20);
 
   tableHBoxUp->SetSizeHints(table);
 
   // decks
   
-  Card *button9 = new Card(
-    table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
+  //Card *button9 = new Card(
+  //  table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
   
   Connect(wxEVT_COMMAND_BUTTON_CLICKED,
          wxCommandEventHandler(GameScreen::OnExit));
   
-  Card *button10 = new Card(
-    table, Suit::HEARTS, 14, wxT("../resources/pictures/cards/cardHeartA.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
+  //Card *button10 = new Card(
+  //  table, Suit::HEARTS, 14, wxT("../resources/pictures/cards/cardHeartA.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
   Connect(wxEVT_LEFT_UP,
-         wxMouseEventHandler(Card::mouseReleased));
+         wxMouseEventHandler(CardPanel::mouseReleased));
 
   wxBoxSizer* deckBox = new wxBoxSizer(wxHORIZONTAL);
   //tableHBoxDecks->Add(button9, 0, wxALL, 20);
   //tableHBoxDecks->Add(button10, 0, wxALL, 20);
-  deckBox->Add(button9, 0, wxALL, 20);
-  deckBox->Add(button10, 0, wxALL, 20);
+  deckBox->Add(crazyEights.getDrawPilePanel(), 0, wxALL, 20);
+  deckBox->Add(crazyEights.getDiscardPilePanel(), 0, wxALL, 20);
 
   tableHBoxDecks->Add(deckBox, 0, wxALL, 20);
   
   tableHBoxDecks->SetSizeHints(table);
   
   // down
+  /*
   std::vector<Card*> bottomPlayerHand;
   s = 10;
   for(int i=0; i<s; i++)
@@ -149,6 +163,8 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   }
 
   tableHBoxDown->Add(downBox, 0, wxALL, 20);
+  */
+  tableHBoxDown->Add(crazyEights.getPlayers()[0].getHandPanel(), 0, wxALL, 20);
   
   tableHBoxDown->SetSizeHints(table);
 
@@ -160,6 +176,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 
   
   // buttons for right side
+  /*
   std::vector<Card*> rightPlayerHand;
   s = 10;
   for(int i=0; i<s; i++)
@@ -183,6 +200,8 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   }
 
   tableVBoxRight->Add(rightBox, 0, wxALL, 20);
+  */
+  tableVBoxRight->Add(crazyEights.getPlayers()[3].getHandPanel(), 0, wxALL, 20);
 
   tableVBoxRight->SetSizeHints(table);
 
@@ -194,7 +213,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 
   table->SetSizer(tableHBox);
 
-  
+  /*
   Card *button11 = new Card(
     rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
   Card *button12 = new Card(
@@ -209,6 +228,13 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   rootHBoxTable->Add(table, 0, wxALL|wxEXPAND, 10);
   rootHBoxDown->Add(button14, 0, wxBOTTOM, 10);
   rootVBoxRight->Add(button12, 0, wxRIGHT, 10);
+  */
+  
+  rootVBoxLeft->Add(crazyEights.getPlayers()[1].getInfoPanel(), 0, wxLEFT, 10);
+  rootHBoxUp->Add(crazyEights.getPlayers()[2].getInfoPanel(), 0, wxALL|wxEXPAND, 10);
+  rootHBoxTable->Add(table, 0, wxALL|wxEXPAND, 10);
+  rootHBoxDown->Add(crazyEights.getPlayers()[0].getInfoPanel(), 0, wxBOTTOM, 10);
+  rootVBoxRight->Add(crazyEights.getPlayers()[3].getInfoPanel(), 0, wxRIGHT, 10);
 
   //hbox->Add(table, 0, wxALL, 50);
   rootVBoxMid->Add(rootHBoxUp, 1, wxEXPAND|wxLEFT|wxRIGHT|wxTOP, 10);

@@ -1,5 +1,9 @@
 #ifndef CRAZYEIGHTS_H
 #define CRAZYEIGHTS_H
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <random>
 #include<vector>
 #include"player.h"
 
@@ -15,8 +19,12 @@ class CrazyEights
 
       std::vector<Player> players;
       int turn; //index for player vector
-      bool gameOver;
       Suit currentSuit;
+      
+      int cardWidth;
+      int cardHeight;
+      int cardHalfWidth;
+      int cardHalfHeight;
 
 public:
     CrazyEights(std::vector<Player>& players, wxPanel* drawParent, wxPanel* discardParent);
@@ -32,6 +40,9 @@ public:
     void updateState(); //updates the entire field
     void gameOver();// show end game screen
     void updateDecks();
-}
+    wxPanel* getDrawPilePanel();
+    wxPanel* getDiscardPilePanel();
+    std::vector<Player> getPlayers();
+};
 
 #endif

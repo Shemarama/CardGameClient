@@ -12,7 +12,10 @@ CrazyEights::CrazyEights(std::vector<Player>&  players, wxPanel* drawParent, wxP
    setDeck();
    discardPile = std::vector<Card>();
    turn = 0;
-   gameOver = false;
+   cardWidth = 70;
+   cardHeight = 98;
+   cardHalfWidth = 25;
+   cardHalfHeight = 98;
 }
 
 void CrazyEights::setCurrentSuit(Suit newSuit)
@@ -25,13 +28,28 @@ Suit CrazyEights::getCurrentSuit()
  return currentSuit;
 }
 
+wxPanel* CrazyEights::getDrawPilePanel()
+{
+  return drawPilePanel;
+}
+
+wxPanel* CrazyEights::getDiscardPilePanel()
+{
+  return discardPilePanel;
+}
+
+std::vector<Player> CrazyEights::getPlayers()
+{
+  return players;
+}
+
 void CrazyEights::setDeck()
 {
     drawPile = std::vector<Card>();
     std::vector<Suit> suits = {HEARTS, SPADES, CLUBS, DIAMONDS};
     for(auto && suit : suits)
     {
-        for(int i = 2; i < 15: i++)
+        for(int i = 2; i < 15; i++)
             drawPile.push_back(Card(suit, static_cast<Value>(i)));
     }
     std::random_device rd;
@@ -45,11 +63,46 @@ void CrazyEights::dealCards()
   {
     for(auto i=0; i<5; ++i)
     {
-      player.AddCard(drawPile.pop_back()); // remove card from deck to each player
+      player.addCard(drawPile.pop_back()); // remove card from deck to each player
     }
   }
 
   discardPile.push_back(drawPile.pop_back()); // present first playable card
+}
+
+bool CrazyEights::isGameOver()
+{
+  return false;
+}
+
+bool CrazyEights::isValidMove()
+{
+  return true;
+}
+
+void CrazyEights::nextTurn()
+{
+  // get next turn
+}
+
+void CrazyEights::playCard()
+{
+  // play card
+}
+
+void CrazyEights::drawCard()
+{
+  // draw card
+}
+
+void CrazyEights::updateState()
+{
+  // update state
+}
+
+void CrazyEights::gameOver()
+{
+  // game over
 }
 
 void CrazyEights::updateDecks()
@@ -61,6 +114,4 @@ void CrazyEights::updateDecks()
   discardPileSizer->Clear(true); // remove all children
   discardPileSizer->Add(new CardPanel(discardPilePanel, discardPile[discardPile.size()-1], wxT("../resources/pictures/card/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 0);
   discardPileSizer->SetSizeHints(discardPilePanel);
-
-
 }

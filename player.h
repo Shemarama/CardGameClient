@@ -30,15 +30,23 @@ class Player
     Direction playerDirection;
     // flag to tell if it is the user's turn
     bool isMyTurn = false;
+    
+    const int cardWidth = 70;
+    const int cardHeight = 98;
+    const int cardHalfWidth = 25;
+    const int cardHalfHeight = 98;
+    
    
    public:
-    Player(wxPanel* handParent, wxPanel* infoParent, wxImagePanel* playerImage, wxString newName, Direction dir); 
+    Player(wxPanel* handParent, wxPanel* infoParent, wxString newName, Direction dir); 
     
     void addCard(Card card);
     void setPlayerHand(std::vector<Card>& newHand); //set hand when ready button is pressed
     std::vector<Card> getPlayerHand();
     void setTurn(bool isTurn);
     bool getTurn(); //will let us know when it's is our turn
+    wxPanel* getHandPanel();
+    wxPanel* getInfoPanel();
     void updatePlayerHand();
     void updatePlayerInfo();
 };
