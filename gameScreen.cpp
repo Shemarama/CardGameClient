@@ -24,6 +24,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   
   wxBoxSizer* tableVBoxMid = new wxBoxSizer(wxVERTICAL);
   wxBoxSizer* tableHBoxMidTop = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* tableVBoxMidMid = new wxBoxSizer(wxVERTICAL);
   wxBoxSizer* tableHBoxMidMid = new wxBoxSizer(wxHORIZONTAL);
   wxBoxSizer* tableHBoxMidBot = new wxBoxSizer(wxHORIZONTAL);
   
@@ -40,6 +41,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   
   wxBoxSizer* rootVBoxMid = new wxBoxSizer(wxVERTICAL);
   wxBoxSizer* rootHBoxMidTop = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* rootVBoxMidMid = new wxBoxSizer(wxVERTICAL);
   wxBoxSizer* rootHBoxMidMid = new wxBoxSizer(wxHORIZONTAL);
   wxBoxSizer* rootHBoxMidBot = new wxBoxSizer(wxHORIZONTAL);
   
@@ -67,9 +69,10 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   tableHBoxMidTop->Add(players[2].getHandPanel(), 0, wxALL|wxALIGN_CENTER, 0);
   tableHBoxMidMid->Add(crazyEights.getDrawPilePanel(), 0, wxRIGHT|wxALIGN_CENTER, 5);
   tableHBoxMidMid->Add(crazyEights.getDiscardPilePanel(), 0, wxLEFT|wxALIGN_CENTER, 5);
+  tableVBoxMidMid->Add(tableHBoxMidMid, 0, wxALL|wxALIGN_CENTER, 5);
   tableHBoxMidBot->Add(players[0].getHandPanel(), 0, wxALL|wxALIGN_CENTER, 0);
   tableVBoxMid->Add(tableHBoxMidTop, 1, wxALL|wxALIGN_CENTER, 0);
-  tableVBoxMid->Add(tableHBoxMidMid, 1, wxALL|wxEXPAND|wxALIGN_CENTER, 10);
+  tableVBoxMid->Add(tableVBoxMidMid, 1, wxALL|wxEXPAND|wxALIGN_CENTER, 10);
   tableVBoxMid->Add(tableHBoxMidBot, 1, wxALL|wxALIGN_CENTER, 0);
   
   // table right
@@ -80,7 +83,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 
   // table columns
   tableHBox->Add(tableVBoxLeft, 1, wxALL|wxEXPAND, 10);
-  tableHBox->Add(tableVBoxMid, 1, wxALL|wxEXPAND, 10);
+  tableHBox->Add(tableVBoxMid, 1, wxALL|wxEXPAND|wxALIGN_CENTER, 10);
   tableHBox->Add(tableVBoxRight, 1, wxALL|wxEXPAND, 10);
 
   tableHBox->SetSizeHints(table);
@@ -96,10 +99,11 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   
   // root middle
   rootHBoxMidTop->Add(players[2].getInfoPanel(), 1, wxALL|wxALIGN_CENTER, 0);
-  rootHBoxMidMid->Add(table, 1, wxALL|wxEXPAND, 10);
+  rootVBoxMidMid->Add(table, 1, wxALL|wxEXPAND|wxALIGN_CENTER, 10);
+  rootHBoxMidMid->Add(rootVBoxMidMid, 1, wxALL|wxEXPAND|wxALIGN_CENTER, 10);
   rootHBoxMidBot->Add(players[0].getInfoPanel(), 1, wxALL|wxALIGN_CENTER, 0);
   rootVBoxMid->Add(rootHBoxMidTop, 1, wxALL|wxALIGN_CENTER, 5);
-  rootVBoxMid->Add(rootHBoxMidMid, 2, wxALL|wxEXPAND|wxALIGN_CENTER, 5);
+  rootVBoxMid->Add(rootHBoxMidMid, 7, wxALL|wxEXPAND|wxALIGN_CENTER, 5);
   rootVBoxMid->Add(rootHBoxMidBot, 1, wxALL|wxALIGN_CENTER, 5);
   
   // root right
@@ -112,7 +116,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 
   // root columns
   rootHBox->Add(rootVBoxLeft, 1, wxALL|wxEXPAND, 20);
-  rootHBox->Add(rootVBoxMid, 2, wxALL|wxEXPAND, 20);
+  rootHBox->Add(rootVBoxMid, 7, wxALL|wxEXPAND, 20);
   rootHBox->Add(rootVBoxRight, 1, wxALL|wxEXPAND, 20);
 
   rootHBox->SetSizeHints(rootPanel);
