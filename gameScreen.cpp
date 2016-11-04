@@ -132,38 +132,6 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
     crazyEights.getPlayers()[i].updatePlayerHand();
   }
   
-  Card *button11 = new Card(
-    rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
-  Card *button12 = new Card(
-    rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
-  Card *button13 = new Card(
-    rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
-  Card *button14 = new Card(
-    rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
-
-  rootVBoxLeft->Add(button11, 0, wxLEFT, 10);
-  rootHBoxUp->Add(button13, 0, wxALL|wxEXPAND, 10);
-  rootHBoxTable->Add(table, 0, wxALL|wxEXPAND, 10);
-  rootHBoxDown->Add(button14, 0, wxBOTTOM, 10);
-  rootVBoxRight->Add(button12, 0, wxRIGHT, 10);
-
-  //hbox->Add(table, 0, wxALL, 50);
-  rootVBoxMid->Add(rootHBoxUp, 1, wxEXPAND|wxLEFT|wxRIGHT|wxTOP, 10);
-  rootVBoxMid->Add(rootHBoxTable, 2, wxEXPAND|wxLEFT|wxRIGHT, 10);
-  rootVBoxMid->Add(rootHBoxDown, 1, wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM, 10);
-
-  hbox->Add(rootVBoxLeft, 1, wxEXPAND, 10);
-  hbox->Add(rootVBoxMid, 2, wxEXPAND, 10);
-  hbox->Add(rootVBoxRight, 1, wxEXPAND, 10);
-
-
-  hbox->SetSizeHints(rootPanel);
-  rootPanel->SetSizer(hbox);
-  //table->SetBackgroundColour(wxColour(203,71,255));
-  //rootPanel->SetBackgroundColour(wxColour(203,71,255));
-  table->SetBackgroundColour(wxColour(0,65,225));
-  rootPanel->SetBackgroundColour(wxColour(0,65,225)); //this is blue background
-  
   //Connect(wxEVT_LEFT_UP,
   //       wxMouseEventHandler(CardPanel::mouseReleased));
 
