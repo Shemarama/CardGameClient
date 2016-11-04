@@ -4,8 +4,8 @@
 #include <iostream>
 #include <iterator>
 #include <random>
-#include<vector>
-#include"player.h"
+#include <vector>
+#include "player.h"
 
 class CrazyEights 
 {
@@ -21,11 +21,6 @@ class CrazyEights
       int turn; //index for player vector
       Suit currentSuit;
       
-      int cardWidth;
-      int cardHeight;
-      int cardHalfWidth;
-      int cardHalfHeight;
-
 public:
     CrazyEights(std::vector<Player>& players, wxPanel* drawParent, wxPanel* discardParent);
     void setCurrentSuit(Suit newSuit);

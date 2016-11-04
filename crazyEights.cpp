@@ -9,13 +9,10 @@ CrazyEights::CrazyEights(std::vector<Player>&  players, wxPanel* drawParent, wxP
    drawPilePanel->SetSizer(drawPileSizer);
    discardPileSizer = new wxBoxSizer(wxHORIZONTAL);
    discardPilePanel->SetSizer(discardPileSizer);
+   // create cards and place in deck
    setDeck();
    discardPile = std::vector<Card>();
    turn = 0;
-   cardWidth = 70;
-   cardHeight = 98;
-   cardHalfWidth = 25;
-   cardHalfHeight = 98;
 }
 
 void CrazyEights::setCurrentSuit(Suit newSuit)
@@ -110,12 +107,14 @@ void CrazyEights::gameOver()
 void CrazyEights::updateDecks()
 {
   drawPileSizer->Clear(true); // remove all children
-  drawPileSizer->Add(new CardPanel(drawPilePanel, drawPile[drawPile.size()-1], wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
+  //drawPileSizer->Add(new CardPanel(drawPilePanel, drawPile.back(), wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
+  drawPileSizer->Add(Player::makeCard(drawPilePanel, drawPile.back(), false, Direction::UP, false));
   drawPileSizer->SetSizeHints(drawPilePanel);
   drawPileSizer->Layout();
 
   discardPileSizer->Clear(true); // remove all children
-  discardPileSizer->Add(new CardPanel(discardPilePanel, discardPile[discardPile.size()-1], wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
+  //discardPileSizer->Add(new CardPanel(discardPilePanel, discardPile[discardPile.size()-1], wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
+  discardPileSizer->Add(Player::makeCard(discardPilePanel, discardPile.back(), true, Direction::UP, false));
   discardPileSizer->SetSizeHints(discardPilePanel);
   discardPileSizer->Layout();
 }

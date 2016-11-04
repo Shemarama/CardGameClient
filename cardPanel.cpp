@@ -1,10 +1,12 @@
 #include "cardPanel.h"
 
-CardPanel::CardPanel(wxPanel* parent, Card card, wxString file, wxBitmapType format, Direction dir, int width, int height)
-    : wxImagePanel(parent, file, format, dir, width, height)
+CardPanel::CardPanel(wxPanel* parent, Card& card, wxString file, wxBitmapType format, Direction dir, int width, int height)
+  : wxImagePanel(parent, file, format, dir, width, height)
 {
   this->card = card;
   this->direction = dir;
+  this->width = width;
+  this->height = height;
 }
 
 void CardPanel::mouseReleased(wxMouseEvent& evt)
@@ -77,7 +79,6 @@ void CardPanel::mouseReleased(wxMouseEvent& evt)
         default:
             std::cout << "Undefined\n";
             break;
-        
     }
 }
 

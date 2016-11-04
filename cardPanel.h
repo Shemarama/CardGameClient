@@ -18,9 +18,11 @@ class CardPanel : public wxImagePanel
     int height;
 
   public:
-    CardPanel(wxPanel* parent, Card card, wxString file, wxBitmapType format, Direction dir, int width, int height);
+    CardPanel(wxPanel* parent, Card& card, wxString file, wxBitmapType format, Direction dir, int width, int height);
 
     void mouseReleased(wxMouseEvent& evt);
+    wxString findHalfImage();
+    wxString findFullImage();
     Card getCard();
     Direction getDirection();
     int getWidth();

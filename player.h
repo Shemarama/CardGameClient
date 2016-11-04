@@ -31,10 +31,10 @@ class Player
     // flag to tell if it is the user's turn
     bool isMyTurn = false;
     
-    int cardWidth;
-    int cardHeight;
-    int cardHalfWidth;
-    int cardHalfHeight;
+    static const int cardWidth = 70;
+    static const int cardHeight = 98;
+    static const int cardHalfWidth = 25;
+    static const int cardHalfHeight = 98;
     
    
    public:
@@ -46,10 +46,13 @@ class Player
     void setTurn(bool isTurn);
     bool getTurn(); //will let us know when it's is our turn
     wxString getPlayerName();
+    static wxString findFullImage(Card& card, bool show);
+    static wxString findHalfImage(Card& card, bool show);
     wxPanel* getHandPanel();
     wxPanel* getInfoPanel();
     void updatePlayerHand();
     void updatePlayerInfo();
+    static CardPanel* makeCard(wxPanel* parent, Card& card, bool show, Direction dir, bool isHalf);
     void mouseReleased(wxMouseEvent& evt);
 
 };
