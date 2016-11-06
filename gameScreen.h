@@ -6,16 +6,16 @@
 #include <wx/wx.h>
 #endif
 
-#include "card.h"
-#include "cardPanel.h"
-#include "imagePanel.h"
+//#include "card.h"
+//#include "cardPanel.h"
+//#include "imagePanel.h"
 #include "crazyEights.h"
-#include "player.h"
-#include <wx/gbsizer.h>
-#include <wx/colour.h>
-#include <wx/sizer.h>
-#include <wx/button.h>
-#include <vector>
+//#include "player.h"
+//#include <wx/gbsizer.h>
+//#include <wx/colour.h>
+//#include <wx/sizer.h>
+//#include <wx/button.h>
+//#include <vector>
 
 class GameScreen : public wxFrame
 {
@@ -26,19 +26,21 @@ public:
 
 private:
   // event handlers
+  /*
   void OnHello(wxCommandEvent& event);
   void OnExit(wxMouseEvent& event);
   void OnExit(wxCommandEvent& event);
   void OnAbout(wxCommandEvent& event);
+  */
 
   // so the window can respond to events
-  wxDECLARE_EVENT_TABLE();
+  //wxDECLARE_EVENT_TABLE();
 };
 
 // give commands unique identifiers
-enum
+enum TEST
 {
-  ID_Hello = 1
+  ID_Hello = 1,
 };
 
 

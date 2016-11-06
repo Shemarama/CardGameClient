@@ -35,6 +35,8 @@ public:
     void updateState(); //updates the entire field
     void gameOver();// show end game screen
     void updateDecks();
+    std::vector<Card> getDrawPile();
+    std::vector<Card> getDiscardPile();
     wxPanel* getDrawPilePanel();
     wxPanel* getDiscardPilePanel();
     std::vector<Player> getPlayers();

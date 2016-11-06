@@ -25,6 +25,16 @@ Suit CrazyEights::getCurrentSuit()
  return currentSuit;
 }
 
+std::vector<Card> CrazyEights::getDrawPile()
+{
+  return drawPile;
+}
+
+std::vector<Card> CrazyEights::getDiscardPile()
+{
+  return discardPile;
+}
+
 wxPanel* CrazyEights::getDrawPilePanel()
 {
   return drawPilePanel;
@@ -107,13 +117,11 @@ void CrazyEights::gameOver()
 void CrazyEights::updateDecks()
 {
   drawPileSizer->Clear(true); // remove all children
-  //drawPileSizer->Add(new CardPanel(drawPilePanel, drawPile.back(), wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
   drawPileSizer->Add(Player::makeCard(drawPilePanel, drawPile.back(), false, Direction::UP, false));
   drawPileSizer->SetSizeHints(drawPilePanel);
   drawPileSizer->Layout();
 
   discardPileSizer->Clear(true); // remove all children
-  //discardPileSizer->Add(new CardPanel(discardPilePanel, discardPile[discardPile.size()-1], wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight), 0, wxALIGN_CENTER, 1);
   discardPileSizer->Add(Player::makeCard(discardPilePanel, discardPile.back(), true, Direction::UP, false));
   discardPileSizer->SetSizeHints(discardPilePanel);
   discardPileSizer->Layout();

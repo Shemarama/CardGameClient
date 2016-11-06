@@ -45,6 +45,7 @@ class Player
     std::vector<Card> getPlayerHand();
     void setTurn(bool isTurn);
     bool getTurn(); //will let us know when it's is our turn
+    Direction getDirection();
     wxString getPlayerName();
     static wxString findFullImage(Card& card, bool show);
     static wxString findHalfImage(Card& card, bool show);
@@ -53,7 +54,5 @@ class Player
     void updatePlayerHand();
     void updatePlayerInfo();
     static CardPanel* makeCard(wxPanel* parent, Card& card, bool show, Direction dir, bool isHalf);
-    void mouseReleased(wxMouseEvent& evt);
-
 };
 #endif

@@ -14,10 +14,19 @@ Card::Card(Suit suit, Value rank)
 
 Suit Card::getSuit()
 {
-  return suit;
+  return this->suit;
 }
 
 Value Card::getRank()
 {
-  return rank;
+  return this->rank;
 }
+
+bool Card::operator==(Card& otherCard)
+{
+  if(this->suit == otherCard.getSuit() && this->rank == otherCard.getRank())
+      return true;
+  else
+      return false;
+}
+
