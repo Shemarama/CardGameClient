@@ -125,16 +125,36 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   
   // down
   std::vector<Card*> bottomPlayerHand;
-  s = 10;
+  s = 6;
   for(int i=0; i<s; i++)
   {
     Card *btn;
     if(i == s-1)
       btn = new Card(
         table, Suit::SPADES, 7, wxT("../resources/pictures/cards/cardSpade7.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
-    else
+
+    else if( i == s - 2)
+	btn = new Card(
+         table, Suit::HEARTS, 3, wxT("../resources/pictures/cards/cardHeart3Half.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardHalfWidth, cardHalfHeight);
+
+    else if(i == s - 3)
+      
       btn = new Card(
         table, Suit::DIAMONDS, 2, wxT("../resources/pictures/cards/cardDiamond2Half.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardHalfWidth, cardHalfHeight);
+
+    else if(i == s - 4)
+      
+      btn = new Card(
+        table, Suit::CLUBS, 4, wxT("../resources/pictures/cards/cardClub4Half.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardHalfWidth, cardHalfHeight);
+
+    else if(i == s - 5)
+      
+      btn = new Card(
+        table, Suit::DIAMONDS,11, wxT("../resources/pictures/cards/cardDiamondJHalf.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardHalfWidth, cardHalfHeight);
+
+    else
+      btn = new Card(
+        table, Suit::DIAMONDS, 13, wxT("../resources/pictures/cards/cardDiamondKHalf.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardHalfWidth, cardHalfHeight);
     
     bottomPlayerHand.push_back(btn);
   }
@@ -195,7 +215,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   table->SetSizer(tableHBox);
 
   
-  Card *button11 = new Card(
+/*  Card *button11 = new Card(
     rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
   Card *button12 = new Card(
     rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
@@ -203,12 +223,13 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
     rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
   Card *button14 = new Card(
     rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
+*/
 
-  rootVBoxLeft->Add(button11, 0, wxLEFT, 10);
-  rootHBoxUp->Add(button13, 0, wxALL|wxEXPAND, 10);
-  rootHBoxTable->Add(table, 0, wxALL|wxEXPAND, 10);
-  rootHBoxDown->Add(button14, 0, wxBOTTOM, 10);
-  rootVBoxRight->Add(button12, 0, wxRIGHT, 10);
+ //rootVBoxLeft->Add(button11, 0, wxLEFT, 10);
+ // rootHBoxUp->Add(button13, 0, wxALL|wxEXPAND, 10);
+  rootHBoxTable->Add(table, 0, wxALL, 30);
+ // rootHBoxDown->Add(button14, 0, wxBOTTOM, 10);
+ // rootVBoxRight->Add(button12, 0, wxRIGHT, 10);
 
   //hbox->Add(table, 0, wxALL, 50);
   rootVBoxMid->Add(rootHBoxUp, 1, wxEXPAND|wxLEFT|wxRIGHT|wxTOP, 10);
