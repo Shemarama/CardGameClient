@@ -5,6 +5,10 @@
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
 #endif
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <random>
 
 enum Suit {HEARTS, SPADES, CLUBS, DIAMONDS, UNDEFINED};
 
@@ -35,6 +39,7 @@ class Card
     Card(Suit suit, Value rank);
     Suit getSuit();
     Value getRank();
+    bool operator==(Card& otherCard);
 };
 
 #endif

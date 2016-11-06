@@ -138,3 +138,8 @@ wxImagePanel::OnSize(wxSizeEvent& event)
   // skip the event.
   event.Skip();
 }
+
+void wxImagePanel::print(wxString message)
+{
+  std::cout << message << "\n";
+}

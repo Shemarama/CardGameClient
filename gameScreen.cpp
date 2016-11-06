@@ -172,8 +172,8 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   rootPanel->SetSizer(rootHBox);
   
   // set background color
-  table->SetBackgroundColour(wxColour(0,65,225));
-  rootPanel->SetBackgroundColour(wxColour(0,65,225));
+  table->SetBackgroundColour(wxColour(0,65,225)); // blue
+  rootPanel->SetBackgroundColour(wxColour(0,65,225)); // blue
 
   // test displaying cards
   crazyEights.setDeck();
@@ -214,6 +214,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   Centre();
 }
 
+/*
 void
 GameScreen::OnExit(wxMouseEvent& event)
 {
@@ -247,6 +248,9 @@ GameScreen::OnHello(wxCommandEvent& event)
 }
 
 // maps unique identifiers to event handlers
-wxBEGIN_EVENT_TABLE(GameScreen, wxFrame) EVT_MENU(ID_Hello, GameScreen::OnHello)
+wxBEGIN_EVENT_TABLE(GameScreen, wxFrame)
+  EVT_MENU(ID_Hello, GameScreen::OnHello)
   EVT_MENU(wxID_EXIT, GameScreen::OnExit)
-    EVT_MENU(wxID_ABOUT, GameScreen::OnAbout) wxEND_EVENT_TABLE()
+  EVT_MENU(wxID_ABOUT, GameScreen::OnAbout)
+wxEND_EVENT_TABLE()
+*/

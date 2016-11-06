@@ -2,11 +2,6 @@
 
 Player::Player(wxPanel* handParent, wxPanel* infoParent, wxString newName, Direction dir)
 {
-  //cardWidth = 70;
-  //cardHeight = 98;
-  //cardHalfWidth = 25;
-  //cardHalfHeight = 98;
-
   this->playerHandPanel = new wxPanel(handParent,wxID_ANY);
   this->playerInfoPanel = new wxPanel(infoParent, wxID_ANY);
   this->playerImage = new wxImagePanel(playerInfoPanel,wxT("../resources/pictures/player/playerIcon.png"),wxBITMAP_TYPE_PNG,Direction::UP, 55, 55);
@@ -63,6 +58,11 @@ void Player::setTurn(bool isTurn)
 bool Player::getTurn()
 {
   return isMyTurn;
+}
+
+Direction Player::getDirection()
+{
+  return playerDirection;
 }
 
 wxString Player::getPlayerName()
@@ -401,9 +401,4 @@ wxString Player::findFullImage(Card& card, bool show)
   }
   else // UNDEFINED
       return wxT("../resources/pictures/cards/cardBack.png");
-}
-
-void Player::mouseReleased(wxMouseEvent& evt)
-{
-  std::cout << "testing\n";
 }

@@ -80,6 +80,46 @@ void CardPanel::mouseReleased(wxMouseEvent& evt)
             std::cout << "Undefined\n";
             break;
     }
+    
+    /*
+    for(auto&& c : crazyEights.getDrawPile())
+    {
+      if(card == c)
+          std::cout << "Inside the Draw Pile\n";
+    }
+    for(auto&& c : crazyEights.getDiscardPile())
+    {
+      if(card == c)
+          std::cout << "Inside the Discard Pile\n";
+    }
+    for(auto&& player : crazyEights.getPlayers())
+    {
+      for(auto&& c : player.getPlayerHand())
+      {
+        if(card == c)
+        {
+          switch(player.getDirection())
+          {
+            case UP:
+                std::cout << "Inside the Top Player's Hand\n";
+                break;
+            case DOWN:
+                std::cout << "Inside the Bottom Player's Hand\n";
+                break;
+            case LEFT:
+                std::cout << "Inside the Left Player's Hand\n";
+                break;
+            case RIGHT:
+                std::cout << "Inside the Right Player's Hand\n";
+                break;
+            default:
+                std::cout << "Error\n";
+                break;
+          }
+        }
+      }
+    }
+    */
 }
 
 Card CardPanel::getCard()
