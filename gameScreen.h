@@ -7,12 +7,15 @@
 #endif
 
 #include "card.h"
+#include "cardPanel.h"
 #include "imagePanel.h"
+#include "crazyEights.h"
+#include "player.h"
 #include <wx/gbsizer.h>
 #include <wx/colour.h>
 #include <wx/sizer.h>
-#include <vector>
 #include <wx/button.h>
+#include <vector>
 
 class GameScreen : public wxFrame
 {
@@ -22,11 +25,6 @@ public:
   GameScreen(const wxString& title, const wxPoint& pos, const wxSize& size);
 
 private:
-  const int cardWidth = 70;
-  const int cardHeight = 98;
-  const int cardHalfWidth = 25;
-  const int cardHalfHeight = 98;
-  
   // event handlers
   void OnHello(wxCommandEvent& event);
   void OnExit(wxMouseEvent& event);

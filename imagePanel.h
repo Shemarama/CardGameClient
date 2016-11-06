@@ -17,7 +17,7 @@ class wxImagePanel : public wxPanel
   int w, h;
 
 public:
-  wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format, Direction dir);
+  wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format, Direction dir, int width, int height);
 
   virtual void mouseReleased(wxMouseEvent& evt);
   void paintEvent(wxPaintEvent& evt);

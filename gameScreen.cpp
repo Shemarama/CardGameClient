@@ -6,123 +6,98 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
                        const wxSize& size)
   : wxFrame(NULL, wxID_ANY, title, pos, size, wxDEFAULT_FRAME_STYLE | wxMAXIMIZE_BOX)
 {
-
   // root panel
   wxPanel* rootPanel = new wxPanel(this, -1);
-
-  // root horizontal container
-  wxBoxSizer* hbox = new wxBoxSizer(wxHORIZONTAL);
-
-  // root vertical containers
-  wxBoxSizer* rootVBoxLeft = new wxBoxSizer(wxVERTICAL);
-  wxBoxSizer* rootVBoxMid = new wxBoxSizer(wxVERTICAL);
-  wxBoxSizer* rootVBoxRight = new wxBoxSizer(wxVERTICAL);
-
-  // root table containers for top player, card table, and bottom player
-  wxBoxSizer* rootHBoxUp = new wxBoxSizer(wxHORIZONTAL);
-  wxBoxSizer* rootHBoxTable = new wxBoxSizer(wxHORIZONTAL);
-  wxBoxSizer* rootHBoxDown = new wxBoxSizer(wxHORIZONTAL);
-
+  wxBoxSizer* rootHBox = new wxBoxSizer(wxHORIZONTAL);
+  
   // card table
   wxImagePanel* table = new wxImagePanel(
-    rootPanel, wxT("../resources/pictures/table/cardtableRect.png"), wxBITMAP_TYPE_PNG, Direction::UP);
-
-  // card table horizontal container
+    rootPanel, wxT("../resources/pictures/table/cardtableRect.png"), wxBITMAP_TYPE_PNG, Direction::UP, 760, 480);
+  
+  // sizers for table
   wxBoxSizer* tableHBox = new wxBoxSizer(wxHORIZONTAL);
-
-  // card table vertical containers
+  
   wxBoxSizer* tableVBoxLeft = new wxBoxSizer(wxVERTICAL);
+  wxBoxSizer* tableHBoxLeftTop = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* tableHBoxLeftMid = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* tableHBoxLeftBot = new wxBoxSizer(wxHORIZONTAL);
+  
   wxBoxSizer* tableVBoxMid = new wxBoxSizer(wxVERTICAL);
+  wxBoxSizer* tableHBoxMidTop = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* tableVBoxMidMid = new wxBoxSizer(wxVERTICAL);
+  wxBoxSizer* tableHBoxMidMid = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* tableHBoxMidBot = new wxBoxSizer(wxHORIZONTAL);
+  
   wxBoxSizer* tableVBoxRight = new wxBoxSizer(wxVERTICAL);
-
-  // card table containers for up, decks, and down
-  wxBoxSizer* tableHBoxUp = new wxBoxSizer(wxHORIZONTAL);
-  wxBoxSizer* tableHBoxDecks = new wxBoxSizer(wxHORIZONTAL);
-  wxBoxSizer* tableHBoxDown = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* tableHBoxRightTop = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* tableHBoxRightMid = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* tableHBoxRightBot = new wxBoxSizer(wxHORIZONTAL);
   
+  // sizers for root panel
+  wxBoxSizer* rootVBoxLeft = new wxBoxSizer(wxVERTICAL);
+  wxBoxSizer* rootHBoxLeftTop = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* rootHBoxLeftMid = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* rootHBoxLeftBot = new wxBoxSizer(wxHORIZONTAL);
   
-  // buttons for left side
-  std::vector<Card*> leftPlayerHand;
-  int s = 10;
-  for(int i=0; i<s; i++)
-  {
-    Card *btn;
-    if(i == s-1)
-      btn = new Card(
-        table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::RIGHT, cardWidth, cardHeight);
-    else
-      btn = new Card(
-        table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::RIGHT, cardHalfWidth, cardHalfHeight);
-      
-    leftPlayerHand.push_back(btn);
-  }
-
-  wxBoxSizer* leftBox = new wxBoxSizer(wxVERTICAL);
+  wxBoxSizer* rootVBoxMid = new wxBoxSizer(wxVERTICAL);
+  wxBoxSizer* rootHBoxMidTop = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* rootVBoxMidMid = new wxBoxSizer(wxVERTICAL);
+  wxBoxSizer* rootHBoxMidMid = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* rootHBoxMidBot = new wxBoxSizer(wxHORIZONTAL);
   
-  for(unsigned int i=0; i<leftPlayerHand.size(); i++)
-  {
-    //tableVBoxLeft->Add(leftPlayerHand[i], 1, wxEXPAND|wxALIGN_CENTER_VERTICAL, 10);
-    //tableVBoxLeft->Add(leftPlayerHand[i], 0, wxALIGN_CENTER, 0);
-    leftBox->Add(leftPlayerHand[i], 0, wxALIGN_CENTER, 0);
-  }
-
-  tableVBoxLeft->Add(leftBox, 0, wxALL, 20);
-
-  tableVBoxLeft->SetSizeHints(table);
-
+  wxBoxSizer* rootVBoxRight = new wxBoxSizer(wxVERTICAL);
+  wxBoxSizer* rootHBoxRightTop = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* rootHBoxRightMid = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* rootHBoxRightBot = new wxBoxSizer(wxHORIZONTAL);
   
-  // up
-  std::vector<Card*> topPlayerHand;
-  s = 10;
-  for(int i=0; i<s; i++)
-  {
-    Card *btn;
-    if(i == 0)
-      btn = new Card(
-        table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::DOWN, cardWidth, cardHeight);
-    else
-      btn = new Card(
-        table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::DOWN, cardHalfWidth, cardHalfHeight);
-      
-    topPlayerHand.push_back(btn);
-  }
-
-  wxBoxSizer* upBox = new wxBoxSizer(wxHORIZONTAL);
-
-  for(unsigned int i=0; i<topPlayerHand.size(); i++)
-  {
-    //tableHBoxUp->Add(topPlayerHand[i], 1, wxEXPAND, 0);
-    //tableHBoxUp->Add(topPlayerHand[i], 0, wxALIGN_CENTER, 0);
-    upBox->Add(topPlayerHand[i], 0, wxALIGN_CENTER, 0);
-  }
+  // create players
+  std::vector<Player> players;
+  players.push_back(Player(table, rootPanel, wxT("Ryan"), Direction::DOWN));
+  players.push_back(Player(table, rootPanel, wxT("Cameron"), Direction::LEFT));
+  players.push_back(Player(table, rootPanel, wxT("Nick"), Direction::UP));
+  players.push_back(Player(table, rootPanel, wxT("Shem"), Direction::RIGHT));
+  // create game logic
+  CrazyEights crazyEights = CrazyEights(players, table, table);
   
-  tableHBoxUp->Add(upBox, 0, wxALL, 20);
+  // table left
+  tableHBoxLeftMid->Add(players[1].getHandPanel(), 0, wxALL|wxALIGN_CENTER, 0);
+  tableVBoxLeft->Add(tableHBoxLeftTop, 1, wxALL|wxEXPAND, 0);
+  tableVBoxLeft->Add(tableHBoxLeftMid, 1, wxALL|wxALIGN_CENTER, 0);
+  tableVBoxLeft->Add(tableHBoxLeftBot, 1, wxALL|wxEXPAND, 0);
+  
+  // table middle
+  tableHBoxMidTop->Add(players[2].getHandPanel(), 0, wxALL|wxALIGN_CENTER, 0);
+  tableHBoxMidMid->Add(crazyEights.getDrawPilePanel(), 0, wxRIGHT|wxALIGN_CENTER, 5);
+  tableHBoxMidMid->Add(crazyEights.getDiscardPilePanel(), 0, wxLEFT|wxALIGN_CENTER, 5);
+  tableVBoxMidMid->Add(tableHBoxMidMid, 0, wxALL|wxALIGN_CENTER, 5);
+  tableHBoxMidBot->Add(players[0].getHandPanel(), 0, wxALL|wxALIGN_CENTER, 0);
+  tableVBoxMid->Add(tableHBoxMidTop, 1, wxALL|wxALIGN_CENTER, 0);
+  tableVBoxMid->Add(tableVBoxMidMid, 1, wxALL|wxEXPAND|wxALIGN_CENTER, 10);
+  tableVBoxMid->Add(tableHBoxMidBot, 1, wxALL|wxALIGN_CENTER, 0);
+  
+  // table right
+  tableHBoxRightMid->Add(players[3].getHandPanel(), 0, wxALL|wxALIGN_CENTER, 0);
+  tableVBoxRight->Add(tableHBoxRightTop, 1, wxALL|wxEXPAND, 0);
+  tableVBoxRight->Add(tableHBoxRightMid, 1, wxALL|wxALIGN_CENTER, 0);
+  tableVBoxRight->Add(tableHBoxRightBot, 1, wxALL|wxEXPAND, 0);
 
-  tableHBoxUp->SetSizeHints(table);
+  // table columns
+  tableHBox->Add(tableVBoxLeft, 1, wxALL|wxEXPAND, 10);
+  tableHBox->Add(tableVBoxMid, 1, wxALL|wxEXPAND|wxALIGN_CENTER, 10);
+  tableHBox->Add(tableVBoxRight, 1, wxALL|wxEXPAND, 10);
 
-  // decks
+  tableHBox->SetSizeHints(table);
+  table->SetSizer(tableHBox);
   
-  Card *button9 = new Card(
-    table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
+  // root left
+  rootHBoxLeftTop->AddSpacer(50);
+  rootHBoxLeftMid->Add(players[1].getInfoPanel(), 1, wxALL|wxALIGN_CENTER, 0);
+  rootHBoxLeftBot->AddSpacer(50);
+  rootVBoxLeft->Add(rootHBoxLeftTop, 1, wxALL|wxEXPAND, 0);
+  rootVBoxLeft->Add(rootHBoxLeftMid, 1, wxALL|wxALIGN_CENTER, 0);
+  rootVBoxLeft->Add(rootHBoxLeftBot, 1, wxALL|wxEXPAND, 0);
   
-  Connect(wxEVT_COMMAND_BUTTON_CLICKED,
-         wxCommandEventHandler(GameScreen::OnExit));
-  
-  Card *button10 = new Card(
-    table, Suit::HEARTS, 14, wxT("../resources/pictures/cards/cardHeartA.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
-  Connect(wxEVT_LEFT_UP,
-         wxMouseEventHandler(Card::mouseReleased));
-
-  wxBoxSizer* deckBox = new wxBoxSizer(wxHORIZONTAL);
-  //tableHBoxDecks->Add(button9, 0, wxALL, 20);
-  //tableHBoxDecks->Add(button10, 0, wxALL, 20);
-  deckBox->Add(button9, 0, wxALL, 20);
-  deckBox->Add(button10, 0, wxALL, 20);
-
-  tableHBoxDecks->Add(deckBox, 0, wxALL, 20);
-  
-  tableHBoxDecks->SetSizeHints(table);
-  
+<<<<<<< HEAD
   // down
   std::vector<Card*> bottomPlayerHand;
   s = 6;
@@ -169,52 +144,48 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   }
 
   tableHBoxDown->Add(downBox, 0, wxALL, 20);
+=======
+  // root middle
+  rootHBoxMidTop->Add(players[2].getInfoPanel(), 1, wxALL|wxALIGN_CENTER, 0);
+  rootVBoxMidMid->Add(table, 1, wxALL|wxEXPAND|wxALIGN_CENTER, 10);
+  rootHBoxMidMid->Add(rootVBoxMidMid, 1, wxALL|wxEXPAND|wxALIGN_CENTER, 10);
+  rootHBoxMidBot->Add(players[0].getInfoPanel(), 1, wxALL|wxALIGN_CENTER, 0);
+  rootVBoxMid->Add(rootHBoxMidTop, 1, wxALL|wxALIGN_CENTER, 5);
+  rootVBoxMid->Add(rootHBoxMidMid, 7, wxALL|wxEXPAND|wxALIGN_CENTER, 5);
+  rootVBoxMid->Add(rootHBoxMidBot, 1, wxALL|wxALIGN_CENTER, 5);
+>>>>>>> upstream/offline
   
-  tableHBoxDown->SetSizeHints(table);
+  // root right
+  rootHBoxRightTop->AddSpacer(50);
+  rootHBoxRightMid->Add(players[3].getInfoPanel(), 1, wxALL|wxALIGN_CENTER, 0);
+  rootHBoxRightBot->AddSpacer(50);
+  rootVBoxRight->Add(rootHBoxRightTop, 1, wxALL|wxEXPAND, 0);
+  rootVBoxRight->Add(rootHBoxRightMid, 1, wxALL|wxALIGN_CENTER, 0);
+  rootVBoxRight->Add(rootHBoxRightBot, 1, wxALL|wxEXPAND, 0);
 
-  tableVBoxMid->Add(tableHBoxUp, 0, wxALL | wxEXPAND, 5);
-  tableVBoxMid->Add(tableHBoxDecks, 0, wxALL | wxEXPAND, 5);
-  tableVBoxMid->Add(tableHBoxDown, 0, wxALL | wxEXPAND, 5);
+  // root columns
+  rootHBox->Add(rootVBoxLeft, 1, wxALL|wxEXPAND, 20);
+  rootHBox->Add(rootVBoxMid, 7, wxALL|wxEXPAND, 20);
+  rootHBox->Add(rootVBoxRight, 1, wxALL|wxEXPAND, 20);
 
-  tableVBoxMid->SetSizeHints(table);
-
+  rootHBox->SetSizeHints(rootPanel);
+  rootPanel->SetSizer(rootHBox);
   
-  // buttons for right side
-  std::vector<Card*> rightPlayerHand;
-  s = 10;
-  for(int i=0; i<s; i++)
+  // set background color
+  table->SetBackgroundColour(wxColour(0,65,225));
+  rootPanel->SetBackgroundColour(wxColour(0,65,225));
+
+  // test displaying cards
+  crazyEights.setDeck();
+  crazyEights.dealCards();
+  crazyEights.updateDecks();
+  for(unsigned int i=0; i<4; i++)
   {
-    Card *btn;
-    if(i == 0)
-      btn = new Card(table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::LEFT, cardWidth, cardHeight);
-    else
-      btn = new Card(table, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBackHalf.png"), wxBITMAP_TYPE_PNG, Direction::LEFT, cardHalfWidth, cardHalfHeight);
-      
-    rightPlayerHand.push_back(btn);
+    crazyEights.getPlayers()[i].updatePlayerInfo();
+    crazyEights.getPlayers()[i].updatePlayerHand();
   }
-
-  wxBoxSizer* rightBox = new wxBoxSizer(wxVERTICAL);
-
-  for(unsigned int i=0; i<rightPlayerHand.size(); i++)
-  {
-    //tableVBoxRight->Add(rightPlayerHand[i], 1, wxEXPAND|wxALIGN_CENTER_VERTICAL, 10);
-    //tableVBoxRight->Add(rightPlayerHand[i], 0, wxALIGN_CENTER, 0);
-    rightBox->Add(rightPlayerHand[i], 0, wxALIGN_CENTER, 0);
-  }
-
-  tableVBoxRight->Add(rightBox, 0, wxALL, 20);
-
-  tableVBoxRight->SetSizeHints(table);
-
-  tableHBox->Add(tableVBoxLeft, 1, wxEXPAND, 10);
-  tableHBox->Add(tableVBoxMid, 2, wxEXPAND, 10);
-  tableHBox->Add(tableVBoxRight, 1, wxEXPAND, 10);
-
-  tableHBox->SetSizeHints(table);
-
-  table->SetSizer(tableHBox);
-
   
+<<<<<<< HEAD
 /*  Card *button11 = new Card(
     rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
   Card *button12 = new Card(
@@ -235,19 +206,11 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   rootVBoxMid->Add(rootHBoxUp, 1, wxEXPAND|wxLEFT|wxRIGHT|wxTOP, 10);
   rootVBoxMid->Add(rootHBoxTable, 2, wxEXPAND|wxLEFT|wxRIGHT, 10);
   rootVBoxMid->Add(rootHBoxDown, 1, wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM, 10);
+=======
+  //Connect(wxEVT_LEFT_UP,
+  //       wxMouseEventHandler(CardPanel::mouseReleased));
+>>>>>>> upstream/offline
 
-  hbox->Add(rootVBoxLeft, 1, wxEXPAND, 10);
-  hbox->Add(rootVBoxMid, 2, wxEXPAND, 10);
-  hbox->Add(rootVBoxRight, 1, wxEXPAND, 10);
-
-
-  hbox->SetSizeHints(rootPanel);
-  rootPanel->SetSizer(hbox);
-  //table->SetBackgroundColour(wxColour(203,71,255));
-  //rootPanel->SetBackgroundColour(wxColour(203,71,255));
-  table->SetBackgroundColour(wxColour(0,65,225));
-  rootPanel->SetBackgroundColour(wxColour(0,65,225)); //this is blue background
-  
   Centre();
 }
 
@@ -256,14 +219,15 @@ GameScreen::OnExit(wxMouseEvent& event)
 {
   // true forces quit
   std::cout << "clicked exit\n";
-  Close(true);
+  //Close(true);
 }
 
 void
 GameScreen::OnExit(wxCommandEvent& event)
 {
   // true forces quit
-  Close(true);
+  std::cout << "exit\n";
+  //Close(true);
 }
 
 void

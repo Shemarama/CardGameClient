@@ -6,28 +6,35 @@
 #include <wx/wx.h>
 #endif
 
-#include "imagePanel.h"
-
 enum Suit {HEARTS, SPADES, CLUBS, DIAMONDS, UNDEFINED};
 
-class Card : public wxImagePanel
+enum Value
+{
+  TWO = 2,
+  THREE = 3,
+  FOUR = 4,
+  FIVE = 5,
+  SIX = 6,
+  SEVEN = 7,
+  EIGHT = 8,
+  NINE = 9,
+  TEN = 10,
+  JACK = 11,
+  QUEEN = 12,
+  KING = 13,
+  ACE = 14
+};
+
+class Card
 {
   private:
     Suit suit;
-    int rank;
-    Direction direction;
-    int width;
-    int height;
-
+    Value rank;
   public:
-    Card(wxPanel* parent, Suit suit, int rank, wxString file, wxBitmapType format, Direction dir, int width, int height);
-
-    void mouseReleased(wxMouseEvent& evt);
+    Card();
+    Card(Suit suit, Value rank);
     Suit getSuit();
-    int getRank();
-    Direction getDirection();
-    int getWidth();
-    int getHeight();
+    Value getRank();
 };
 
 #endif
