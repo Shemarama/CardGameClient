@@ -27,9 +27,9 @@ Player::Player(wxPanel* handParent, wxPanel* infoParent, wxString newName, Direc
   playerHandPanel->SetSizer(playerHandSizer);
   
   playerInfoSizer = new wxBoxSizer(wxVERTICAL);
-  playerInfoSizer->Add(readyButton, 0, wxALIGN_CENTER|wxSHAPED, 1);
-  playerInfoSizer->Add(playerImage, 0, wxALIGN_CENTER|wxSHAPED, 1);
-  playerInfoSizer->Add(playerName, 0, wxALIGN_CENTER|wxSHAPED, 1);
+  playerInfoSizer->Add(readyButton, 0, wxALIGN_CENTER, 1);
+  playerInfoSizer->Add(playerImage, 0, wxALIGN_CENTER, 1);
+  playerInfoSizer->Add(playerName, 0, wxALIGN_CENTER, 1);
   playerInfoSizer->SetSizeHints(playerInfoPanel);
   playerInfoPanel->SetSizer(playerInfoSizer);
 } 
@@ -132,9 +132,9 @@ void Player::updatePlayerHand()
 void Player::updatePlayerInfo()
 {
   playerInfoSizer->Clear(false); // remove all children
-  playerInfoSizer->Add(readyButton, 0, wxALIGN_CENTER|wxSHAPED, 1);
-  playerInfoSizer->Add(playerImage, 0, wxALIGN_CENTER|wxSHAPED, 1);
-  playerInfoSizer->Add(playerName, 0, wxALIGN_CENTER|wxSHAPED, 1);
+  playerInfoSizer->Add(readyButton, 0, wxALIGN_CENTER, 1);
+  playerInfoSizer->Add(playerImage, 0, wxALIGN_CENTER, 1);
+  playerInfoSizer->Add(playerName, 0, wxALIGN_CENTER, 1);
   playerInfoSizer->SetSizeHints(playerInfoPanel);
   playerInfoSizer->Layout();
 }
