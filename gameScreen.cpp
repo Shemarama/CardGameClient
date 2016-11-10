@@ -96,64 +96,17 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   rootVBoxLeft->Add(rootHBoxLeftTop, 1, wxALL|wxEXPAND, 0);
   rootVBoxLeft->Add(rootHBoxLeftMid, 1, wxALL|wxALIGN_CENTER, 0);
   rootVBoxLeft->Add(rootHBoxLeftBot, 1, wxALL|wxEXPAND, 0);
-  
-<<<<<<< HEAD
-  // down
-  std::vector<Card*> bottomPlayerHand;
-  s = 6;
-  for(int i=0; i<s; i++)
-  {
-    Card *btn;
-    if(i == s-1)
-      btn = new Card(
-        table, Suit::SPADES, 7, wxT("../resources/pictures/cards/cardSpade7.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
-
-    else if( i == s - 2)
-	btn = new Card(
-         table, Suit::HEARTS, 3, wxT("../resources/pictures/cards/cardHeart3Half.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardHalfWidth, cardHalfHeight);
-
-    else if(i == s - 3)
-      
-      btn = new Card(
-        table, Suit::DIAMONDS, 2, wxT("../resources/pictures/cards/cardDiamond2Half.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardHalfWidth, cardHalfHeight);
-
-    else if(i == s - 4)
-      
-      btn = new Card(
-        table, Suit::CLUBS, 4, wxT("../resources/pictures/cards/cardClub4Half.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardHalfWidth, cardHalfHeight);
-
-    else if(i == s - 5)
-      
-      btn = new Card(
-        table, Suit::DIAMONDS,11, wxT("../resources/pictures/cards/cardDiamondJHalf.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardHalfWidth, cardHalfHeight);
-
-    else
-      btn = new Card(
-        table, Suit::DIAMONDS, 13, wxT("../resources/pictures/cards/cardDiamondKHalf.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardHalfWidth, cardHalfHeight);
-    
-    bottomPlayerHand.push_back(btn);
-  }
-
-  wxBoxSizer* downBox = new wxBoxSizer(wxHORIZONTAL);
-
-  for(unsigned int i=0; i<bottomPlayerHand.size(); i++)
-  {
-    //tableHBoxDown->Add(bottomPlayerHand[i], 1, wxEXPAND, 0);
-    //tableHBoxDown->Add(bottomPlayerHand[i], 0, wxALIGN_CENTER, 0);
-    downBox->Add(bottomPlayerHand[i], 0, wxALIGN_CENTER, 0);
-  }
-
-  tableHBoxDown->Add(downBox, 0, wxALL, 20);
-=======
+ // text box
+wxBoxSizer* testVertBox = new wxBoxSizer(wxVERTICAL); 
   // root middle
   rootHBoxMidTop->Add(players[2].getInfoPanel(), 1, wxALL|wxALIGN_CENTER, 0);
   rootVBoxMidMid->Add(table, 1, wxALL|wxEXPAND|wxALIGN_CENTER, 10);
   rootHBoxMidMid->Add(rootVBoxMidMid, 1, wxALL|wxEXPAND|wxALIGN_CENTER, 10);
-  rootHBoxMidBot->Add(players[0].getInfoPanel(), 1, wxALL|wxALIGN_CENTER, 0);
+  testVertBox->Add(players[0].getInfoPanel(), 2, wxALL|wxALIGN_CENTER | wxEXPAND, 0);
+  rootHBoxMidBot->Add(testVertBox, 2, wxALL|wxALIGN_CENTER | wxEXPAND, 0);
   rootVBoxMid->Add(rootHBoxMidTop, 1, wxALL|wxALIGN_CENTER, 5);
   rootVBoxMid->Add(rootHBoxMidMid, 7, wxALL|wxEXPAND|wxALIGN_CENTER, 5);
   rootVBoxMid->Add(rootHBoxMidBot, 1, wxALL|wxALIGN_CENTER, 5);
->>>>>>> upstream/offline
   
   // root right
   rootHBoxRightTop->AddSpacer(50);
@@ -185,31 +138,8 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
     crazyEights.getPlayers()[i].updatePlayerHand();
   }
   
-<<<<<<< HEAD
-/*  Card *button11 = new Card(
-    rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
-  Card *button12 = new Card(
-    rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
-  Card *button13 = new Card(
-    rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
-  Card *button14 = new Card(
-    rootPanel, Suit::UNDEFINED, -1, wxT("../resources/pictures/cards/cardBack.png"), wxBITMAP_TYPE_PNG, Direction::UP, cardWidth, cardHeight);
-*/
-
- //rootVBoxLeft->Add(button11, 0, wxLEFT, 10);
- // rootHBoxUp->Add(button13, 0, wxALL|wxEXPAND, 10);
-  rootHBoxTable->Add(table, 0, wxALL, 30);
- // rootHBoxDown->Add(button14, 0, wxBOTTOM, 10);
- // rootVBoxRight->Add(button12, 0, wxRIGHT, 10);
-
-  //hbox->Add(table, 0, wxALL, 50);
-  rootVBoxMid->Add(rootHBoxUp, 1, wxEXPAND|wxLEFT|wxRIGHT|wxTOP, 10);
-  rootVBoxMid->Add(rootHBoxTable, 2, wxEXPAND|wxLEFT|wxRIGHT, 10);
-  rootVBoxMid->Add(rootHBoxDown, 1, wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM, 10);
-=======
   //Connect(wxEVT_LEFT_UP,
   //       wxMouseEventHandler(CardPanel::mouseReleased));
->>>>>>> upstream/offline
 
   Centre();
 }
