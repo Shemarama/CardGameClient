@@ -1,58 +1,31 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <wx/wx.h>
-#include "imagePanel.h"
 #include "card.h"
-#include "cardPanel.h"
 #include <vector>
 
 
 class Player 
 {
    private:
-    //This holds the hand and is what we will reference when we render a players hand
-    wxPanel* playerHandPanel;
-    //This hold the player icon and name
-    wxPanel* playerInfoPanel; 
-    // box sizer for player's hand
-    wxBoxSizer* playerHandSizer;
-    // box sizer for player's info
-    wxBoxSizer* playerInfoSizer;
     // player's hand
-    std::vector<Card> playerHand; 
+    std::vector<Card> hand; 
     // player's name
-    wxStaticText* playerName;
-    // player's avatar
-    wxImagePanel* playerImage;
-    // ready up button to start the game
-    wxButton* readyButton;
-    // player position on the table
-    Direction playerDirection;
+    wxString name;
     // flag to tell if it is the user's turn
-    bool isMyTurn = false;
-    
-    static const int cardWidth = 70;
-    static const int cardHeight = 98;
-    static const int cardHalfWidth = 25;
-    static const int cardHalfHeight = 98;
-    
+    bool isMyTurn;
+    bool isReady;
    
    public:
-    Player(wxPanel* handParent, wxPanel* infoParent, wxString newName, Direction dir); 
-    
+    Player(wxString newName); 
     void addCard(Card& card);
-    void setPlayerHand(std::vector<Card>& newHand); //set hand when ready button is pressed
-    std::vector<Card> getPlayerHand();
+    Card removeCard();
+    wxString getName();
+    void setName(wxString name);
+    std::vector<Card> getHand();
     void setTurn(bool isTurn);
     bool getTurn(); //will let us know when it's is our turn
-    Direction getDirection();
-    wxString getPlayerName();
-    static wxString findFullImage(Card& card, bool show);
-    static wxString findHalfImage(Card& card, bool show);
-    wxPanel* getHandPanel();
-    wxPanel* getInfoPanel();
-    void updatePlayerHand();
-    void updatePlayerInfo();
-    static CardPanel* makeCard(wxPanel* parent, Card& card, bool show, Direction dir, bool isHalf);
+    void setReady(bool isReady);
+    bool getReady();
 };
 #endif
