@@ -21,14 +21,14 @@ public:
     void setCurrentSuit(Suit newSuit);
     Suit getCurrentSuit(); 
     void dealCards(); //will use drawPile, deal 5 cards to each 
-    void setDeck();  //sets up the deck for the game 
+    void setDeck();  //sets up the deck for the game
     bool isGameOver();
     bool isValidMove();
     void nextTurn();// decide who goes next
-    void playCard();
+    void playCard(Card& card);
     void drawCard();
     void gameOver();// show end game screen
-    void getMove(Card& card);
+    bool getMove(Card& card);
     std::vector<Card> getDrawPile();
     std::vector<Card> getDiscardPile();
     std::vector<Player> getPlayers();

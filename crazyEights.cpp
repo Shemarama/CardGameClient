@@ -16,7 +16,7 @@ void CrazyEights::setCurrentSuit(Suit newSuit)
 
 Suit CrazyEights::getCurrentSuit()
 {
- return currentSuit;
+  return currentSuit;
 }
 
 std::vector<Card> CrazyEights::getDrawPile()
@@ -73,19 +73,19 @@ bool CrazyEights::isValidMove()
   return true;
 }
 
-void CrazyEights::nextTurn()
-{
-  // get next turn
-}
-
-void CrazyEights::playCard()
+void CrazyEights::playCard(Card& card)
 {
   // play card
+  std::cout << players[turn].getName() << " is playing a card\n";
+  discardPile.push_back(players[turn].removeCard(card));
 }
 
 void CrazyEights::drawCard()
 {
   // draw card
+  std::cout << players[turn].getName() << " is drawing a card\n";
+  players[turn].addCard(drawPile.back());
+  drawPile.pop_back();
 }
 
 void CrazyEights::gameOver()
@@ -93,7 +93,7 @@ void CrazyEights::gameOver()
   // game over
 }
 
-void CrazyEights::getMove(Card& card)
+bool CrazyEights::getMove(Card& card)
 {
   std::cout << "printing inside crazyEights.cpp\n";
   card.print();
@@ -102,10 +102,11 @@ void CrazyEights::getMove(Card& card)
   {
     for(unsigned int j=0; j<players[i].getHand().size(); ++j)
     {
-      if(card == players[i].getHand()[j])
+      if((card == players[i].getHand()[j]) && (i == turn))
       {
         std::cout << "Clicked a card in player " << i << "'s hand\n";
-        return;
+        playCard(card);
+        return true;
       }
     }
   }
@@ -114,12 +115,20 @@ void CrazyEights::getMove(Card& card)
   if(card == drawPile.back())
   {
     std::cout << "Clicked on the draw pile\n";
-    return;
+    drawCard();
+    return true;
   }
 
   if(card == discardPile.back())
   {
     std::cout << "Clicked on the discard pile\n";
-    return;
+    return false;
   }
+
+  return false;
+}
+
+void CrazyEights::nextTurn()
+{
+  turn = (turn+1) % players.size();
 }

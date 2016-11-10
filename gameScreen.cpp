@@ -205,7 +205,7 @@ void GameScreen::updateTable()
           }
           break;
       case 2:
-          // for cards in the bottom player's hand
+          // for cards in the top player's hand
           for(unsigned int j=0; j<players[i].getHand().size(); ++j)
           {
             if(j == 0)
@@ -215,7 +215,7 @@ void GameScreen::updateTable()
           }
           break;
       case 3:
-          // for cards in the bottom player's hand
+          // for cards in the right player's hand
           for(unsigned int j=0; j<players[i].getHand().size(); ++j)
           {
             if(j == 0)
@@ -228,8 +228,9 @@ void GameScreen::updateTable()
           break;
     }
     playerHandSizers[i]->SetSizeHints(playerHandPanels[i]);
-    playerHandSizers[i]->Layout();
+    playerHandPanels[i]->Layout();
   }
+  table->Layout();
 
   // draw pile
   drawPileSizer->Clear(true); // remove all children
@@ -527,8 +528,10 @@ wxString GameScreen::findFullImage(Card& card, bool show)
 void GameScreen::test(Card& card)
 {
   players = crazyEights.getPlayers();
-  crazyEights.getMove(card);
+  if(!crazyEights.getMove(card))
+      return;
   updateTable();
+  crazyEights.nextTurn();
 }
 
 /*

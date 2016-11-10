@@ -13,11 +13,15 @@ void Player::addCard(Card& card)
   hand.push_back(card);
 }
 
-Card Player::removeCard()
+Card Player::removeCard(Card& card)
 {
-  Card c = hand.back();
-  hand.pop_back();
-  return c;
+  for(auto c = hand.begin(); c<hand.end(); ++c)
+  {
+    if(card == *c)
+      hand.erase(c);
+  }
+  
+  return card;
 }
 
 wxString Player::getName()
