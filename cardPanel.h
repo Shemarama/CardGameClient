@@ -12,6 +12,7 @@
 class CardPanel : public wxImagePanel
 {
   private:
+    wxPanel* parent;
     Card card;
     Direction direction;
     int width;

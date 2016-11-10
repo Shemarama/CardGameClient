@@ -1,14 +1,8 @@
 #include"crazyEights.h"
 
-CrazyEights::CrazyEights(std::vector<Player>&  players, wxPanel* drawParent, wxPanel* discardParent)
+CrazyEights::CrazyEights(std::vector<Player>& players)
 {
    this->players = players;
-   this->drawPilePanel = new wxPanel(drawParent, wxID_ANY);
-   this->discardPilePanel = new wxPanel(discardParent, wxID_ANY);
-   drawPileSizer = new wxBoxSizer(wxHORIZONTAL);
-   drawPilePanel->SetSizer(drawPileSizer);
-   discardPileSizer = new wxBoxSizer(wxHORIZONTAL);
-   discardPilePanel->SetSizer(discardPileSizer);
    // create cards and place in deck
    setDeck();
    discardPile = std::vector<Card>();
@@ -22,7 +16,7 @@ void CrazyEights::setCurrentSuit(Suit newSuit)
 
 Suit CrazyEights::getCurrentSuit()
 {
- return currentSuit;
+  return currentSuit;
 }
 
 std::vector<Card> CrazyEights::getDrawPile()
@@ -33,16 +27,6 @@ std::vector<Card> CrazyEights::getDrawPile()
 std::vector<Card> CrazyEights::getDiscardPile()
 {
   return discardPile;
-}
-
-wxPanel* CrazyEights::getDrawPilePanel()
-{
-  return drawPilePanel;
-}
-
-wxPanel* CrazyEights::getDiscardPilePanel()
-{
-  return discardPilePanel;
 }
 
 std::vector<Player> CrazyEights::getPlayers()
@@ -89,24 +73,19 @@ bool CrazyEights::isValidMove()
   return true;
 }
 
-void CrazyEights::nextTurn()
-{
-  // get next turn
-}
-
-void CrazyEights::playCard()
+void CrazyEights::playCard(Card& card)
 {
   // play card
+  std::cout << players[turn].getName() << " is playing a card\n";
+  discardPile.push_back(players[turn].removeCard(card));
 }
 
 void CrazyEights::drawCard()
 {
   // draw card
-}
-
-void CrazyEights::updateState()
-{
-  // update state
+  std::cout << players[turn].getName() << " is drawing a card\n";
+  players[turn].addCard(drawPile.back());
+  drawPile.pop_back();
 }
 
 void CrazyEights::gameOver()
@@ -114,15 +93,41 @@ void CrazyEights::gameOver()
   // game over
 }
 
-void CrazyEights::updateDecks()
+bool CrazyEights::getMove(Card& card)
 {
-  drawPileSizer->Clear(true); // remove all children
-  drawPileSizer->Add(Player::makeCard(drawPilePanel, drawPile.back(), false, Direction::UP, false));
-  drawPileSizer->SetSizeHints(drawPilePanel);
-  drawPileSizer->Layout();
+  card.print();
+  // search each player's hand
+  for(unsigned int i=0; i<players.size(); ++i)
+  {
+    for(unsigned int j=0; j<players[i].getHand().size(); ++j)
+    {
+      if((card == players[i].getHand()[j]) && (i == turn))
+      {
+        std::cout << "Clicked a card in player " << i << "'s hand\n";
+        playCard(card);
+        return true;
+      }
+    }
+  }
 
-  discardPileSizer->Clear(true); // remove all children
-  discardPileSizer->Add(Player::makeCard(discardPilePanel, discardPile.back(), true, Direction::UP, false));
-  discardPileSizer->SetSizeHints(discardPilePanel);
-  discardPileSizer->Layout();
+  // search the draw pile
+  if(card == drawPile.back())
+  {
+    std::cout << "Clicked on the draw pile\n";
+    drawCard();
+    return true;
+  }
+
+  if(card == discardPile.back())
+  {
+    std::cout << "Clicked on the discard pile\n";
+    return false;
+  }
+
+  return false;
+}
+
+void CrazyEights::nextTurn()
+{
+  turn = (turn+1) % players.size();
 }

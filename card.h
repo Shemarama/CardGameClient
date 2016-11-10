@@ -40,6 +40,7 @@ class Card
     Suit getSuit();
     Value getRank();
     bool operator==(Card& otherCard);
+    void print();
 };
 
 #endif
