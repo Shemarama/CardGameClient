@@ -12,12 +12,13 @@ enum Direction {UP, DOWN, LEFT, RIGHT};
 // https://wiki.wxwidgets.org/An_image_panel
 class wxImagePanel : public wxPanel
 {
+protected:
   wxImage image;
   wxBitmap resized;
   int w, h;
 
 public:
-  wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format, Direction dir);
+  wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format, Direction dir, int width, int height);
 
   virtual void mouseReleased(wxMouseEvent& evt);
   void paintEvent(wxPaintEvent& evt);
@@ -36,6 +37,7 @@ public:
    void keyPressed(wxKeyEvent& event);
    void keyReleased(wxKeyEvent& event);
    */
+  void print(wxString message);
 
   DECLARE_EVENT_TABLE()
 };

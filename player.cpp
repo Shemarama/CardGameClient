@@ -1,11 +1,60 @@
 #include"player.h"
 
-Player::Player( wxPanel* handParent, wxPanel* infoParent,wxImagePanel* playerImage, wxString newName)
+Player::Player(wxString newName)
 {
-
-this->playerHandPanel = new wxPanel(handParent,-1);
-this->playerInfo = new wxPanel(infoParent, wxID_ANY);
-this->playerImage = new wxImagePanel(infoParent,wxT("../resources/pictures/player/playerIcon.png"),wxBITMAP_TYPE_PNG,Direction::UP);
-this->playerName = new wxStaticText(playerInfo, wxID_ANY, newName);
-
+  this->hand = std::vector<Card>();
+  this->name = newName;
+  this->isReady = false;
+  this->isMyTurn = false;
 } 
+
+void Player::addCard(Card& card)
+{
+  hand.push_back(card);
+}
+
+Card Player::removeCard(Card& card)
+{
+  for(auto c = hand.begin(); c<hand.end(); ++c)
+  {
+    if(card == *c)
+      hand.erase(c);
+  }
+  
+  return card;
+}
+
+wxString Player::getName()
+{
+  return name;
+}
+
+void Player::setName(wxString name)
+{
+  this->name = name;
+}
+
+std::vector<Card> Player::getHand()
+{
+  return hand;
+}
+
+void Player::setTurn(bool isTurn)
+{
+  isMyTurn = isTurn;
+}
+
+bool Player::getTurn()
+{
+  return isMyTurn;
+}
+
+void Player::setReady(bool isReady)
+{
+  this->isReady = isReady;
+}
+
+bool Player::getReady()
+{
+  return isReady;
+}

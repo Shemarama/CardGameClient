@@ -1,30 +1,31 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#include<wx/wx.h>
-#include"imagePanel.h"
-#include"card.h"
-#include<vector>
+#include <wx/wx.h>
+#include "card.h"
+#include <vector>
 
 
 class Player 
 {
    private:
-    //This holds the hand and is what we will reference when we render a players hand
-    wxPanel* playerHandPanel;
-
-    //This hold the player icon and name
-    wxPanel* playerInfo; 
-
-    std::vector<Card> playerHand; 
-    wxStaticText* playerName;
-    wxImagePanel* playerImage;
-    wxButton* readyButton;
-    bool isMyTurn = false;
+    // player's hand
+    std::vector<Card> hand; 
+    // player's name
+    wxString name;
+    // flag to tell if it is the user's turn
+    bool isMyTurn;
+    bool isReady;
    
    public:
-    Player( wxPanel* handParent, wxPanel* infoParent,wxImagePanel* playerImage, wxString newName); 
-    void setPlayerHand(std::vector<Card>& newHand); //set hand when ready button is pressed
+    Player(wxString newName); 
+    void addCard(Card& card);
+    Card removeCard(Card& card);
+    wxString getName();
+    void setName(wxString name);
+    std::vector<Card> getHand();
     void setTurn(bool isTurn);
-    bool getTurn(); //will let us know when its is our turn
+    bool getTurn(); //will let us know when it's is our turn
+    void setReady(bool isReady);
+    bool getReady();
 };
 #endif

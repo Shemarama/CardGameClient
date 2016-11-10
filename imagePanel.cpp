@@ -33,7 +33,7 @@ END_EVENT_TABLE()
  void wxImagePanel::keyReleased(wxKeyEvent& event) {}
  */
 
-wxImagePanel::wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format, Direction dir)
+wxImagePanel::wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format, Direction dir, int width, int height)
   : wxPanel(parent)
 {
   // load the file... ideally add a check to see if loading was successful
@@ -43,17 +43,25 @@ wxImagePanel::wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format, 
   {
     case UP:
         // don't rotate
+        this->SetMinSize(wxSize(width, height));
+        this->SetMaxSize(wxSize(width, height));
         break;
     case DOWN:
         image = image.Rotate180();
+        this->SetMinSize(wxSize(width, height));
+        this->SetMaxSize(wxSize(width, height));
         break;
     case LEFT:
         // counter clockwise
         image = image.Rotate90(false);
+        this->SetMinSize(wxSize(height, width));
+        this->SetMaxSize(wxSize(height, width));
         break;
     case RIGHT:
         // clockwise
         image = image.Rotate90(true);
+        this->SetMinSize(wxSize(height, width));
+        this->SetMaxSize(wxSize(height, width));
         break;
     default:
         // don't rotate
@@ -129,4 +137,9 @@ wxImagePanel::OnSize(wxSizeEvent& event)
   Refresh();
   // skip the event.
   event.Skip();
+}
+
+void wxImagePanel::print(wxString message)
+{
+  std::cout << message << "\n";
 }
