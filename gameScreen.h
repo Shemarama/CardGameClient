@@ -70,7 +70,7 @@ private:
   wxBoxSizer* rootHBoxRightBot;
 
   // players
-  std::vector<Player> players;
+  std::vector<Player*> players;
   
   // player panels
   std::vector<wxPanel*> playerHandPanels;

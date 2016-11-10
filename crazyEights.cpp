@@ -1,6 +1,6 @@
 #include"crazyEights.h"
 
-CrazyEights::CrazyEights(std::vector<Player>& players)
+CrazyEights::CrazyEights(std::vector<Player*>& players)
 {
    this->players = players;
    // create cards and place in deck
@@ -29,7 +29,7 @@ std::vector<Card> CrazyEights::getDiscardPile()
   return discardPile;
 }
 
-std::vector<Player> CrazyEights::getPlayers()
+std::vector<Player*> CrazyEights::getPlayers()
 {
   return players;
 }
@@ -54,7 +54,7 @@ void CrazyEights::dealCards()
   {
     for(auto i=0; i<5; ++i)
     {
-      player.addCard(drawPile.back()); // remove card from deck to each player
+      player->addCard(drawPile.back()); // remove card from deck to each player
       drawPile.pop_back();
     }
   }
@@ -68,24 +68,60 @@ bool CrazyEights::isGameOver()
   return false;
 }
 
-bool CrazyEights::isValidMove()
+bool CrazyEights::isValidMove(Card& card)
 {
-  return true;
+  card.print();
+  // search each player's hand
+  for(unsigned int i=0; i<players.size(); ++i)
+  {
+    for(unsigned int j=0; j<players[i]->getHand().size(); ++j)
+    {
+      if((card == players[i]->getHand()[j]) && (i == turn))
+      {
+        std::cout << "Clicked a card in player " << i << "'s hand\n";
+        playCard(card);
+        return true;
+      }
+    }
+  }
+
+  // check the draw pile
+  if(card == drawPile.back())
+  {
+    std::cout << "Clicked on the draw pile\n";
+    return drawCard();
+  }
+
+  // check the discard pile
+  if(card == discardPile.back())
+  {
+    std::cout << "Clicked on the discard pile\n";
+    return false;
+  }
+
+  return false;
 }
 
 void CrazyEights::playCard(Card& card)
 {
   // play card
-  std::cout << players[turn].getName() << " is playing a card\n";
-  discardPile.push_back(players[turn].removeCard(card));
+  std::cout << players[turn]->getName() << " is playing a card\n";
+  discardPile.push_back(players[turn]->removeCard(card));
 }
 
-void CrazyEights::drawCard()
+bool CrazyEights::drawCard()
 {
   // draw card
-  std::cout << players[turn].getName() << " is drawing a card\n";
-  players[turn].addCard(drawPile.back());
+  std::cout << players[turn]->getName() << " is drawing a card\n";
+  if(drawPile.empty())
+  {
+      std::cout << "Draw pile is empty\n";
+      return false;
+  }
+  
+  players[turn]->addCard(drawPile.back());
   drawPile.pop_back();
+  return true;
 }
 
 void CrazyEights::gameOver()
@@ -95,36 +131,7 @@ void CrazyEights::gameOver()
 
 bool CrazyEights::getMove(Card& card)
 {
-  card.print();
-  // search each player's hand
-  for(unsigned int i=0; i<players.size(); ++i)
-  {
-    for(unsigned int j=0; j<players[i].getHand().size(); ++j)
-    {
-      if((card == players[i].getHand()[j]) && (i == turn))
-      {
-        std::cout << "Clicked a card in player " << i << "'s hand\n";
-        playCard(card);
-        return true;
-      }
-    }
-  }
-
-  // search the draw pile
-  if(card == drawPile.back())
-  {
-    std::cout << "Clicked on the draw pile\n";
-    drawCard();
-    return true;
-  }
-
-  if(card == discardPile.back())
-  {
-    std::cout << "Clicked on the discard pile\n";
-    return false;
-  }
-
-  return false;
+  return isValidMove(card);
 }
 
 void CrazyEights::nextTurn()
