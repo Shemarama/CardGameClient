@@ -95,7 +95,6 @@ void CrazyEights::gameOver()
 
 bool CrazyEights::getMove(Card& card)
 {
-  std::cout << "printing inside crazyEights.cpp\n";
   card.print();
   // search each player's hand
   for(unsigned int i=0; i<players.size(); ++i)
