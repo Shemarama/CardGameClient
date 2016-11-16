@@ -20,7 +20,7 @@ public:
   CardPanel* makeCard(wxPanel* parent, Card& card, bool show, Direction dir, bool isHalf);
   wxString findHalfImage(Card& card, bool show);
   wxString findFullImage(Card& card, bool show);
-  void test(Card& card);
+  void onClick(Card card);
 
 private:
   // card image width and height

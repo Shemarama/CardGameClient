@@ -177,10 +177,12 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 void GameScreen::updateTable()
 {
   players = crazyEights.getPlayers();
+  if(crazyEights.getDrawPile().size() < 2)
+      crazyEights.refillDeck();
   // for each player
   for(unsigned int i=0; i<players.size(); ++i)
   {
-    playerHandSizers[i]->Clear(true); // remove all children
+    playerHandSizers[i]->Clear(false); // remove all children
     // update card display depending on player's position
     switch(i)
     {
@@ -230,21 +232,22 @@ void GameScreen::updateTable()
     playerHandSizers[i]->SetSizeHints(playerHandPanels[i]);
     playerHandPanels[i]->Layout();
   }
-  table->Layout();
 
   // draw pile
-  drawPileSizer->Clear(true); // remove all children
+  drawPileSizer->Clear(false); // remove all children
   if(!crazyEights.getDrawPile().empty())
     drawPileSizer->Add(makeCard(drawPilePanel, crazyEights.getDrawPile().back(), false, Direction::UP, false));
   drawPileSizer->SetSizeHints(drawPilePanel);
   drawPileSizer->Layout();
 
   // discard pile
-  discardPileSizer->Clear(true); // remove all children
+  discardPileSizer->Clear(false); // remove all children
   if(!crazyEights.getDiscardPile().empty())
     discardPileSizer->Add(makeCard(discardPilePanel, crazyEights.getDiscardPile().back(), true, Direction::UP, false));
   discardPileSizer->SetSizeHints(discardPilePanel);
   discardPileSizer->Layout();
+  // update table layout to fit new sizes
+  table->Layout();
 }
 
 void GameScreen::updatePlayerInfo()
@@ -527,13 +530,15 @@ wxString GameScreen::findFullImage(Card& card, bool show)
       return wxT("../resources/pictures/cards/cardBack.png");
 }
 
-void GameScreen::test(Card& card)
+void GameScreen::onClick(Card card)
 {
   players = crazyEights.getPlayers();
-  if(!crazyEights.getMove(card))
-      return;
+  //if(!players[0]->getTurn())
+  //    return;
+  crazyEights.getMove(card);
   updateTable();
   crazyEights.nextTurn();
+  std::cout << " \n";
 }
 
 /*

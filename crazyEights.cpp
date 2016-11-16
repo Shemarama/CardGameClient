@@ -34,6 +34,27 @@ std::vector<Player*> CrazyEights::getPlayers()
   return players;
 }
 
+void CrazyEights::refillDeck()
+{
+  Card card = discardPile.back();
+  discardPile.pop_back(); // for no duplicate card
+
+  while(!discardPile.empty())
+  {
+    drawPile.push_back(discardPile.back());
+    discardPile.pop_back();
+  }
+  shuffleDeck();
+  discardPile.push_back(card);
+}
+
+void CrazyEights::shuffleDeck()
+{
+  std::random_device rd;
+  std::mt19937 generator(rd());
+  std::shuffle(drawPile.begin(), drawPile.end(), generator);
+}
+
 void CrazyEights::setDeck()
 {
     drawPile = std::vector<Card>();
@@ -43,9 +64,7 @@ void CrazyEights::setDeck()
         for(int i = 2; i < 15; i++)
             drawPile.push_back(Card(suit, static_cast<Value>(i)));
     }
-    std::random_device rd;
-    std::mt19937 generator(rd());
-    std::shuffle(drawPile.begin(), drawPile.end(), generator);
+    shuffleDeck();
 }
 
 void CrazyEights::dealCards()
@@ -72,7 +91,7 @@ bool CrazyEights::isValidMove(Card& card)
 {
   card.print();
   // search each player's hand
-  for(unsigned int i=0; i<players.size(); ++i)
+  /*for(unsigned int i=0; i<players.size(); ++i)
   {
     for(unsigned int j=0; j<players[i]->getHand().size(); ++j)
     {
@@ -82,6 +101,16 @@ bool CrazyEights::isValidMove(Card& card)
         playCard(card);
         return true;
       }
+    }
+  }*/
+
+  for(auto&& c : players[turn]->getHand())
+  {
+    if(card == c)
+    {
+      std::cout << "Clicked a card in " << players[turn]->getName() << "'s hand\n";
+      playCard(card);
+      return true;
     }
   }
 
@@ -121,6 +150,7 @@ bool CrazyEights::drawCard()
   
   players[turn]->addCard(drawPile.back());
   drawPile.pop_back();
+
   return true;
 }
 
