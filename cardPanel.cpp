@@ -23,8 +23,10 @@ void CardPanel::mouseReleased(wxMouseEvent& evt)
     
     // cardPanel -> hands/decks -> table -> root -> gameScreen
     GameScreen *gs = (GameScreen *) parent->GetParent()->GetParent()->GetParent();
-    if(gs->onClick(card,this))
-      delete this;
+    if(gs->onClick(card))
+    {
+      //delete this;
+    }
 }
 
 Card CardPanel::getCard()

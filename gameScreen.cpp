@@ -165,7 +165,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   // test displaying cards
   crazyEights.setDeck();
   crazyEights.dealCards();
-  updateTable(nullptr);
+  updateTable();
   updatePlayerInfo();
   
   //Connect(wxEVT_LEFT_UP,
@@ -174,7 +174,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   Centre();
 }
 
-void GameScreen::updateTable(CardPanel* cardPanel)
+void GameScreen::updateTable()
 {
   players = crazyEights.getPlayers();
   if(crazyEights.getDrawPile().size() < 2)
@@ -182,9 +182,7 @@ void GameScreen::updateTable(CardPanel* cardPanel)
   // for each player
   for(unsigned int i=0; i<players.size(); ++i)
   {
-    if(cardPanel != nullptr)
-      playerHandSizers[i]->Detach(cardPanel);
-    playerHandSizers[i]->Clear(true); // remove all children
+    playerHandSizers[i]->Clear(false); // remove all children
     // update card display depending on player's position
     switch(i)
     {
@@ -236,8 +234,6 @@ void GameScreen::updateTable(CardPanel* cardPanel)
   }
 
   // draw pile
-  if(cardPanel != nullptr)
-    drawPileSizer->Detach(cardPanel);
   drawPileSizer->Clear(false); // remove all children
   if(!crazyEights.getDrawPile().empty())
     drawPileSizer->Add(makeCard(drawPilePanel, crazyEights.getDrawPile().back(), false, Direction::UP, false));
@@ -245,8 +241,6 @@ void GameScreen::updateTable(CardPanel* cardPanel)
   drawPileSizer->Layout();
 
   // discard pile
-  if(cardPanel != nullptr)
-    discardPileSizer->Detach(cardPanel);
   discardPileSizer->Clear(false); // remove all children
   if(!crazyEights.getDiscardPile().empty())
     discardPileSizer->Add(makeCard(discardPilePanel, crazyEights.getDiscardPile().back(), true, Direction::UP, false));
@@ -536,7 +530,7 @@ wxString GameScreen::findFullImage(Card& card, bool show)
       return wxT("../resources/pictures/cards/cardBack.png");
 }
 
-bool GameScreen::onClick(Card card, CardPanel* cardPanel)
+bool GameScreen::onClick(Card card)
 {
   players = crazyEights.getPlayers();
   //if(!players[0]->getTurn())
@@ -549,7 +543,7 @@ bool GameScreen::onClick(Card card, CardPanel* cardPanel)
   
   if(crazyEights.getMove(card))
   {
-    updateTable(cardPanel);
+    updateTable();
     crazyEights.nextTurn();
     std::cout << " \n";
     if(crazyEights.isGameOver())

@@ -82,6 +82,7 @@ void CrazyEights::dealCards()
   drawPile.pop_back();
 }
 
+// check if a player has no cards in their hand
 bool CrazyEights::isGameOver()
 {
   for(auto&& player : players)
@@ -92,6 +93,7 @@ bool CrazyEights::isGameOver()
   return false;
 }
 
+// check if a card is in a player's hand
 bool CrazyEights::isInHand(Card& card)
 {
   for(auto&& c : players[turn]->getHand())
@@ -106,6 +108,7 @@ bool CrazyEights::isInHand(Card& card)
   return false;
 }
 
+// check if a card is in the top of the draw pile
 bool CrazyEights::isInDrawPile(Card& card)
 {
   if(card == drawPile.back())
@@ -118,6 +121,7 @@ bool CrazyEights::isInDrawPile(Card& card)
     return false;
 }
 
+// check if a card is in the top of the discard pile
 bool CrazyEights::isInDiscardPile(Card& card)
 {
   if(card == discardPile.back())
@@ -129,6 +133,7 @@ bool CrazyEights::isInDiscardPile(Card& card)
     return false;
 }
 
+// check if a chosen card is valid
 bool CrazyEights::isValidMove(Card& card)
 {
   card.print();
@@ -147,6 +152,7 @@ bool CrazyEights::isValidMove(Card& card)
   return false;
 }
 
+// play a card from the current player's hand to the discard pile
 void CrazyEights::playCard(Card& card)
 {
   // play card
