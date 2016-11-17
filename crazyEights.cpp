@@ -131,6 +131,7 @@ void CrazyEights::gameOver()
 
 bool CrazyEights::getMove(Card& card)
 {
+ std::cout << "inside getMove \n";
   return isValidMove(card);
 }
 

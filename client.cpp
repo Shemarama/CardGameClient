@@ -6,8 +6,7 @@
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
 #endif
-#include"gameScreen.h"
-
+#include"frameManager.h"
 
 // main app that uses main window
 class MyApp : public wxApp
@@ -23,11 +22,12 @@ public:
 bool
 MyApp::OnInit()
 {
+
+       FrameManager* frameManager = new FrameManager();
+       frameManager->getCurrentFrame()->Show(true);
+
   wxInitAllImageHandlers();
-  GameScreen* frame =
-    //new GameScreen("Card Game", wxPoint(50, 50), wxSize(1080, 680));
-    new GameScreen("Card Game", wxPoint(50, 50), wxSize(1080, 720));
-  frame->Show(true);
   return true;
 }
+
 

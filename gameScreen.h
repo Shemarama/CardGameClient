@@ -14,7 +14,7 @@ class GameScreen : public wxFrame
 
 // main window
 public:
-  GameScreen(const wxString& title, const wxPoint& pos, const wxSize& size);
+  GameScreen(const wxString& title,wxFrame* parent, const wxPoint& pos, const wxSize& size);
   void updateTable();
   void updatePlayerInfo();
   CardPanel* makeCard(wxPanel* parent, Card& card, bool show, Direction dir, bool isHalf);
@@ -23,6 +23,8 @@ public:
   void test(Card& card);
 
 private:
+
+  wxFrame* parentFrame;
   // card image width and height
   const int cardWidth = 70;
   const int cardHeight = 98;
@@ -90,15 +92,12 @@ private:
   wxBoxSizer* drawPileSizer;
   wxBoxSizer* discardPileSizer;
   // event handlers
-  /*
-  void OnHello(wxCommandEvent& event);
-  void OnExit(wxMouseEvent& event);
+  
   void OnExit(wxCommandEvent& event);
-  void OnAbout(wxCommandEvent& event);
-  */
+  
 
   // so the window can respond to events
-  //wxDECLARE_EVENT_TABLE();
+ // wxDECLARE_EVENT_TABLE();
 };
 
 // give commands unique identifiers

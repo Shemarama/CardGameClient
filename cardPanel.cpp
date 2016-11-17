@@ -13,6 +13,7 @@ CardPanel::CardPanel(wxPanel* parent, Card& card, wxString file, wxBitmapType fo
 
 void CardPanel::mouseReleased(wxMouseEvent& evt)
 {
+std::cout << "mouse Released \n";
     // card -> place on table -> table -> root -> gameScreen
     GameScreen *gs = (GameScreen *) parent->GetParent()->GetParent()->GetParent();
     gs->test(card);

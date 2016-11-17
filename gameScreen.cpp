@@ -2,10 +2,12 @@
 
 
 // constructor
-GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
+GameScreen::GameScreen(const wxString& title, wxFrame* parentFrame, const wxPoint& pos,
                        const wxSize& size)
-  : wxFrame(NULL, wxID_ANY, title, pos, size, wxDEFAULT_FRAME_STYLE | wxMAXIMIZE_BOX)
+  : wxFrame(parentFrame, wxID_ANY, title, pos, size, wxDEFAULT_FRAME_STYLE | wxMAXIMIZE_BOX)
 {
+ this->parentFrame = parentFrame;
+
   // root panel
   rootPanel = new wxPanel(this, -1);
   rootHBox = new wxBoxSizer(wxHORIZONTAL);
@@ -75,9 +77,9 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
     playerHandPanels[i]->SetSizer(playerHandSizers[i]);
 
     playerInfoSizers.push_back(new wxBoxSizer(wxVERTICAL));
-    playerInfoSizers[i]->Add(playerReadyButtons[i], 0, wxALIGN_CENTER, 1);
-    playerInfoSizers[i]->Add(playerImagePanels[i], 0, wxALIGN_CENTER, 1);
-    playerInfoSizers[i]->Add(playerNames[i], 0, wxALIGN_CENTER, 1);
+    playerInfoSizers[i]->Add(playerReadyButtons[i], 0, wxALIGN_CENTER , 1);
+    playerInfoSizers[i]->Add(playerImagePanels[i], 0, wxALIGN_CENTER , 1);
+    playerInfoSizers[i]->Add(playerNames[i], 0, wxALIGN_CENTER , 1);
     playerInfoSizers[i]->SetSizeHints(playerInfoPanels[i]);
     playerInfoPanels[i]->SetSizer(playerInfoSizers[i]);
   }
@@ -181,9 +183,9 @@ void GameScreen::updateTable()
   // for each player
   for(unsigned int i=0; i<players.size(); ++i)
   {
-    playerHandSizers[i]->Clear(true); // remove all children
+    playerHandSizers[i]->Clear(false); // remove all children
     // update card display depending on player's position
-    switch(i)
+   switch(i)
     {
       case 0:
           // for cards in the bottom player's hand
@@ -227,25 +229,29 @@ void GameScreen::updateTable()
           break;
       default:
           break;
+
     }
+
     playerHandSizers[i]->SetSizeHints(playerHandPanels[i]);
     playerHandPanels[i]->Layout();
   }
-  table->Layout();
+
+
 
   // draw pile
-  drawPileSizer->Clear(true); // remove all children
+  drawPileSizer->Clear(false); // remove all children
   if(!crazyEights.getDrawPile().empty())
     drawPileSizer->Add(makeCard(drawPilePanel, crazyEights.getDrawPile().back(), false, Direction::UP, false));
   drawPileSizer->SetSizeHints(drawPilePanel);
   drawPileSizer->Layout();
 
   // discard pile
-  discardPileSizer->Clear(true); // remove all children
+  discardPileSizer->Clear(false); // remove all children
   if(!crazyEights.getDiscardPile().empty())
     discardPileSizer->Add(makeCard(discardPilePanel, crazyEights.getDiscardPile().back(), true, Direction::UP, false));
   discardPileSizer->SetSizeHints(discardPilePanel);
   discardPileSizer->Layout();
+  table->Layout();
 }
 
 void GameScreen::updatePlayerInfo()
@@ -255,12 +261,13 @@ void GameScreen::updatePlayerInfo()
   for(unsigned int i=0; i<players.size(); ++i)
   {
     playerInfoSizers[i]->Clear(false); // remove all children
-    playerInfoSizers[i]->Add(playerReadyButtons[i], 0, wxALIGN_CENTER, 1);
-    playerInfoSizers[i]->Add(playerImagePanels[i], 0, wxALIGN_CENTER, 1);
-    playerInfoSizers[i]->Add(playerNames[i], 0, wxALIGN_CENTER, 1);
+    playerInfoSizers[i]->Add(playerReadyButtons[i], 1, wxALIGN_CENTER | wxEXPAND, 1);
+    playerInfoSizers[i]->Add(playerImagePanels[i], 1, wxALIGN_CENTER | wxEXPAND, 1);
+    playerInfoSizers[i]->Add(playerNames[i], 1, wxALIGN_CENTER | wxEXPAND, 1);
     playerInfoSizers[i]->SetSizeHints(playerInfoPanels[i]);
     playerInfoSizers[i]->Layout();
   }
+ rootPanel->Layout();
 }
 
 CardPanel* GameScreen::makeCard(wxPanel* parent, Card& card, bool show, Direction dir, bool isHalf)
@@ -268,6 +275,7 @@ CardPanel* GameScreen::makeCard(wxPanel* parent, Card& card, bool show, Directio
   if(isHalf)
   {
     wxString imgPath = findHalfImage(card, show);
+    std::cout << "found half image\n";
     return new CardPanel(parent, card, imgPath, wxBITMAP_TYPE_PNG, dir, cardHalfWidth, cardHalfHeight);
   }
   else
@@ -530,6 +538,7 @@ wxString GameScreen::findFullImage(Card& card, bool show)
 
 void GameScreen::test(Card& card)
 {
+std::cout << "Inside Test \n";
   players = crazyEights.getPlayers();
   if(!crazyEights.getMove(card))
       return;
@@ -537,14 +546,7 @@ void GameScreen::test(Card& card)
   crazyEights.nextTurn();
 }
 
-/*
-void
-GameScreen::OnExit(wxMouseEvent& event)
-{
-  // true forces quit
-  std::cout << "clicked exit\n";
-  //Close(true);
-}
+
 
 void
 GameScreen::OnExit(wxCommandEvent& event)
@@ -553,7 +555,7 @@ GameScreen::OnExit(wxCommandEvent& event)
   std::cout << "exit\n";
   //Close(true);
 }
-
+/*
 void
 GameScreen::OnAbout(wxCommandEvent& event)
 {
@@ -569,11 +571,9 @@ GameScreen::OnHello(wxCommandEvent& event)
   // pop up window with message
   wxLogMessage("Hello world from wxWidgets!");
 }
-
+*/
 // maps unique identifiers to event handlers
-wxBEGIN_EVENT_TABLE(GameScreen, wxFrame)
-  EVT_MENU(ID_Hello, GameScreen::OnHello)
+/*wxBEGIN_EVENT_TABLE(GameScreen, wxFrame)
   EVT_MENU(wxID_EXIT, GameScreen::OnExit)
-  EVT_MENU(wxID_ABOUT, GameScreen::OnAbout)
 wxEND_EVENT_TABLE()
 */
