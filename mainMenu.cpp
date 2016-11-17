@@ -24,8 +24,8 @@ MainMenu::MainMenu(const wxString& title, wxFrame* parentFrame, wxString current
   logoutButton = new wxButton(this, logoutButtonID, wxT("Logout")); 
 
     
-  hTopPanelLayout->Add(crazyEightsButton,0 , wxEXPAND | wxALL, 30);
-  hTopPanelLayout->Add(heartsButton, 0,wxEXPAND | wxALL, 30);
+  hTopPanelLayout->Add(crazyEightsButton,0 , wxALL, 30);
+  hTopPanelLayout->Add(heartsButton, 0,wxALL, 30);
   hBottomPanelLayout->Add(logoutButton, 0,wxEXPAND | wxALL, 30);
   frameGrid->Add(usersName, 0, wxALIGN_CENTRE ,0);
   frameGrid->Add(hTopPanelLayout, 2,  wxALIGN_CENTRE| wxRight, 30);

@@ -2,10 +2,11 @@
 
 
 // constructor
-GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
+GameScreen::GameScreen(const wxString& title, wxFrame* parentFrame, const wxPoint& pos,
                        const wxSize& size)
-  : wxFrame(NULL, wxID_ANY, title, pos, size, wxDEFAULT_FRAME_STYLE | wxMAXIMIZE_BOX)
+  : wxFrame(parentFrame, wxID_ANY, title, pos, size, wxDEFAULT_FRAME_STYLE | wxMAXIMIZE_BOX)
 {
+  this->parentFrame = parentFrame;
   // root panel
   rootPanel = new wxPanel(this, -1);
   rootHBox = new wxBoxSizer(wxHORIZONTAL);
