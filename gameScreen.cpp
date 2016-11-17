@@ -253,6 +253,7 @@ void GameScreen::updateTable()
   discardPileSizer->Layout();
   // update table layout to fit new sizes
   table->Layout();
+  rootPanel->Layout();
 }
 
 void GameScreen::updatePlayerInfo()
