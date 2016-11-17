@@ -15,12 +15,12 @@ class GameScreen : public wxFrame
 // main window
 public:
   GameScreen(const wxString& title, wxFrame* parent, const wxPoint& pos, const wxSize& size);
-  void updateTable(CardPanel* cardPanel);
+  void updateTable();
   void updatePlayerInfo();
   CardPanel* makeCard(wxPanel* parent, Card& card, bool show, Direction dir, bool isHalf);
   wxString findHalfImage(Card& card, bool show);
   wxString findFullImage(Card& card, bool show);
-  bool onClick(Card card, CardPanel* cardPanel);
+  bool onClick(Card card);
 
 private:
 

@@ -23,8 +23,14 @@ void CardPanel::mouseReleased(wxMouseEvent& evt)
     
     // cardPanel -> hands/decks -> table -> root -> gameScreen
     GameScreen *gs = (GameScreen *) parent->GetParent()->GetParent()->GetParent();
-    if(gs->onClick(card,this))
-      delete this;
+    if(gs->onClick(card))
+    { 
+      std::cout << "deleted current Card Panel \n"; 
+       //  delete this;
+        
+    }
+    else
+     std::cout << "did not delete current card Panel\n";
 }
 
 Card CardPanel::getCard()
