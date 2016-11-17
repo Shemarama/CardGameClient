@@ -23,7 +23,12 @@ public:
     Suit getCurrentSuit(); 
     void dealCards(); //will use drawPile, deal 5 cards to each 
     void setDeck();  //sets up the deck for the game
+    void refillDeck();
+    void shuffleDeck();
     bool isGameOver();
+    bool isInHand(Card& card);
+    bool isInDrawPile(Card& card);
+    bool isInDiscardPile(Card& card);
     bool isValidMove(Card& card);
     void nextTurn();// decide who goes next
     void playCard(Card& card);
