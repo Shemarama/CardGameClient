@@ -17,8 +17,8 @@ Card Player::removeCard(Card& card)
 {
   for(auto c = hand.begin(); c<hand.end(); ++c)
   {
-    //if(card == *c)
-     // hand.erase(c);
+    if(card == *c)
+      hand.erase(c);
   }
   
   return card;
