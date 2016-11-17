@@ -14,7 +14,7 @@ class GameScreen : public wxFrame
 
 // main window
 public:
-  GameScreen(const wxString& title, const wxPoint& pos, const wxSize& size);
+  GameScreen(const wxString& title, wxFrame* parent, const wxPoint& pos, const wxSize& size);
   void updateTable(CardPanel* cardPanel);
   void updatePlayerInfo();
   CardPanel* makeCard(wxPanel* parent, Card& card, bool show, Direction dir, bool isHalf);

@@ -187,7 +187,7 @@ void GameScreen::updateTable(CardPanel* cardPanel)
   {
     if(cardPanel != nullptr)
       playerHandSizers[i]->Detach(cardPanel);
-    playerHandSizers[i]->Clear(true); // remove all children
+    playerHandSizers[i]->Clear(false); // remove all children
     // update card display depending on player's position
    switch(i)
     {
