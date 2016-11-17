@@ -7,7 +7,7 @@
 
 class Player 
 {
-   private:
+   protected:
     // player's hand
     std::vector<Card> hand; 
     // player's name

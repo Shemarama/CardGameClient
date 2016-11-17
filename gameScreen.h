@@ -20,7 +20,7 @@ public:
   CardPanel* makeCard(wxPanel* parent, Card& card, bool show, Direction dir, bool isHalf);
   wxString findHalfImage(Card& card, bool show);
   wxString findFullImage(Card& card, bool show);
-  void test(Card& card);
+  bool onClick(Card card);
 
 private:
   // card image width and height
@@ -70,7 +70,7 @@ private:
   wxBoxSizer* rootHBoxRightBot;
 
   // players
-  std::vector<Player> players;
+  std::vector<Player*> players;
   
   // player panels
   std::vector<wxPanel*> playerHandPanels;

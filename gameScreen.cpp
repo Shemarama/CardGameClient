@@ -52,10 +52,10 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
   
   
   // create players
-  players.push_back(Player(wxT("Ryan")));
-  players.push_back(Player(wxT("Cameron")));
-  players.push_back(Player(wxT("Nick")));
-  players.push_back(Player(wxT("Shem")));
+  players.push_back(new Player(wxT("Ryan")));
+  players.push_back(new AI(wxT("Cameron")));
+  players.push_back(new AI(wxT("Nick")));
+  players.push_back(new AI(wxT("Shem")));
 
 
   // create player panels
@@ -64,7 +64,7 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
     playerHandPanels.push_back(new wxPanel(table, wxID_ANY));
     playerInfoPanels.push_back(new wxPanel(rootPanel, wxID_ANY));
     playerImagePanels.push_back(new wxImagePanel(playerInfoPanels[i], wxT("../resources/pictures/player/playerIcon.png"), wxBITMAP_TYPE_PNG, Direction::UP, 55, 55));
-    playerNames.push_back(new wxStaticText(playerInfoPanels[i], wxID_ANY, players[i].getName()));
+    playerNames.push_back(new wxStaticText(playerInfoPanels[i], wxID_ANY, players[i]->getName()));
     playerReadyButtons.push_back(new wxButton(playerInfoPanels[i], wxID_ANY, wxT("Ready")));
     // if bottom or top player
     if(i == 0 || i == 2)
@@ -177,51 +177,53 @@ GameScreen::GameScreen(const wxString& title, const wxPoint& pos,
 void GameScreen::updateTable()
 {
   players = crazyEights.getPlayers();
+  if(crazyEights.getDrawPile().size() < 2)
+      crazyEights.refillDeck();
   // for each player
   for(unsigned int i=0; i<players.size(); ++i)
   {
-    playerHandSizers[i]->Clear(true); // remove all children
+    playerHandSizers[i]->Clear(false); // remove all children
     // update card display depending on player's position
     switch(i)
     {
       case 0:
           // for cards in the bottom player's hand
-          for(unsigned int j=0; j<players[i].getHand().size(); ++j)
+          for(unsigned int j=0; j<players[i]->getHand().size(); ++j)
           {
-            if(j == players[i].getHand().size()-1)
-              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i].getHand()[j], true, Direction::UP, false));
+            if(j == players[i]->getHand().size()-1)
+              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i]->getHand()[j], true, Direction::UP, false));
             else
-              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i].getHand()[j], true, Direction::UP, true));
+              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i]->getHand()[j], true, Direction::UP, true));
           }
           break;
       case 1:
           // for cards in the left player's hand
-          for(unsigned int j=0; j<players[i].getHand().size(); ++j)
+          for(unsigned int j=0; j<players[i]->getHand().size(); ++j)
           {
-            if(j == players[i].getHand().size()-1)
-              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i].getHand()[j], false, Direction::RIGHT, false));
+            if(j == players[i]->getHand().size()-1)
+              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i]->getHand()[j], false, Direction::RIGHT, false));
             else
-              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i].getHand()[j], false, Direction::RIGHT, true));
+              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i]->getHand()[j], false, Direction::RIGHT, true));
           }
           break;
       case 2:
           // for cards in the top player's hand
-          for(unsigned int j=0; j<players[i].getHand().size(); ++j)
+          for(unsigned int j=0; j<players[i]->getHand().size(); ++j)
           {
             if(j == 0)
-              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i].getHand()[j], false, Direction::DOWN, false));
+              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i]->getHand()[j], false, Direction::DOWN, false));
             else
-              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i].getHand()[j], false, Direction::DOWN, true));
+              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i]->getHand()[j], false, Direction::DOWN, true));
           }
           break;
       case 3:
           // for cards in the right player's hand
-          for(unsigned int j=0; j<players[i].getHand().size(); ++j)
+          for(unsigned int j=0; j<players[i]->getHand().size(); ++j)
           {
             if(j == 0)
-              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i].getHand()[j], false, Direction::LEFT, false));
+              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i]->getHand()[j], false, Direction::LEFT, false));
             else
-              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i].getHand()[j], false, Direction::LEFT, true));
+              playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i]->getHand()[j], false, Direction::LEFT, true));
           }
           break;
       default:
@@ -230,19 +232,23 @@ void GameScreen::updateTable()
     playerHandSizers[i]->SetSizeHints(playerHandPanels[i]);
     playerHandPanels[i]->Layout();
   }
-  table->Layout();
 
   // draw pile
-  drawPileSizer->Clear(true); // remove all children
-  drawPileSizer->Add(makeCard(drawPilePanel, crazyEights.getDrawPile().back(), false, Direction::UP, false));
+  drawPileSizer->Clear(false); // remove all children
+  if(!crazyEights.getDrawPile().empty())
+    drawPileSizer->Add(makeCard(drawPilePanel, crazyEights.getDrawPile().back(), false, Direction::UP, false));
   drawPileSizer->SetSizeHints(drawPilePanel);
   drawPileSizer->Layout();
 
   // discard pile
-  discardPileSizer->Clear(true); // remove all children
-  discardPileSizer->Add(makeCard(discardPilePanel, crazyEights.getDiscardPile().back(), true, Direction::UP, false));
+  discardPileSizer->Clear(false); // remove all children
+  if(!crazyEights.getDiscardPile().empty())
+    discardPileSizer->Add(makeCard(discardPilePanel, crazyEights.getDiscardPile().back(), true, Direction::UP, false));
   discardPileSizer->SetSizeHints(discardPilePanel);
   discardPileSizer->Layout();
+  // update table layout to fit new sizes
+  table->Layout();
+  rootPanel->Layout();
 }
 
 void GameScreen::updatePlayerInfo()
@@ -525,13 +531,33 @@ wxString GameScreen::findFullImage(Card& card, bool show)
       return wxT("../resources/pictures/cards/cardBack.png");
 }
 
-void GameScreen::test(Card& card)
+bool GameScreen::onClick(Card card)
 {
   players = crazyEights.getPlayers();
-  if(!crazyEights.getMove(card))
-      return;
-  updateTable();
-  crazyEights.nextTurn();
+  //if(!players[0]->getTurn())
+  //    return;
+  if(crazyEights.isGameOver())
+  {
+    std::cout << "Game Over\n";
+    return false;
+  }
+  
+  if(crazyEights.getMove(card))
+  {
+    updateTable();
+    crazyEights.nextTurn();
+    std::cout << " \n";
+    if(crazyEights.isGameOver())
+      std::cout << "Game Over\n";
+    return true;
+  }
+  else
+  {
+    std::cout << " \n";
+    if(crazyEights.isGameOver())
+      std::cout << "Game Over\n";
+    return false;
+  }
 }
 
 /*

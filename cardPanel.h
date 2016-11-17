@@ -20,6 +20,7 @@ class CardPanel : public wxImagePanel
 
   public:
     CardPanel(wxPanel* parent, Card& card, wxString file, wxBitmapType format, Direction dir, int width, int height);
+    ~CardPanel();
 
     void mouseReleased(wxMouseEvent& evt);
     wxString findHalfImage();
