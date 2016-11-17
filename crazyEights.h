@@ -26,6 +26,9 @@ public:
     void refillDeck();
     void shuffleDeck();
     bool isGameOver();
+    bool isInHand(Card& card);
+    bool isInDrawPile(Card& card);
+    bool isInDiscardPile(Card& card);
     bool isValidMove(Card& card);
     void nextTurn();// decide who goes next
     void playCard(Card& card);

@@ -11,6 +11,11 @@ CardPanel::CardPanel(wxPanel* parent, Card& card, wxString file, wxBitmapType fo
   this->height = height;
 }
 
+CardPanel::~CardPanel()
+{
+  //std::cout << "Card Panel Destroyed\n";
+}
+
 void CardPanel::mouseReleased(wxMouseEvent& evt)
 {
     //std::cout << "Inside cardPanel.cpp\n";
@@ -18,7 +23,8 @@ void CardPanel::mouseReleased(wxMouseEvent& evt)
     
     // cardPanel -> hands/decks -> table -> root -> gameScreen
     GameScreen *gs = (GameScreen *) parent->GetParent()->GetParent()->GetParent();
-    gs->onClick(card);
+    if(gs->onClick(card,this))
+      delete this;
 }
 
 Card CardPanel::getCard()
