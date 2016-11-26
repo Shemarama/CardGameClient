@@ -531,6 +531,18 @@ wxString GameScreen::findFullImage(Card& card, bool show)
       return wxT("../resources/pictures/cards/cardBack.png");
 }
 
+void GameScreen::displaySuitChoice()
+{
+  // display a custom dialog with 4 buttons
+  SuitDialog *suitDialog = new SuitDialog(wxT("SuitDialog"));
+  //suitDialog->Show(true);
+  if(suitDialog->ShowModal() == wxID_OK)
+    std::cout << "clicked ok\n";
+  else
+    std::cout << "clicked cancel\n";
+  suitDialog->Destroy();
+}
+
 bool GameScreen::onClick(Card card)
 {
   players = crazyEights.getPlayers();

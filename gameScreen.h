@@ -8,6 +8,7 @@
 
 #include "crazyEights.h"
 #include "cardPanel.h"
+#include "suitDialog.h"
 
 class GameScreen : public wxFrame
 {
@@ -20,6 +21,7 @@ public:
   CardPanel* makeCard(wxPanel* parent, Card& card, bool show, Direction dir, bool isHalf);
   wxString findHalfImage(Card& card, bool show);
   wxString findFullImage(Card& card, bool show);
+  void displaySuitChoice();
   bool onClick(Card card);
 
 private:
