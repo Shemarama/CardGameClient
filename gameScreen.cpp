@@ -535,11 +535,21 @@ void GameScreen::displaySuitChoice()
 {
   // display a custom dialog with 4 buttons
   SuitDialog *suitDialog = new SuitDialog(wxT("SuitDialog"));
-  //suitDialog->Show(true);
-  if(suitDialog->ShowModal() == wxID_OK)
-    std::cout << "clicked ok\n";
-  else
-    std::cout << "clicked cancel\n";
+  
+  // keep showing until the user hits okay
+  while(suitDialog->ShowModal() != wxID_OK){};
+  
+  // check what suit the user picked
+  Suit suitChoice = suitDialog->getSuit();
+  if(suitChoice == Suit::HEARTS)
+    std::cout << "Chose Hearts\n";
+  else if(suitChoice == Suit::SPADES)
+    std::cout << "Chose Spades\n";
+  else if(suitChoice == Suit::DIAMONDS)
+    std::cout << "Chose Diamonds\n";
+  else if(suitChoice == Suit::CLUBS)
+    std::cout << "Chose Clubs\n";
+
   suitDialog->Destroy();
 }
 
@@ -557,6 +567,10 @@ bool GameScreen::onClick(Card card)
   if(crazyEights.getMove(card))
   {
     updateTable();
+    if(card.getRank() == Value::EIGHT)
+    {
+      displaySuitChoice();
+    }
     crazyEights.nextTurn();
     std::cout << " \n";
     if(crazyEights.isGameOver())
