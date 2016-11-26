@@ -1,9 +1,9 @@
 #include "cardPanel.h"
-#include "gameScreen.h"
+#include "crazyEightsScreen.h"
 
-CardPanel::CardPanel(wxPanel* parent, Card& card, wxString file, wxBitmapType format, Direction dir, int width, int height)
-  : wxImagePanel(parent, file, format, dir, width, height)
-{
+CardPanel::CardPanel(wxPanel *parent, Card &card, wxString file,
+                     wxBitmapType format, Direction dir, int width, int height)
+    : wxImagePanel(parent, file, format, dir, width, height) {
   this->parent = parent;
   this->card = card;
   this->direction = dir;
@@ -11,40 +11,26 @@ CardPanel::CardPanel(wxPanel* parent, Card& card, wxString file, wxBitmapType fo
   this->height = height;
 }
 
-CardPanel::~CardPanel()
-{
-  //std::cout << "Card Panel Destroyed\n";
+CardPanel::~CardPanel() {
+  // std::cout << "Card Panel Destroyed\n";
 }
 
-void CardPanel::mouseReleased(wxMouseEvent& evt)
-{
-    //std::cout << "Inside cardPanel.cpp\n";
-    //card.print();
-    
-    // cardPanel -> hands/decks -> table -> root -> gameScreen
-    GameScreen *gs = (GameScreen *) parent->GetParent()->GetParent()->GetParent();
-    if(gs->onClick(card))
-    {
-      //delete this;
-    }
+void CardPanel::mouseReleased(wxMouseEvent &WXUNUSED(evt)) {
+  // std::cout << "Inside cardPanel.cpp\n";
+  // card.print();
+
+  // cardPanel -> hands/decks -> table -> root -> gameScreen
+  CrazyEightsScreen *gs =
+      (CrazyEightsScreen *)parent->GetParent()->GetParent()->GetParent();
+  if (gs->onClick(card)) {
+    // delete this;
+  }
 }
 
-Card CardPanel::getCard()
-{
-  return card;
-}
+Card CardPanel::getCard() { return card; }
 
-Direction CardPanel::getDirection()
-{
-  return direction;
-}
+Direction CardPanel::getDirection() { return direction; }
 
-int CardPanel::getWidth()
-{
-  return width;
-}
+int CardPanel::getWidth() { return width; }
 
-int CardPanel::getHeight()
-{
-  return height;
-}
+int CardPanel::getHeight() { return height; }

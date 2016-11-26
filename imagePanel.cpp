@@ -33,48 +33,45 @@ END_EVENT_TABLE()
  void wxImagePanel::keyReleased(wxKeyEvent& event) {}
  */
 
-wxImagePanel::wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format, Direction dir, int width, int height)
-  : wxPanel(parent)
-{
+wxImagePanel::wxImagePanel(wxPanel *parent, wxString file, wxBitmapType format,
+                           Direction dir, int width, int height)
+    : wxPanel(parent) {
   // load the file... ideally add a check to see if loading was successful
   image.LoadFile(file, format);
-  
-  switch(dir)
-  {
-    case UP:
-        // don't rotate
-        this->SetMinSize(wxSize(width, height));
-        this->SetMaxSize(wxSize(width, height));
-        break;
-    case DOWN:
-        image = image.Rotate180();
-        this->SetMinSize(wxSize(width, height));
-        this->SetMaxSize(wxSize(width, height));
-        break;
-    case LEFT:
-        // counter clockwise
-        image = image.Rotate90(false);
-        this->SetMinSize(wxSize(height, width));
-        this->SetMaxSize(wxSize(height, width));
-        break;
-    case RIGHT:
-        // clockwise
-        image = image.Rotate90(true);
-        this->SetMinSize(wxSize(height, width));
-        this->SetMaxSize(wxSize(height, width));
-        break;
-    default:
-        // don't rotate
-        break;
+
+  switch (dir) {
+  case UP:
+    // don't rotate
+    this->SetMinSize(wxSize(width, height));
+    this->SetMaxSize(wxSize(width, height));
+    break;
+  case DOWN:
+    image = image.Rotate180();
+    this->SetMinSize(wxSize(width, height));
+    this->SetMaxSize(wxSize(width, height));
+    break;
+  case LEFT:
+    // counter clockwise
+    image = image.Rotate90(false);
+    this->SetMinSize(wxSize(height, width));
+    this->SetMaxSize(wxSize(height, width));
+    break;
+  case RIGHT:
+    // clockwise
+    image = image.Rotate90(true);
+    this->SetMinSize(wxSize(height, width));
+    this->SetMaxSize(wxSize(height, width));
+    break;
+  default:
+    // don't rotate
+    break;
   }
   w = -1;
   h = -1;
 }
 
-
-void wxImagePanel::mouseReleased(wxMouseEvent& evt)
-{
-    std::cout << "clicked...\n";
+void wxImagePanel::mouseReleased(wxMouseEvent &evt) {
+  std::cout << "clicked...\n";
 }
 /*
  * Called by the system of by wxWidgets when the panel needs
@@ -82,9 +79,7 @@ void wxImagePanel::mouseReleased(wxMouseEvent& evt)
  * calling Refresh()/Update().
  */
 
-void
-wxImagePanel::paintEvent(wxPaintEvent& evt)
-{
+void wxImagePanel::paintEvent(wxPaintEvent &evt) {
   // depending on your system you may need to look at double-buffered dcs
   wxPaintDC dc(this);
   render(dc);
@@ -98,9 +93,7 @@ wxImagePanel::paintEvent(wxPaintEvent& evt)
  * background, and expects you will redraw it when the window comes
  * back (by sending a paint event).
  */
-void
-wxImagePanel::paintNow()
-{
+void wxImagePanel::paintNow() {
   // depending on your system you may need to look at double-buffered dcs
   wxClientDC dc(this);
   render(dc);
@@ -111,9 +104,7 @@ wxImagePanel::paintNow()
  * method so that it can work no matter what type of DC
  * (e.g. wxPaintDC or wxClientDC) is used.
  */
-void
-wxImagePanel::render(wxDC& dc)
-{
+void wxImagePanel::render(wxDC &dc) {
   int neww, newh;
   dc.GetSize(&neww, &newh);
 
@@ -131,15 +122,10 @@ wxImagePanel::render(wxDC& dc)
  * Here we call refresh to tell the panel to draw itself again.
  * So when the user resizes the image panel the image should be resized too.
  */
-void
-wxImagePanel::OnSize(wxSizeEvent& event)
-{
+void wxImagePanel::OnSize(wxSizeEvent &event) {
   Refresh();
   // skip the event.
   event.Skip();
 }
 
-void wxImagePanel::print(wxString message)
-{
-  std::cout << message << "\n";
-}
+void wxImagePanel::print(wxString message) { std::cout << message << "\n"; }

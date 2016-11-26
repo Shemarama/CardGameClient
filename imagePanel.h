@@ -6,25 +6,25 @@
 #include <wx/wx.h>
 #endif
 
-enum Direction {UP, DOWN, LEFT, RIGHT};
+enum Direction { UP, DOWN, LEFT, RIGHT };
 
 // the wxImagePanel class is taken from
 // https://wiki.wxwidgets.org/An_image_panel
-class wxImagePanel : public wxPanel
-{
+class wxImagePanel : public wxPanel {
 protected:
   wxImage image;
   wxBitmap resized;
   int w, h;
 
 public:
-  wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format, Direction dir, int width, int height);
+  wxImagePanel(wxPanel *parent, wxString file, wxBitmapType format,
+               Direction dir, int width, int height);
 
-  virtual void mouseReleased(wxMouseEvent& evt);
-  void paintEvent(wxPaintEvent& evt);
+  virtual void mouseReleased(wxMouseEvent &evt);
+  void paintEvent(wxPaintEvent &evt);
   void paintNow();
-  void OnSize(wxSizeEvent& event);
-  void render(wxDC& dc);
+  void OnSize(wxSizeEvent &event);
+  void render(wxDC &dc);
 
   // some useful events
   /*
@@ -41,6 +41,5 @@ public:
 
   DECLARE_EVENT_TABLE()
 };
-
 
 #endif
