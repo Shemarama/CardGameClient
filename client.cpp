@@ -6,7 +6,7 @@ wxIMPLEMENT_APP(MyApp);
 bool MyApp::OnInit() {
 
   wxInitAllImageHandlers();
-  FrameManager *frameManager = new FrameManager();
+  frameManager = new FrameManager();
 
   return true;
 }

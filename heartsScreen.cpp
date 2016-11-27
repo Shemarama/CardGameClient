@@ -148,8 +148,8 @@ HeartsScreen::HeartsScreen(const wxString &title, wxFrame *parentFrame,
 
   // root middle
   rootHBoxMidTop->Add(playerInfoPanels[2], 1, wxALL | wxALIGN_CENTER, 0);
-  rootVBoxMidMid->Add(table, 1, wxALL | wxEXPAND | wxALIGN_CENTER, 10);
-  rootHBoxMidMid->Add(rootVBoxMidMid, 1, wxALL | wxEXPAND | wxALIGN_CENTER, 10);
+  rootVBoxMidMid->Add(table, 1, wxALL | wxEXPAND | wxALIGN_CENTER, 5);
+  rootHBoxMidMid->Add(rootVBoxMidMid, 1, wxALL | wxEXPAND | wxALIGN_CENTER, 5);
   rootHBoxMidBot->Add(playerInfoPanels[0], 1, wxALL | wxALIGN_CENTER, 0);
   rootVBoxMid->Add(rootHBoxMidTop, 1, wxALL | wxALIGN_CENTER, 5);
   rootVBoxMid->Add(rootHBoxMidMid, 7, wxALL | wxEXPAND | wxALIGN_CENTER, 5);
@@ -164,9 +164,9 @@ HeartsScreen::HeartsScreen(const wxString &title, wxFrame *parentFrame,
   rootVBoxRight->Add(rootHBoxRightBot, 1, wxALL | wxEXPAND, 0);
 
   // root columns
-  rootHBox->Add(rootVBoxLeft, 1, wxALL | wxEXPAND, 20);
-  rootHBox->Add(rootVBoxMid, 7, wxALL | wxEXPAND, 20);
-  rootHBox->Add(rootVBoxRight, 1, wxALL | wxEXPAND, 20);
+  rootHBox->Add(rootVBoxLeft, 1, wxALL | wxEXPAND, 10);
+  rootHBox->Add(rootVBoxMid, 7, wxALL | wxEXPAND, 10);
+  rootHBox->Add(rootVBoxRight, 1, wxALL | wxEXPAND, 10);
 
   rootHBox->SetSizeHints(rootPanel);
   rootPanel->SetSizer(rootHBox);
