@@ -70,7 +70,7 @@ wxImagePanel::wxImagePanel(wxPanel *parent, wxString file, wxBitmapType format,
   h = -1;
 }
 
-void wxImagePanel::mouseReleased(wxMouseEvent &evt) {
+void wxImagePanel::mouseReleased(wxMouseEvent &WXUNUSED(evt)) {
   std::cout << "clicked...\n";
 }
 /*
@@ -79,7 +79,7 @@ void wxImagePanel::mouseReleased(wxMouseEvent &evt) {
  * calling Refresh()/Update().
  */
 
-void wxImagePanel::paintEvent(wxPaintEvent &evt) {
+void wxImagePanel::paintEvent(wxPaintEvent &WXUNUSED(evt)) {
   // depending on your system you may need to look at double-buffered dcs
   wxPaintDC dc(this);
   render(dc);

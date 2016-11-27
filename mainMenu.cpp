@@ -8,11 +8,11 @@ END_EVENT_TABLE()
 
 MainMenu::MainMenu(const wxString &title, wxFrame *parentFrame,
                    wxString currentUserName)
-    : wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(500, 500)) {
+    : wxFrame(parentFrame, wxID_ANY, title, wxDefaultPosition,
+              wxSize(500, 500)) {
   usersName = new wxStaticText(this, wxID_ANY, currentUserName);
   this->parentFrame = parentFrame;
   this->SetBackgroundColour((wxColour(0, 65, 225)));
-  // hWindowLayout = new wxBoxSizer(wxHORIZONTAL);
   hTopPanelLayout = new wxBoxSizer(wxHORIZONTAL);
   hBottomPanelLayout = new wxBoxSizer(wxHORIZONTAL);
   frameGrid = new wxBoxSizer(wxVERTICAL);
@@ -31,9 +31,6 @@ MainMenu::MainMenu(const wxString &title, wxFrame *parentFrame,
 
   this->SetSizer(frameGrid);
   Centre();
-  //   this->playerImage = new
-  //   wxImagePanel(playerInfoPanel,wxT("../resources/pictures/player/playerIcon.png"),wxBITMAP_TYPE_PNG,Direction::UP,
-  //   55, 55);
 }
 
 void MainMenu::onClickC8Button(wxCommandEvent &WXUNUSED(event)) {
@@ -52,23 +49,3 @@ void MainMenu::onClickLogoutButton(wxCommandEvent &WXUNUSED(event)) {
   FrameManager *fm = (FrameManager *)parentFrame;
   fm->switchScreens(wxT("login"));
 }
-/*
-wxString* MainMenu::getUsersName()
-{
-return usersName;
-}
-
-wxString* MainMenu::getUsersWins()
-{
-  return usersWins;
-}
-
-wxString* MainMenu::getUsersLosses()
-{
-  return usersLosses;
-}
-
-wxString* MainMenu::getUsersWLratio()
-{
-  return usersWLratio;
-}*/

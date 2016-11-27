@@ -104,9 +104,21 @@ HeartsScreen::HeartsScreen(const wxString &title, wxFrame *parentFrame,
 
   // table middle
   tableHBoxMidTop->Add(playerHandPanels[2], 0, wxALL | wxALIGN_CENTER, 0);
-  tableHBoxMidMid->Add(drawPilePanel, 0, wxRIGHT | wxALIGN_CENTER, 5);
-  tableHBoxMidMid->Add(discardPilePanel, 0, wxLEFT | wxALIGN_CENTER, 5);
-  tableVBoxMidMid->Add(tableHBoxMidMid, 0, wxALL | wxALIGN_CENTER, 5);
+
+  wxBoxSizer *tableVBoxMidMidLeft = new wxBoxSizer(wxVERTICAL);
+  wxBoxSizer *tableVBoxMidMidMid = new wxBoxSizer(wxVERTICAL);
+  wxBoxSizer *tableVBoxMidMidRight = new wxBoxSizer(wxVERTICAL);
+
+  tableVBoxMidMidLeft->Add(drawPilePanel, 0, wxRIGHT | wxALIGN_CENTER, 0);
+  tableVBoxMidMidMid->Add(drawPilePanel, 0, wxALL | wxALIGN_CENTER, 0);
+  tableVBoxMidMidMid->Add(discardPilePanel, 0, wxALL | wxALIGN_CENTER, 0);
+  tableVBoxMidMidRight->Add(discardPilePanel, 0, wxLEFT | wxALIGN_CENTER, 0);
+
+  tableHBoxMidMid->Add(tableVBoxMidMidLeft, 0, wxALL | wxALIGN_CENTER, 0);
+  tableHBoxMidMid->Add(tableVBoxMidMidMid, 0, wxALL | wxALIGN_CENTER, 0);
+  tableHBoxMidMid->Add(tableVBoxMidMidRight, 0, wxALL | wxALIGN_CENTER, 0);
+  tableVBoxMidMid->Add(tableHBoxMidMid, 0, wxALL | wxALIGN_CENTER, 0);
+
   tableHBoxMidBot->Add(playerHandPanels[0], 0, wxALL | wxALIGN_CENTER, 0);
   tableVBoxMid->Add(tableHBoxMidTop, 1, wxALL | wxALIGN_CENTER, 0);
   tableVBoxMid->Add(tableVBoxMidMid, 1, wxALL | wxEXPAND | wxALIGN_CENTER, 10);

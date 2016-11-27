@@ -11,7 +11,6 @@ private:
   wxStaticText *usersWins;
   wxStaticText *usersLosses;
   wxStaticText *usersWLratio;
-  // wxImagePanel* playerImage;
 
   wxFrame *parentFrame;
 
@@ -27,10 +26,6 @@ public:
   void onClickC8Button(wxCommandEvent &event);
   void onClickHeartsButton(wxCommandEvent &event);
   void onClickLogoutButton(wxCommandEvent &event);
-  /* wxString* getUsersName();
-   wxString* getUsersWins();
-   wxString* getUsersLosses();
-   wxString* getUsersWLratio();*/
   DECLARE_EVENT_TABLE();
 };
 

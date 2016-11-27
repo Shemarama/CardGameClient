@@ -2,7 +2,12 @@
 #include <wx/app.h>
 
 FrameManager::FrameManager() {
-  currentFrame = new LoginFrame("Please Log In", this);
+  loginFrame = nullptr;
+  mainMenu = nullptr;
+  crazyEightsScreen = nullptr;
+  heartsScreen = nullptr;
+  currentFrame = nullptr;
+  switchScreens(wxT("login"));
 }
 
 void FrameManager::switchScreens(wxString newScreen) {
@@ -10,28 +15,28 @@ void FrameManager::switchScreens(wxString newScreen) {
   if (newScreen == "login") {
     loginFrame = new LoginFrame("Please Log In ", this);
     currentFrame = loginFrame;
+    ((LoginFrame *)currentFrame)->Show(true);
   }
 
   else if (newScreen == "main") {
     mainMenu = new MainMenu("Main Menu", this, "current User");
     currentFrame = mainMenu;
+    ((MainMenu *)currentFrame)->Show(true);
   }
 
   else if (newScreen == "crazyEights") {
-    // load the game board
     crazyEightsScreen = new CrazyEightsScreen(
         "Crazy Eights", this, wxPoint(50, 50), wxSize(1080, 720));
     currentFrame = crazyEightsScreen;
-    // frame->Show(true);
+    ((CrazyEightsScreen *)currentFrame)->Show(true);
   } else if (newScreen == "hearts") {
-    // load the game board
     heartsScreen =
         new HeartsScreen("Hearts", this, wxPoint(50, 50), wxSize(1080, 720));
     currentFrame = heartsScreen;
-    // frame->Show(true);
+    ((HeartsScreen *)currentFrame)->Show(true);
   }
-  this->currentFrame->Show(true);
-  oldFrame->Destroy();
+  if (oldFrame != nullptr)
+    oldFrame->Destroy();
 }
 
 wxFrame *FrameManager::getCurrentFrame() { return currentFrame; }
