@@ -93,7 +93,7 @@ private:
   wxBoxSizer* discardPileSizer;
   // event handlers
   
-  void OnExit(wxCommandEvent& event);
+//  void OnExit(wxCommandEvent& event);
   
 
   // so the window can respond to events

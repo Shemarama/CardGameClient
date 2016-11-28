@@ -10,12 +10,13 @@ private:
     LoginFrame* loginFrame;
     MainMenu*  mainMenu;
     wxFrame* currentFrame;    
-
+    GameScreen* gameScreen;
 
 public:
 
 FrameManager(); //want to initialize the first screen to be the login Screen
 void switchScreens(wxString newScreen);  // "login" "main" "game"
+void OnExit(wxCommandEvent& event);
 wxFrame* getCurrentFrame();
 };
 #endif

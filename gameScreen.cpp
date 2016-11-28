@@ -134,8 +134,7 @@ GameScreen::GameScreen(const wxString& title, wxFrame* parentFrame, const wxPoin
   rootVBoxLeft->Add(rootHBoxLeftTop, 1, wxALL|wxEXPAND, 0);
   rootVBoxLeft->Add(rootHBoxLeftMid, 1, wxALL|wxALIGN_CENTER, 0);
   rootVBoxLeft->Add(rootHBoxLeftBot, 1, wxALL|wxEXPAND, 0);
- // text box
-wxBoxSizer* testVertBox = new wxBoxSizer(wxVERTICAL); 
+
   // root middle
   rootHBoxMidTop->Add(playerInfoPanels[2], 1, wxALL|wxALIGN_CENTER, 0);
   rootVBoxMidMid->Add(table, 1, wxALL|wxEXPAND|wxALIGN_CENTER, 10);
@@ -193,6 +192,7 @@ void GameScreen::updateTable()
           // for cards in the bottom player's hand
           for(unsigned int j=0; j<players[i]->getHand().size(); ++j)
           {
+            players[i]->getHand()[j].print();
             if(j == players[i]->getHand().size()-1)
               playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i]->getHand()[j], true, Direction::UP, false));
             else
@@ -203,6 +203,7 @@ void GameScreen::updateTable()
           // for cards in the left player's hand
           for(unsigned int j=0; j<players[i]->getHand().size(); ++j)
           {
+            players[i]->getHand()[j].print();
             if(j == players[i]->getHand().size()-1)
               playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i]->getHand()[j], false, Direction::RIGHT, false));
             else
@@ -213,6 +214,7 @@ void GameScreen::updateTable()
           // for cards in the top player's hand
           for(unsigned int j=0; j<players[i]->getHand().size(); ++j)
           {
+            players[i]->getHand()[j].print();
             if(j == 0)
               playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i]->getHand()[j], false, Direction::DOWN, false));
             else
@@ -223,6 +225,7 @@ void GameScreen::updateTable()
           // for cards in the right player's hand
           for(unsigned int j=0; j<players[i]->getHand().size(); ++j)
           {
+            players[i]->getHand()[j].print();
             if(j == 0)
               playerHandSizers[i]->Add(makeCard(playerHandPanels[i], players[i]->getHand()[j], false, Direction::LEFT, false));
             else
@@ -269,7 +272,6 @@ void GameScreen::updatePlayerInfo()
     playerInfoSizers[i]->SetSizeHints(playerInfoPanels[i]);
     playerInfoSizers[i]->Layout();
   }
- rootPanel->Layout();
 }
 
 CardPanel* GameScreen::makeCard(wxPanel* parent, Card& card, bool show, Direction dir, bool isHalf)
@@ -277,7 +279,6 @@ CardPanel* GameScreen::makeCard(wxPanel* parent, Card& card, bool show, Directio
   if(isHalf)
   {
     wxString imgPath = findHalfImage(card, show);
-    std::cout << "found half image\n";
     return new CardPanel(parent, card, imgPath, wxBITMAP_TYPE_PNG, dir, cardHalfWidth, cardHalfHeight);
   }
   else
@@ -569,15 +570,14 @@ std::cout << "Inside Test \n";
 }
 
 
-
+/*
 void
 GameScreen::OnExit(wxCommandEvent& event)
 {
   // true forces quit
-  std::cout << "exit\n";
   //Close(true);
 }
-/*
+
 void
 GameScreen::OnAbout(wxCommandEvent& event)
 {
