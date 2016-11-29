@@ -71,8 +71,8 @@ CrazyEightsScreen::CrazyEightsScreen(const wxString &title,
         wxBITMAP_TYPE_PNG, Direction::UP, 55, 55));
     playerNames.push_back(
         new wxStaticText(playerInfoPanels[i], wxID_ANY, players[i]->getName()));
-    playerReadyButtons.push_back(
-        new wxButton(playerInfoPanels[i], wxID_ANY, wxT("Ready")));
+//    playerReadyButtons.push_back(
+//        new wxButton(playerInfoPanels[i], wxID_ANY, wxT("Ready")));
     // if bottom or top player
     if (i == 0 || i == 2)
       playerHandSizers.push_back(new wxBoxSizer(wxHORIZONTAL));
@@ -82,7 +82,7 @@ CrazyEightsScreen::CrazyEightsScreen(const wxString &title,
     playerHandPanels[i]->SetSizer(playerHandSizers[i]);
 
     playerInfoSizers.push_back(new wxBoxSizer(wxVERTICAL));
-    playerInfoSizers[i]->Add(playerReadyButtons[i], 0, wxALIGN_CENTER, 1);
+//    playerInfoSizers[i]->Add(playerReadyButtons[i], 0, wxALIGN_CENTER, 1);
     playerInfoSizers[i]->Add(playerImagePanels[i], 0, wxALIGN_CENTER, 1);
     playerInfoSizers[i]->Add(playerNames[i], 0, wxALIGN_CENTER, 1);
     playerInfoSizers[i]->SetSizeHints(playerInfoPanels[i]);
@@ -273,7 +273,7 @@ void CrazyEightsScreen::updatePlayerInfo() {
   // for each player
   for (unsigned int i = 0; i < players.size(); ++i) {
     playerInfoSizers[i]->Clear(false); // remove all children
-    playerInfoSizers[i]->Add(playerReadyButtons[i], 0, wxALIGN_CENTER, 1);
+//    playerInfoSizers[i]->Add(playerReadyButtons[i], 0, wxALIGN_CENTER, 1);
     playerInfoSizers[i]->Add(playerImagePanels[i], 0, wxALIGN_CENTER, 1);
     playerInfoSizers[i]->Add(playerNames[i], 0, wxALIGN_CENTER, 1);
     playerInfoSizers[i]->SetSizeHints(playerInfoPanels[i]);
