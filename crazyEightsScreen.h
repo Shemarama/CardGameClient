@@ -83,7 +83,7 @@ private:
   std::vector<wxBoxSizer *> playerInfoSizers;
   std::vector<wxImagePanel *> playerImagePanels;
   std::vector<wxStaticText *> playerNames;
-  std::vector<wxButton *> playerReadyButtons;
+  //std::vector<wxButton *> playerReadyButtons;
 
   // game logic
   CrazyEights crazyEights = CrazyEights(players);
