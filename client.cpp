@@ -1,33 +1,12 @@
-// wxWidgets "Hello world" Program
+#include "client.h"
 
-// For compilers that support precompilation, includes "wx/wx.h".
+// the main function and it starts MyApp via OnInit()
+wxIMPLEMENT_APP(MyApp);
 
-#include <wx/wxprec.h>
-#ifndef WX_PRECOMP
-#include <wx/wx.h>
-#endif
-#include"frameManager.h"
-
-// main app that uses main window
-class MyApp : public wxApp
-{
-public:
-  virtual bool OnInit();
-};
-
-
-  // the main function and it starts MyApp via OnInit()
-  wxIMPLEMENT_APP(MyApp);
-
-bool
-MyApp::OnInit()
-{
-
-       FrameManager* frameManager = new FrameManager();
-       frameManager->getCurrentFrame()->Show(true);
+bool MyApp::OnInit() {
 
   wxInitAllImageHandlers();
+  frameManager = new FrameManager();
+
   return true;
 }
-
-
