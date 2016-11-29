@@ -10,23 +10,31 @@ MainMenu::MainMenu(const wxString &title, wxFrame *parentFrame,
                    wxString currentUserName)
     : wxFrame(parentFrame, wxID_ANY, title, wxDefaultPosition,
               wxSize(500, 500)) {
-  usersName = new wxStaticText(this, wxID_ANY, currentUserName);
+  // set static text and modify the size
+  usersName =
+      new wxStaticText(this, wxID_ANY, wxT("Welcome \n" + currentUserName));
+  wxFont font = usersName->GetFont();
+  font.SetPointSize(16);
+  usersName->SetFont(font);
+  // set parent frame
   this->parentFrame = parentFrame;
-  this->SetBackgroundColour((wxColour(0, 65, 225)));
+
+  // set main sizers
   hTopPanelLayout = new wxBoxSizer(wxHORIZONTAL);
   hBottomPanelLayout = new wxBoxSizer(wxHORIZONTAL);
   frameGrid = new wxBoxSizer(wxVERTICAL);
-
+  // set buttons
   crazyEightsButton =
       new wxButton(this, crazyEightsButtonID, wxT("Play Crazy Eights"));
   heartsButton = new wxButton(this, heartsButtonID, wxT("Play Hearts"));
   logoutButton = new wxButton(this, logoutButtonID, wxT("Logout"));
 
+  // add to layout
   hTopPanelLayout->Add(crazyEightsButton, 0, wxALL, 30);
   hTopPanelLayout->Add(heartsButton, 0, wxALL, 30);
   hBottomPanelLayout->Add(logoutButton, 0, wxEXPAND | wxALL, 30);
-  frameGrid->Add(usersName, 0, wxALIGN_CENTRE, 0);
-  frameGrid->Add(hTopPanelLayout, 2, wxALIGN_CENTRE | wxRight, 30);
+  frameGrid->Add(usersName, 0, wxALIGN_CENTRE | wxTOP, 50);
+  frameGrid->Add(hTopPanelLayout, 2, wxALIGN_CENTRE | wxTOP, 120);
   frameGrid->Add(hBottomPanelLayout, 0, wxALIGN_RIGHT | wxLeft, 30);
 
   this->SetSizer(frameGrid);

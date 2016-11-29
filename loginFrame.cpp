@@ -18,7 +18,7 @@ LoginFrame::LoginFrame(const wxString &title, wxFrame *parentFrame)
   userPassText = new wxStaticText(this, wxID_ANY, "User Password: ");
   userNameText = new wxStaticText(this, wxID_ANY, "User Name:     ");
   userNameTextBox = new wxTextCtrl(this, userNameTextID, " ");
-  userPassTextBox = new wxTextCtrl(this, userPassTextID, " ", wxDefaultPosition,
+  userPassTextBox = new wxTextCtrl(this, userPassTextID, "", wxDefaultPosition,
                                    wxDefaultSize, wxTE_PASSWORD);
   submitButton = new wxButton(this, submitButtonID, " Submit ");
   cancelButton = new wxButton(this, cancelButtonID, " Cancel ");
@@ -38,17 +38,21 @@ LoginFrame::LoginFrame(const wxString &title, wxFrame *parentFrame)
 }
 
 void LoginFrame::onSubmit(wxCommandEvent &WXUNUSED(event)) {
-  userName = userNameTextBox->GetLineText(0);
+  FrameManager *fm = (FrameManager *)parentFrame;
+  fm->setUserName(userNameTextBox->GetLineText(0));
   userPassword = userPassTextBox->GetLineText(0);
-  wxPuts(userName);
-  std::cout << userName << std::endl;
+  // wxPuts(userName);
+  std::cout << fm->getUserName() << std::endl;
   std::cout << userPassword << std::endl;
 
-  FrameManager *fm = (FrameManager *)parentFrame;
   fm->switchScreens(wxT("main"));
   return;
 }
 
 void LoginFrame::onCancel(wxCommandEvent &WXUNUSED(event)) { Close(true); }
 
-wxString LoginFrame::getUserName() { return userName; }
+wxString LoginFrame::getUserName() {
+
+  FrameManager *fm = (FrameManager *)parentFrame;
+  return fm->getUserName();
+}
