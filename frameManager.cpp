@@ -2,6 +2,7 @@
 #include <wx/app.h>
 
 FrameManager::FrameManager() {
+  wxString userName = " ";
   loginFrame = nullptr;
   mainMenu = nullptr;
   crazyEightsScreen = nullptr;
@@ -19,19 +20,19 @@ void FrameManager::switchScreens(wxString newScreen) {
   }
 
   else if (newScreen == "main") {
-    mainMenu = new MainMenu("Main Menu", this, "current User");
+    mainMenu = new MainMenu("Main Menu", this, userName);
     currentFrame = mainMenu;
     ((MainMenu *)currentFrame)->Show(true);
   }
 
   else if (newScreen == "crazyEights") {
     crazyEightsScreen = new CrazyEightsScreen(
-        "Crazy Eights", this, wxPoint(50, 50), wxSize(1080, 720));
+        "Crazy Eights", this, wxPoint(50, 50), wxSize(1080, 720), userName);
     currentFrame = crazyEightsScreen;
     ((CrazyEightsScreen *)currentFrame)->Show(true);
   } else if (newScreen == "hearts") {
-    heartsScreen =
-        new HeartsScreen("Hearts", this, wxPoint(50, 50), wxSize(1080, 720));
+    heartsScreen = new HeartsScreen("Hearts", this, wxPoint(50, 50),
+                                    wxSize(1080, 720), userName);
     currentFrame = heartsScreen;
     ((HeartsScreen *)currentFrame)->Show(true);
   }
@@ -40,3 +41,7 @@ void FrameManager::switchScreens(wxString newScreen) {
 }
 
 wxFrame *FrameManager::getCurrentFrame() { return currentFrame; }
+
+wxString FrameManager::getUserName() { return userName; }
+
+void FrameManager::setUserName(wxString newName) { userName = newName; }

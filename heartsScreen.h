@@ -15,7 +15,7 @@ class HeartsScreen : public wxFrame {
   // main window
 public:
   HeartsScreen(const wxString &title, wxFrame *parent, const wxPoint &pos,
-               const wxSize &size);
+               const wxSize &size, wxString playerName);
   void updateTable();
   void updatePlayerInfo();
   CardPanel *makeCard(wxPanel *parent, Card &card, bool show, Direction dir,
@@ -88,6 +88,8 @@ private:
   // game logic
   CrazyEights crazyEights = CrazyEights(players);
 
+  // player name
+  wxString playerName;
   // draw and discard panels
   wxPanel *drawPilePanel;
   wxPanel *discardPilePanel;

@@ -2,10 +2,13 @@
 
 // constructor
 HeartsScreen::HeartsScreen(const wxString &title, wxFrame *parentFrame,
-                           const wxPoint &pos, const wxSize &size)
+                           const wxPoint &pos, const wxSize &size,
+                           wxString playerName)
     : wxFrame(parentFrame, wxID_ANY, title, pos, size,
               wxDEFAULT_FRAME_STYLE | wxMAXIMIZE_BOX) {
   this->parentFrame = parentFrame;
+  // set current player name
+  this->playerName = playerName;
   // root panel
   rootPanel = new wxPanel(this, -1);
   rootHBox = new wxBoxSizer(wxHORIZONTAL);
@@ -52,7 +55,7 @@ HeartsScreen::HeartsScreen(const wxString &title, wxFrame *parentFrame,
   rootHBoxRightBot = new wxBoxSizer(wxHORIZONTAL);
 
   // create players
-  players.push_back(new Player(wxT("Ryan")));
+  players.push_back(new Player(playerName));
   players.push_back(new AI(wxT("Cameron")));
   players.push_back(new AI(wxT("Nick")));
   players.push_back(new AI(wxT("Shem")));

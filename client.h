@@ -13,6 +13,7 @@
 class MyApp : public wxApp {
 private:
   FrameManager *frameManager;
+
 public:
   virtual bool OnInit();
 };

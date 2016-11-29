@@ -6,7 +6,6 @@ private:
   wxButton *submitButton;
   wxButton *cancelButton;
 
-  wxString userName;
   wxString userPassword;
   wxStaticText *userNameText; // static label that prompts the user to enter
                               // name
