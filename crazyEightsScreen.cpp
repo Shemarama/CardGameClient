@@ -529,14 +529,12 @@ wxString CrazyEightsScreen::findFullImage(Card &card, bool show) {
 void CrazyEightsScreen::displaySuitChoice() {
   // display a custom dialog with 4 buttons
   SuitDialog *suitDialog = new SuitDialog(wxT("SuitDialog"));
-  // suitDialog->Show(true);
+  
+  // wait until user clicks OK
   while (suitDialog->ShowModal() != wxID_OK) {
   };
-  /*if (suitDialog->ShowModal() == wxID_OK)
-    std::cout << "clicked ok\n";
-  else
-    std::cout << "clicked cancel\n";
-  */
+  
+  // get suit choice from user
   Suit suitChoice = suitDialog->getSuit();
   if (suitChoice == Suit::HEARTS)
     std::cout << "Chose Hearts\n";
@@ -546,6 +544,7 @@ void CrazyEightsScreen::displaySuitChoice() {
     std::cout << "Chose Diamonds\n";
   else if (suitChoice == Suit::CLUBS)
     std::cout << "Chose Clubs\n";
+  
   suitDialog->Destroy();
 }
 
