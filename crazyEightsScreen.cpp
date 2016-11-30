@@ -574,9 +574,13 @@ bool CrazyEightsScreen::onClick(Card card) {
   }
   std::cout << "\n";
 
+  bool clickedDraw = false;
+  if(card == crazyEights.getDrawPile().back())
+    clickedDraw = true;
+
   if (crazyEights.getMove(card)) {
     updateTable();
-    if (card.getRank() == Value::EIGHT) {
+    if (card.getRank() == Value::EIGHT && !clickedDraw) {
       displaySuitChoice();
     }
     crazyEights.nextTurn();
