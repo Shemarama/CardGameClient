@@ -1,12 +1,14 @@
 #include "ai.h"
 
-AI::AI(wxString name)
-  : Player(name)
-{
+AI::AI(wxString name) : Player(name) {
   // setup bot
 }
 
-void AI::play()
-{
+void AI::play() {
   // play
+}
+
+void AI::setDiscard(Card card)
+{
+  discardTop = card;
 }

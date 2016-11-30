@@ -10,10 +10,9 @@
 #include <iterator>
 #include <random>
 
-enum Suit {HEARTS, SPADES, CLUBS, DIAMONDS, UNDEFINED};
+enum Suit { HEARTS, SPADES, CLUBS, DIAMONDS, UNDEFINED };
 
-enum Value
-{
+enum Value {
   TWO = 2,
   THREE = 3,
   FOUR = 4,
@@ -29,18 +28,18 @@ enum Value
   ACE = 14
 };
 
-class Card
-{
-  private:
-    Suit suit;
-    Value rank;
-  public:
-    Card();
-    Card(Suit suit, Value rank);
-    Suit getSuit();
-    Value getRank();
-    bool operator==(Card& otherCard);
-    void print();
+class Card {
+private:
+  Suit suit;
+  Value rank;
+
+public:
+  Card();
+  Card(Suit suit, Value rank);
+  Suit getSuit();
+  Value getRank();
+  bool operator==(Card &otherCard);
+  void print();
 };
 
 #endif

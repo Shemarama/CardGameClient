@@ -1,60 +1,39 @@
-#include"player.h"
+#include "player.h"
 
-Player::Player(wxString newName)
-{
+Player::Player(wxString newName) {
   this->hand = std::vector<Card>();
   this->name = newName;
   this->isReady = false;
   this->isMyTurn = false;
-} 
-
-void Player::addCard(Card& card)
-{
-  hand.push_back(card);
 }
 
-Card Player::removeCard(Card& card)
-{
-  for(auto c = hand.begin(); c<hand.end(); ++c)
-  {
-    if(card == *c)
+void Player::addCard(Card &card) { hand.push_back(card); }
+
+Card Player::removeCard(Card &card) {
+  for (auto c = hand.begin(); c < hand.end(); ++c) {
+    if (card == *c)
       hand.erase(c);
   }
-  
+
   return card;
 }
 
-wxString Player::getName()
-{
-  return name;
+void Player::clearHand() {
+  while (!hand.empty()) {
+    hand.pop_back();
+  }
 }
 
-void Player::setName(wxString name)
-{
-  this->name = name;
-}
+wxString Player::getName() { return name; }
 
-std::vector<Card> Player::getHand()
-{
-  return hand;
-}
+void Player::setName(wxString name) { this->name = name; }
 
-void Player::setTurn(bool isTurn)
-{
-  isMyTurn = isTurn;
-}
+std::vector<Card> Player::getHand() { return hand; }
 
-bool Player::getTurn()
-{
-  return isMyTurn;
-}
+void Player::setTurn(bool isTurn) { isMyTurn = isTurn; }
 
-void Player::setReady(bool isReady)
-{
-  this->isReady = isReady;
-}
+bool Player::getTurn() { return isMyTurn; }
 
-bool Player::getReady()
-{
-  return isReady;
-}
+void Player::setReady(bool isReady) { this->isReady = isReady; }
+
+bool Player::getReady() { return isReady; }
