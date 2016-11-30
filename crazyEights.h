@@ -24,15 +24,16 @@ public:
   void setDeck();   // sets up the deck for the game
   void refillDeck();
   void shuffleDeck();
+  Player* getWinner();
   bool isGameOver();
   bool isInHand(Card &card);
   bool isInDrawPile(Card &card);
   bool isInDiscardPile(Card &card);
   bool isValidMove(Card &card);
   void nextTurn(); // decide who goes next
+  void reset();
   void playCard(Card &card);
   bool drawCard();
-  void gameOver(); // show end game screen
   bool getMove(Card &card);
   std::vector<Card> getDrawPile();
   std::vector<Card> getDiscardPile();

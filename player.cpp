@@ -18,6 +18,14 @@ Card Player::removeCard(Card &card) {
   return card;
 }
 
+void Player::clearHand()
+{
+  while(!hand.empty())
+  {
+    hand.pop_back();
+  }
+}
+
 wxString Player::getName() { return name; }
 
 void Player::setName(wxString name) { this->name = name; }

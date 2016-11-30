@@ -169,14 +169,9 @@ CrazyEightsScreen::CrazyEightsScreen(const wxString &title,
   rootPanel->SetBackgroundColour(wxColour(0, 65, 225)); // blue
 
   // test displaying cards
-  crazyEights.setDeck();
-  crazyEights.dealCards();
-  updateTable();
-  updatePlayerInfo();
+  reset();
 
   Centre();
-
-  // displaySuitChoice();
 }
 
 void CrazyEightsScreen::updateTable() {
@@ -526,11 +521,23 @@ wxString CrazyEightsScreen::findFullImage(Card &card, bool show) {
     return wxT("../resources/pictures/cards/cardBack.png");
 }
 
+void CrazyEightsScreen::reset()
+{
+  crazyEights.reset();
+  crazyEights.setDeck();
+  crazyEights.dealCards();
+  updateTable();
+  updatePlayerInfo();
+}
+
 // game over message
 void CrazyEightsScreen::displayGameOverMessage()
 {
-  wxMessageDialog *gameOverMessage = new wxMessageDialog(NULL, wxT("You Lose!"), wxT("Game Over"), wxOK);
+  Player* winner = crazyEights.getWinner();
+  wxString message = winner->getName() + " Wins!";
+  wxMessageDialog *gameOverMessage = new wxMessageDialog(NULL, message, wxT("Game Over"), wxOK);
   gameOverMessage->ShowModal();
+  reset();
 }
 
 // dialog to choose a Suit when a player plays an 8

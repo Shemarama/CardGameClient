@@ -18,6 +18,7 @@ public:
   Player(wxString newName);
   void addCard(Card &card);
   Card removeCard(Card &card);
+  void clearHand();
   wxString getName();
   void setName(wxString name);
   std::vector<Card> getHand();

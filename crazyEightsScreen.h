@@ -22,6 +22,7 @@ public:
                       bool isHalf);
   wxString findHalfImage(Card &card, bool show);
   wxString findFullImage(Card &card, bool show);
+  void reset();
   void displayGameOverMessage();
   void displaySuitChoice();
   bool onClick(Card card);

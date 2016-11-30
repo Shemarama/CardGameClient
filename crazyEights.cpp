@@ -58,6 +58,15 @@ void CrazyEights::dealCards() {
   drawPile.pop_back();
 }
 
+Player* CrazyEights::getWinner()
+{
+  for (auto &&player : players) {
+    if (player->getHand().size() == 0)
+      return player;
+  }
+  return nullptr;
+}
+
 // check if a player has no cards in their hand
 bool CrazyEights::isGameOver() {
   for (auto &&player : players) {
@@ -138,10 +147,6 @@ bool CrazyEights::drawCard() {
   return true;
 }
 
-void CrazyEights::gameOver() {
-  // game over
-}
-
 bool CrazyEights::getMove(Card &card) {
   if (isValidMove(card)) {
     if (isInHand(card))
@@ -154,3 +159,21 @@ bool CrazyEights::getMove(Card &card) {
 }
 
 void CrazyEights::nextTurn() { turn = (turn + 1) % players.size(); }
+
+void CrazyEights::reset()
+{
+  while(!drawPile.empty())
+  {
+    drawPile.pop_back();
+  }
+
+  while(!discardPile.empty())
+  {
+    discardPile.pop_back();
+  }
+
+  for(auto&& player : players)
+  {
+    player->clearHand();
+  }
+}
