@@ -24,7 +24,7 @@ public:
   void setDeck();   // sets up the deck for the game
   void refillDeck();
   void shuffleDeck();
-  Player* getWinner();
+  Player *getWinner();
   bool isGameOver();
   bool isInHand(Card &card);
   bool isInDrawPile(Card &card);

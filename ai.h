@@ -4,9 +4,11 @@
 
 class AI : public Player {
 private:
+  Card discardTop;
 public:
   AI(wxString name);
   void play();
+  void setDiscard(Card card);
 };
 
 #endif

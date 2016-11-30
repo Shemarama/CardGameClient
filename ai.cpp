@@ -7,3 +7,8 @@ AI::AI(wxString name) : Player(name) {
 void AI::play() {
   // play
 }
+
+void AI::setDiscard(Card card)
+{
+  discardTop = card;
+}

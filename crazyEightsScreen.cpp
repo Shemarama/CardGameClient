@@ -521,8 +521,7 @@ wxString CrazyEightsScreen::findFullImage(Card &card, bool show) {
     return wxT("../resources/pictures/cards/cardBack.png");
 }
 
-void CrazyEightsScreen::reset()
-{
+void CrazyEightsScreen::reset() {
   crazyEights.reset();
   crazyEights.setDeck();
   crazyEights.dealCards();
@@ -531,11 +530,11 @@ void CrazyEightsScreen::reset()
 }
 
 // game over message
-void CrazyEightsScreen::displayGameOverMessage()
-{
-  Player* winner = crazyEights.getWinner();
+void CrazyEightsScreen::displayGameOverMessage() {
+  Player *winner = crazyEights.getWinner();
   wxString message = winner->getName() + " Wins!";
-  wxMessageDialog *gameOverMessage = new wxMessageDialog(NULL, message, wxT("Game Over"), wxOK);
+  wxMessageDialog *gameOverMessage =
+      new wxMessageDialog(NULL, message, wxT("Game Over"), wxOK);
   gameOverMessage->ShowModal();
   reset();
 }
@@ -581,8 +580,7 @@ bool CrazyEightsScreen::onClick(Card card) {
       displaySuitChoice();
     }
     crazyEights.nextTurn();
-    if (crazyEights.isGameOver())
-    {
+    if (crazyEights.isGameOver()) {
       std::cout << "Game Over\n";
       displayGameOverMessage();
     }

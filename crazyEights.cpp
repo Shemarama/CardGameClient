@@ -58,8 +58,7 @@ void CrazyEights::dealCards() {
   drawPile.pop_back();
 }
 
-Player* CrazyEights::getWinner()
-{
+Player *CrazyEights::getWinner() {
   for (auto &&player : players) {
     if (player->getHand().size() == 0)
       return player;
@@ -160,20 +159,16 @@ bool CrazyEights::getMove(Card &card) {
 
 void CrazyEights::nextTurn() { turn = (turn + 1) % players.size(); }
 
-void CrazyEights::reset()
-{
-  while(!drawPile.empty())
-  {
+void CrazyEights::reset() {
+  while (!drawPile.empty()) {
     drawPile.pop_back();
   }
 
-  while(!discardPile.empty())
-  {
+  while (!discardPile.empty()) {
     discardPile.pop_back();
   }
 
-  for(auto&& player : players)
-  {
+  for (auto &&player : players) {
     player->clearHand();
   }
 }

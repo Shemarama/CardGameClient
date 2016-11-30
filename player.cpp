@@ -18,10 +18,8 @@ Card Player::removeCard(Card &card) {
   return card;
 }
 
-void Player::clearHand()
-{
-  while(!hand.empty())
-  {
+void Player::clearHand() {
+  while (!hand.empty()) {
     hand.pop_back();
   }
 }
