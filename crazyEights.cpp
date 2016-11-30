@@ -18,6 +18,11 @@ std::vector<Card> CrazyEights::getDiscardPile() { return discardPile; }
 
 std::vector<Player *> CrazyEights::getPlayers() { return players; }
 
+Player* CrazyEights::getCurrentPlayer()
+{
+  return players[turn];
+}
+
 void CrazyEights::refillDeck() {
   Card card = discardPile.back();
   discardPile.pop_back(); // for no duplicate card
@@ -130,7 +135,7 @@ bool CrazyEights::isValidMove(Card &card) {
 // play a card from the current player's hand to the discard pile
 bool CrazyEights::playCard(Card &card) {
   // play card
-  std::cout << players[turn]->getName() << " is playing a card\n";
+  std::cout << players[turn]->getName() << " is playing a card\n\n";
 
   // if rank or suit matches or is an 8
   if( (card.getRank() == discardPile.back().getRank()) || 
@@ -149,7 +154,7 @@ bool CrazyEights::playCard(Card &card) {
 
 bool CrazyEights::drawCard() {
   // draw card
-  std::cout << players[turn]->getName() << " is drawing a card\n";
+  std::cout << players[turn]->getName() << " is drawing a card\n\n";
   if (drawPile.empty()) {
     std::cout << "Draw pile is empty\n";
     return false;
@@ -175,7 +180,7 @@ bool CrazyEights::getMove(Card &card) {
 // gets next player's turn
 void CrazyEights::nextTurn() { turn = (turn + 1) % players.size(); }
 
-// clears all cards on the table
+// resets the game
 void CrazyEights::reset() {
   while (!drawPile.empty()) {
     drawPile.pop_back();
@@ -188,4 +193,6 @@ void CrazyEights::reset() {
   for (auto &&player : players) {
     player->clearHand();
   }
+
+  turn = 0;
 }

@@ -564,6 +564,53 @@ void CrazyEightsScreen::displaySuitChoice() {
   suitDialog->Destroy();
 }
 
+void CrazyEightsScreen::aiTurn()
+{
+  wxThread::Sleep(1000);
+  // update player info
+  players = crazyEights.getPlayers();
+  
+  // while ai's turn
+  while(players[0] != crazyEights.getCurrentPlayer())
+  {
+    AI* currentAI = (AI*)crazyEights.getCurrentPlayer();
+    currentAI->setDiscard(crazyEights.getDiscardPile().back());
+    currentAI->setPlayableSuit(crazyEights.getCurrentSuit());
+    int cardIndex = currentAI->play();
+
+    // draw until ai has a valid card
+    while(cardIndex == -1)
+    {
+      crazyEights.getMove(crazyEights.getDrawPile().back());
+      currentAI = (AI*)crazyEights.getCurrentPlayer();
+      players = crazyEights.getPlayers();
+      cardIndex = currentAI->play();
+      updateTable();
+      wxThread::Sleep(1000);
+    }
+    
+    // has valid card
+    Card card = currentAI->getHand()[cardIndex];
+    crazyEights.getMove(card);
+    currentAI = (AI*)crazyEights.getCurrentPlayer();
+    // update discard pile info for ai
+    currentAI->setDiscard(crazyEights.getDiscardPile().back());
+    currentAI->setPlayableSuit(crazyEights.getCurrentSuit());
+    // check if ai played an 8
+    if(card.getRank() == Value::EIGHT)
+      crazyEights.setCurrentSuit(currentAI->chooseSuit());
+    // get next turn
+    crazyEights.nextTurn();
+    players = crazyEights.getPlayers();
+    updateTable();
+    if (crazyEights.isGameOver()) {
+      std::cout << "Game Over\n";
+      displayGameOverMessage();
+      return;
+    }
+  }
+}
+
 // when a card gets clicked
 bool CrazyEightsScreen::onClick(Card card) {
   players = crazyEights.getPlayers();
@@ -586,10 +633,16 @@ bool CrazyEightsScreen::onClick(Card card) {
       displaySuitChoice();
     }
     if(!clickedDraw)
+    {
       crazyEights.nextTurn();
-    if (crazyEights.isGameOver()) {
-      std::cout << "Game Over\n";
-      displayGameOverMessage();
+      
+      if (crazyEights.isGameOver()) {
+        std::cout << "Game Over\n";
+        displayGameOverMessage();
+        return true;
+      }
+      
+      aiTurn();
     }
     return true;
   }

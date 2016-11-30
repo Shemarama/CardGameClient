@@ -25,6 +25,7 @@ public:
   void reset();
   void displayGameOverMessage();
   void displaySuitChoice();
+  void aiTurn();
   bool onClick(Card card);
 
 private:

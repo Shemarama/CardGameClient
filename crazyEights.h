@@ -38,6 +38,7 @@ public:
   std::vector<Card> getDrawPile();
   std::vector<Card> getDiscardPile();
   std::vector<Player *> getPlayers();
+  Player* getCurrentPlayer();
 };
 
 #endif

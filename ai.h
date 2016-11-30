@@ -6,6 +6,7 @@
 class AI : public Player {
 private:
   Card discardTop;
+  Suit playableSuit;
 public:
   AI(wxString name);
   int play();
@@ -15,6 +16,7 @@ public:
   int getClubsCount();
   Suit chooseSuit();
   void setDiscard(Card card);
+  void setPlayableSuit(Suit suit);
 };
 
 #endif

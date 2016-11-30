@@ -7,7 +7,7 @@ AI::AI(wxString name) : Player(name) {
 int AI::play() {
   // search for same Suit
   for(unsigned int i=0; i<hand.size(); ++i)
-    if(hand[i].getSuit() == discardTop.getSuit())
+    if(hand[i].getSuit() == playableSuit)
       return i;
   
   // search for same Rank
@@ -74,16 +74,33 @@ Suit AI::chooseSuit()
   int clubsCount = getClubsCount();
 
   if( (heartsCount > spadesCount) && (heartsCount > diamondsCount) && (heartsCount > clubsCount) )
+  {
+    std::cout << "Chose Hearts\n";
     return Suit::HEARTS;
+  }
   else if( (spadesCount > heartsCount) && (spadesCount > diamondsCount) && (spadesCount > clubsCount) )
+  {
+    std::cout << "Chose Spades\n";
     return Suit::SPADES;
+  }
   else if( (diamondsCount > heartsCount) && (diamondsCount > spadesCount) && (diamondsCount > clubsCount) )
+  {
+    std::cout << "Chose Diamonds\n";
     return Suit::DIAMONDS;
+  }
   else
+  {
+    std::cout << "Chose Clubs\n";
     return Suit::CLUBS;
+  }
 }
 
 void AI::setDiscard(Card card)
 {
   discardTop = card;
+}
+
+void AI::setPlayableSuit(Suit suit)
+{
+  playableSuit = suit;
 }
