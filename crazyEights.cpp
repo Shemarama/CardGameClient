@@ -28,6 +28,7 @@ void CrazyEights::refillDeck() {
   }
   shuffleDeck();
   discardPile.push_back(card);
+  setCurrentSuit(discardPile.back().getSuit());
 }
 
 void CrazyEights::shuffleDeck() {
@@ -56,6 +57,7 @@ void CrazyEights::dealCards() {
 
   discardPile.push_back(drawPile.back()); // present first playable card
   drawPile.pop_back();
+  setCurrentSuit(discardPile.back().getSuit());
 }
 
 Player *CrazyEights::getWinner() {
@@ -126,10 +128,23 @@ bool CrazyEights::isValidMove(Card &card) {
 }
 
 // play a card from the current player's hand to the discard pile
-void CrazyEights::playCard(Card &card) {
+bool CrazyEights::playCard(Card &card) {
   // play card
   std::cout << players[turn]->getName() << " is playing a card\n";
-  discardPile.push_back(players[turn]->removeCard(card));
+
+  // if rank or suit matches or is an 8
+  if( (card.getRank() == discardPile.back().getRank()) || 
+      (card.getSuit() == currentSuit) ||
+      (card.getRank() == Value::EIGHT) )
+  {
+    discardPile.push_back(players[turn]->removeCard(card));
+    setCurrentSuit(discardPile.back().getSuit());
+    return true;
+  }
+
+  // else, is invalid
+  std::cout << "Invalid Move\n";
+  return false;
 }
 
 bool CrazyEights::drawCard() {
@@ -149,16 +164,18 @@ bool CrazyEights::drawCard() {
 bool CrazyEights::getMove(Card &card) {
   if (isValidMove(card)) {
     if (isInHand(card))
-      playCard(card);
+      return playCard(card);
     if (isInDrawPile(card))
-      drawCard();
-    return true;
-  } else
-    return false;
+      return drawCard();
+  }
+
+  return false;
 }
 
+// gets next player's turn
 void CrazyEights::nextTurn() { turn = (turn + 1) % players.size(); }
 
+// clears all cards on the table
 void CrazyEights::reset() {
   while (!drawPile.empty()) {
     drawPile.pop_back();

@@ -558,6 +558,8 @@ void CrazyEightsScreen::displaySuitChoice() {
     std::cout << "Chose Diamonds\n";
   else if (suitChoice == Suit::CLUBS)
     std::cout << "Chose Clubs\n";
+  
+  crazyEights.setCurrentSuit(suitChoice);
 
   suitDialog->Destroy();
 }
@@ -583,7 +585,8 @@ bool CrazyEightsScreen::onClick(Card card) {
     if (card.getRank() == Value::EIGHT && !clickedDraw) {
       displaySuitChoice();
     }
-    crazyEights.nextTurn();
+    if(!clickedDraw)
+      crazyEights.nextTurn();
     if (crazyEights.isGameOver()) {
       std::cout << "Game Over\n";
       displayGameOverMessage();

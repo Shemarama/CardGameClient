@@ -32,7 +32,7 @@ public:
   bool isValidMove(Card &card);
   void nextTurn(); // decide who goes next
   void reset();
-  void playCard(Card &card);
+  bool playCard(Card &card);
   bool drawCard();
   bool getMove(Card &card);
   std::vector<Card> getDrawPile();
