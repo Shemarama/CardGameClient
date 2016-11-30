@@ -71,8 +71,8 @@ CrazyEightsScreen::CrazyEightsScreen(const wxString &title,
         wxBITMAP_TYPE_PNG, Direction::UP, 55, 55));
     playerNames.push_back(
         new wxStaticText(playerInfoPanels[i], wxID_ANY, players[i]->getName()));
-//    playerReadyButtons.push_back(
-//        new wxButton(playerInfoPanels[i], wxID_ANY, wxT("Ready")));
+    //    playerReadyButtons.push_back(
+    //        new wxButton(playerInfoPanels[i], wxID_ANY, wxT("Ready")));
     // if bottom or top player
     if (i == 0 || i == 2)
       playerHandSizers.push_back(new wxBoxSizer(wxHORIZONTAL));
@@ -82,7 +82,7 @@ CrazyEightsScreen::CrazyEightsScreen(const wxString &title,
     playerHandPanels[i]->SetSizer(playerHandSizers[i]);
 
     playerInfoSizers.push_back(new wxBoxSizer(wxVERTICAL));
-//    playerInfoSizers[i]->Add(playerReadyButtons[i], 0, wxALIGN_CENTER, 1);
+    //    playerInfoSizers[i]->Add(playerReadyButtons[i], 0, wxALIGN_CENTER, 1);
     playerInfoSizers[i]->Add(playerImagePanels[i], 0, wxALIGN_CENTER, 1);
     playerInfoSizers[i]->Add(playerNames[i], 0, wxALIGN_CENTER, 1);
     playerInfoSizers[i]->SetSizeHints(playerInfoPanels[i]);
@@ -273,7 +273,7 @@ void CrazyEightsScreen::updatePlayerInfo() {
   // for each player
   for (unsigned int i = 0; i < players.size(); ++i) {
     playerInfoSizers[i]->Clear(false); // remove all children
-//    playerInfoSizers[i]->Add(playerReadyButtons[i], 0, wxALIGN_CENTER, 1);
+    //    playerInfoSizers[i]->Add(playerReadyButtons[i], 0, wxALIGN_CENTER, 1);
     playerInfoSizers[i]->Add(playerImagePanels[i], 0, wxALIGN_CENTER, 1);
     playerInfoSizers[i]->Add(playerNames[i], 0, wxALIGN_CENTER, 1);
     playerInfoSizers[i]->SetSizeHints(playerInfoPanels[i]);
@@ -526,14 +526,22 @@ wxString CrazyEightsScreen::findFullImage(Card &card, bool show) {
     return wxT("../resources/pictures/cards/cardBack.png");
 }
 
+// game over message
+void CrazyEightsScreen::displayGameOverMessage()
+{
+  wxMessageDialog *gameOverMessage = new wxMessageDialog(NULL, wxT("You Lose!"), wxT("Game Over"), wxOK);
+  gameOverMessage->ShowModal();
+}
+
+// dialog to choose a Suit when a player plays an 8
 void CrazyEightsScreen::displaySuitChoice() {
   // display a custom dialog with 4 buttons
   SuitDialog *suitDialog = new SuitDialog(wxT("SuitDialog"));
-  
+
   // wait until user clicks OK
   while (suitDialog->ShowModal() != wxID_OK) {
   };
-  
+
   // get suit choice from user
   Suit suitChoice = suitDialog->getSuit();
   if (suitChoice == Suit::HEARTS)
@@ -544,18 +552,21 @@ void CrazyEightsScreen::displaySuitChoice() {
     std::cout << "Chose Diamonds\n";
   else if (suitChoice == Suit::CLUBS)
     std::cout << "Chose Clubs\n";
-  
+
   suitDialog->Destroy();
 }
 
+// when a card gets clicked
 bool CrazyEightsScreen::onClick(Card card) {
   players = crazyEights.getPlayers();
   // if(!players[0]->getTurn())
   //    return;
   if (crazyEights.isGameOver()) {
     std::cout << "Game Over\n";
+    displayGameOverMessage();
     return false;
   }
+  std::cout << "\n";
 
   if (crazyEights.getMove(card)) {
     updateTable();
@@ -563,16 +574,15 @@ bool CrazyEightsScreen::onClick(Card card) {
       displaySuitChoice();
     }
     crazyEights.nextTurn();
-    std::cout << " \n";
     if (crazyEights.isGameOver())
+    {
       std::cout << "Game Over\n";
+      displayGameOverMessage();
+    }
     return true;
-  } else {
-    std::cout << " \n";
-    if (crazyEights.isGameOver())
-      std::cout << "Game Over\n";
-    return false;
   }
+
+  return false;
 }
 
 /*

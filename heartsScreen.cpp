@@ -76,6 +76,7 @@ HeartsScreen::HeartsScreen(const wxString &title, wxFrame *parentFrame,
       playerHandSizers.push_back(new wxBoxSizer(wxHORIZONTAL));
     else
       playerHandSizers.push_back(new wxBoxSizer(wxVERTICAL));
+    
     playerHandSizers[i]->SetSizeHints(playerHandPanels[i]);
     playerHandPanels[i]->SetSizer(playerHandSizers[i]);
 
@@ -190,10 +191,14 @@ HeartsScreen::HeartsScreen(const wxString &title, wxFrame *parentFrame,
 }
 
 void HeartsScreen::updateTable() {
+  // update player info
   players = crazyEights.getPlayers();
+  
+  // refill deck if needed
   if (crazyEights.getDrawPile().size() < 2)
     crazyEights.refillDeck();
-  // for each player
+  
+  // for each player, redraw their hand
   for (unsigned int i = 0; i < players.size(); ++i) {
     playerHandSizers[i]->Clear(false); // remove all children
     // update card display depending on player's position

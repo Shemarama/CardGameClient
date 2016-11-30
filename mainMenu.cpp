@@ -11,8 +11,9 @@ MainMenu::MainMenu(const wxString &title, wxFrame *parentFrame,
     : wxFrame(parentFrame, wxID_ANY, title, wxDefaultPosition,
               wxSize(500, 500)) {
   // set static text and modify the size
-  usersName =
-      new wxStaticText(this, wxID_ANY, wxT("Welcome \n" + currentUserName));
+  usersName = new wxStaticText(
+      this, wxID_ANY, wxT("Welcome \n" + currentUserName), wxDefaultPosition,
+      wxDefaultSize, wxALIGN_CENTRE_HORIZONTAL);
   wxFont font = usersName->GetFont();
   font.SetPointSize(16);
   usersName->SetFont(font);

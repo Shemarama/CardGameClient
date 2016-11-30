@@ -17,7 +17,7 @@ LoginFrame::LoginFrame(const wxString &title, wxFrame *parentFrame)
 
   userPassText = new wxStaticText(this, wxID_ANY, "User Password: ");
   userNameText = new wxStaticText(this, wxID_ANY, "User Name:     ");
-  userNameTextBox = new wxTextCtrl(this, userNameTextID, " ");
+  userNameTextBox = new wxTextCtrl(this, userNameTextID, "");
   userPassTextBox = new wxTextCtrl(this, userPassTextID, "", wxDefaultPosition,
                                    wxDefaultSize, wxTE_PASSWORD);
   submitButton = new wxButton(this, submitButtonID, " Submit ");

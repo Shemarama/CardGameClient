@@ -22,6 +22,7 @@ public:
                       bool isHalf);
   wxString findHalfImage(Card &card, bool show);
   wxString findFullImage(Card &card, bool show);
+  void displayGameOverMessage();
   void displaySuitChoice();
   bool onClick(Card card);
 
@@ -83,7 +84,7 @@ private:
   std::vector<wxBoxSizer *> playerInfoSizers;
   std::vector<wxImagePanel *> playerImagePanels;
   std::vector<wxStaticText *> playerNames;
-  //std::vector<wxButton *> playerReadyButtons;
+  // std::vector<wxButton *> playerReadyButtons;
 
   // game logic
   CrazyEights crazyEights = CrazyEights(players);
