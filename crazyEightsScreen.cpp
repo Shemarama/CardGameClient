@@ -1,4 +1,5 @@
 #include "crazyEightsScreen.h"
+#include "frameManager.h"
 
 // constructor
 CrazyEightsScreen::CrazyEightsScreen(const wxString &title,
@@ -175,9 +176,14 @@ CrazyEightsScreen::CrazyEightsScreen(const wxString &title,
 }
 
 void CrazyEightsScreen::updateTable() {
+  std::cout << "Updating Table...\n";
+  // update player info
   players = crazyEights.getPlayers();
+
+  // check if draw pile needs refilling
   if (crazyEights.getDrawPile().size() < 2)
     crazyEights.refillDeck();
+  
   // for each player
   for (unsigned int i = 0; i < players.size(); ++i) {
     playerHandSizers[i]->Clear(false); // remove all children
@@ -534,10 +540,22 @@ void CrazyEightsScreen::reset() {
 void CrazyEightsScreen::displayGameOverMessage() {
   Player *winner = crazyEights.getWinner();
   wxString message = winner->getName() + " Wins!";
-  wxMessageDialog *gameOverMessage =
-      new wxMessageDialog(NULL, message, wxT("Game Over"), wxOK);
-  gameOverMessage->ShowModal();
-  reset();
+  
+  GameOverDialog *gameOverDialog = new GameOverDialog(wxT("Game Over"), message);
+  int i = gameOverDialog->ShowModal();
+  std::cout << i << "\n";
+  // if user click main menu or closed the window, go back to main menu
+  if(i == wxID_CANCEL)
+  {
+    gameOverDialog->Destroy();
+    mainMenuButton();
+    return;
+  }
+  else // play again
+  {
+    gameOverDialog->Destroy();
+    reset();
+  }
 }
 
 // dialog to choose a Suit when a player plays an 8
@@ -567,12 +585,14 @@ void CrazyEightsScreen::displaySuitChoice() {
 
 void CrazyEightsScreen::aiTurn()
 {
+  wxThread::Sleep(1000);
   // update player info
   players = crazyEights.getPlayers();
   
   // while ai's turn
   while(players[0] != crazyEights.getCurrentPlayer())
   {
+    players = crazyEights.getPlayers();
     AI* currentAI = (AI*)crazyEights.getCurrentPlayer();
     currentAI->setDiscard(crazyEights.getDiscardPile().back());
     currentAI->setPlayableSuit(crazyEights.getCurrentSuit());
@@ -582,9 +602,9 @@ void CrazyEightsScreen::aiTurn()
     while(cardIndex == -1)
     {
       crazyEights.getMove(crazyEights.getDrawPile().back());
-      updateTable();
-      currentAI = (AI*)crazyEights.getCurrentPlayer();
       players = crazyEights.getPlayers();
+      currentAI = (AI*)crazyEights.getCurrentPlayer();
+      updateTable();
       cardIndex = currentAI->play();
       wxThread::Sleep(1000);
     }
@@ -592,8 +612,9 @@ void CrazyEightsScreen::aiTurn()
     // has valid card
     Card card = currentAI->getHand()[cardIndex];
     crazyEights.getMove(card);
-    updateTable();
+    players = crazyEights.getPlayers();
     currentAI = (AI*)crazyEights.getCurrentPlayer();
+    updateTable();
     // update discard pile info for ai
     currentAI->setDiscard(crazyEights.getDiscardPile().back());
     currentAI->setPlayableSuit(crazyEights.getCurrentSuit());
@@ -602,6 +623,7 @@ void CrazyEightsScreen::aiTurn()
       crazyEights.setCurrentSuit(currentAI->chooseSuit());
     // get next turn
     crazyEights.nextTurn();
+    wxThread::Sleep(1000);
     players = crazyEights.getPlayers();
     if (crazyEights.isGameOver()) {
       std::cout << "Game Over\n";
@@ -682,11 +704,16 @@ CrazyEightsScreen::OnHello(wxCommandEvent& event)
   // pop up window with message
   wxLogMessage("Hello world from wxWidgets!");
 }
+*/
 
+void CrazyEightsScreen::mainMenuButton()
+{
+  FrameManager *fm = (FrameManager*)parentFrame;
+  fm->switchScreens(wxT("main"));
+}
+/*
 // maps unique identifiers to event handlers
 wxBEGIN_EVENT_TABLE(GameScreen, wxFrame)
-  EVT_MENU(ID_Hello, GameScreen::OnHello)
-  EVT_MENU(wxID_EXIT, GameScreen::OnExit)
-  EVT_MENU(wxID_ABOUT, GameScreen::OnAbout)
+  //EVT_BUTTON(mainMenuID, CrazyEightsScreen::mainMenuButton)
 wxEND_EVENT_TABLE()
 */

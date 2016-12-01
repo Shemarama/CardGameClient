@@ -9,6 +9,7 @@
 #include "cardPanel.h"
 #include "crazyEights.h"
 #include "suitDialog.h"
+#include "gameOverDialog.h"
 
 class CrazyEightsScreen : public wxFrame {
 
@@ -27,6 +28,7 @@ public:
   void displaySuitChoice();
   void aiTurn();
   bool onClick(Card card);
+  void mainMenuButton();
 
 private:
   wxFrame *parentFrame;
@@ -104,12 +106,12 @@ private:
   void OnExit(wxCommandEvent &event);
 
   // so the window can respond to events
-  // wxDECLARE_EVENT_TABLE();
+  //wxDECLARE_EVENT_TABLE();
 };
 
 // give commands unique identifiers
-/*enum TEST {
-  ID_Hello = 1,
+/*enum {
+  mainMenuID = 10;
 };
 */
 
