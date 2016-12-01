@@ -521,6 +521,7 @@ wxString CrazyEightsScreen::findFullImage(Card &card, bool show) {
     return wxT("../resources/pictures/cards/cardBack.png");
 }
 
+// resets the game
 void CrazyEightsScreen::reset() {
   crazyEights.reset();
   crazyEights.setDeck();
@@ -566,7 +567,6 @@ void CrazyEightsScreen::displaySuitChoice() {
 
 void CrazyEightsScreen::aiTurn()
 {
-  wxThread::Sleep(1000);
   // update player info
   players = crazyEights.getPlayers();
   
@@ -582,16 +582,17 @@ void CrazyEightsScreen::aiTurn()
     while(cardIndex == -1)
     {
       crazyEights.getMove(crazyEights.getDrawPile().back());
+      updateTable();
       currentAI = (AI*)crazyEights.getCurrentPlayer();
       players = crazyEights.getPlayers();
       cardIndex = currentAI->play();
-      updateTable();
       wxThread::Sleep(1000);
     }
     
     // has valid card
     Card card = currentAI->getHand()[cardIndex];
     crazyEights.getMove(card);
+    updateTable();
     currentAI = (AI*)crazyEights.getCurrentPlayer();
     // update discard pile info for ai
     currentAI->setDiscard(crazyEights.getDiscardPile().back());
@@ -602,7 +603,6 @@ void CrazyEightsScreen::aiTurn()
     // get next turn
     crazyEights.nextTurn();
     players = crazyEights.getPlayers();
-    updateTable();
     if (crazyEights.isGameOver()) {
       std::cout << "Game Over\n";
       displayGameOverMessage();
