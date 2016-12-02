@@ -636,8 +636,10 @@ void CrazyEightsScreen::aiTurn()
 // when a card gets clicked
 bool CrazyEightsScreen::onClick(Card card) {
   players = crazyEights.getPlayers();
-  // if(!players[0]->getTurn())
-  //    return;
+  // return if not the player's turn
+  if(players[0] != crazyEights.getCurrentPlayer())
+    return false;
+  
   if (crazyEights.isGameOver()) {
     std::cout << "Game Over\n";
     displayGameOverMessage();
@@ -665,6 +667,7 @@ bool CrazyEightsScreen::onClick(Card card) {
       }
       
       aiTurn();
+			//aiThread = new MyThread([&](){aiTurn();}); // auto runs & deletes itself when finished
     }
     return true;
   }
@@ -672,48 +675,8 @@ bool CrazyEightsScreen::onClick(Card card) {
   return false;
 }
 
-/*
-void
-CrazyEightsScreen::OnExit(wxMouseEvent& event)
-{
-  // true forces quit
-  std::cout << "clicked exit\n";
-  //Close(true);
-}
-
-void
-CrazyEightsScreen::OnExit(wxCommandEvent& event)
-{
-  // true forces quit
-  std::cout << "exit\n";
-  //Close(true);
-}
-
-void
-CrazyEightsScreen::OnAbout(wxCommandEvent& event)
-{
-  // pop up window
-  // body text, title, icons
-  wxMessageBox("This is a wxWidgets' Hello world sample", "About Hello World",
-               wxOK | wxICON_INFORMATION);
-}
-
-void
-CrazyEightsScreen::OnHello(wxCommandEvent& event)
-{
-  // pop up window with message
-  wxLogMessage("Hello world from wxWidgets!");
-}
-*/
-
 void CrazyEightsScreen::mainMenuButton()
 {
   FrameManager *fm = (FrameManager*)parentFrame;
   fm->switchScreens(wxT("main"));
 }
-/*
-// maps unique identifiers to event handlers
-wxBEGIN_EVENT_TABLE(GameScreen, wxFrame)
-  //EVT_BUTTON(mainMenuID, CrazyEightsScreen::mainMenuButton)
-wxEND_EVENT_TABLE()
-*/

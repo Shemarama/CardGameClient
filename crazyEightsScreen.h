@@ -10,6 +10,7 @@
 #include "crazyEights.h"
 #include "suitDialog.h"
 #include "gameOverDialog.h"
+#include "myThread.h"
 
 class CrazyEightsScreen : public wxFrame {
 
@@ -101,8 +102,11 @@ private:
   wxPanel *discardPilePanel;
   wxBoxSizer *drawPileSizer;
   wxBoxSizer *discardPileSizer;
+  
+  // ai thread
+  MyThread* aiThread;
+  
   // event handlers
-
   void OnExit(wxCommandEvent &event);
 
   // so the window can respond to events
