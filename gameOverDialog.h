@@ -7,6 +7,7 @@ class GameOverDialog : public wxDialog {
 private:
   wxPanel *panel;
   wxBoxSizer *vbox;
+  wxBoxSizer *hbox1;
   wxBoxSizer *hbox;
   
   wxStaticText *messageText;

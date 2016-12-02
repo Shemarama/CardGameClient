@@ -6,6 +6,7 @@ CrazyEights::CrazyEights(std::vector<Player *> &players) {
   setDeck();
   discardPile = std::vector<Card>();
   turn = 0;
+  timesDrawn = 0;
 }
 
 void CrazyEights::setCurrentSuit(Suit newSuit) { currentSuit = newSuit; }
@@ -144,6 +145,7 @@ bool CrazyEights::playCard(Card &card) {
   {
     discardPile.push_back(players[turn]->removeCard(card));
     setCurrentSuit(discardPile.back().getSuit());
+    timesDrawn = 0;
     return true;
   }
 
@@ -160,9 +162,17 @@ bool CrazyEights::drawCard() {
     return false;
   }
 
+  if(timesDrawn > 2)
+  {
+    std::cout << "Ran out of draws\n";
+    timesDrawn = 0;
+    return false;
+  }
+
   players[turn]->addCard(drawPile.back());
   drawPile.pop_back();
-
+  timesDrawn++;
+  
   return true;
 }
 

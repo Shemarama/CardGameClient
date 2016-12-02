@@ -176,7 +176,6 @@ CrazyEightsScreen::CrazyEightsScreen(const wxString &title,
 }
 
 void CrazyEightsScreen::updateTable() {
-  std::cout << "Updating Table...\n";
   // update player info
   players = crazyEights.getPlayers();
 
@@ -585,6 +584,7 @@ void CrazyEightsScreen::displaySuitChoice() {
 
 void CrazyEightsScreen::aiTurn()
 {
+  bool skipTurn = false;
   wxThread::Sleep(1000);
   // update player info
   players = crazyEights.getPlayers();
@@ -592,6 +592,7 @@ void CrazyEightsScreen::aiTurn()
   // while ai's turn
   while(players[0] != crazyEights.getCurrentPlayer())
   {
+    skipTurn = false;
     players = crazyEights.getPlayers();
     AI* currentAI = (AI*)crazyEights.getCurrentPlayer();
     currentAI->setDiscard(crazyEights.getDiscardPile().back());
@@ -601,12 +602,24 @@ void CrazyEightsScreen::aiTurn()
     // draw until ai has a valid card
     while(cardIndex == -1)
     {
-      crazyEights.getMove(crazyEights.getDrawPile().back());
+      if(!crazyEights.getMove(crazyEights.getDrawPile().back()))
+      {
+        players = crazyEights.getPlayers();
+        skipTurn = true;
+        break;
+      }
       players = crazyEights.getPlayers();
       currentAI = (AI*)crazyEights.getCurrentPlayer();
       updateTable();
       cardIndex = currentAI->play();
       wxThread::Sleep(1000);
+    }
+
+    if(skipTurn)
+    {
+      std::cout << "Skipping Turn...\n";
+      crazyEights.nextTurn();
+      continue;
     }
     
     // has valid card
@@ -653,12 +666,11 @@ bool CrazyEightsScreen::onClick(Card card) {
 
   if (crazyEights.getMove(card)) {
     updateTable();
-    if (card.getRank() == Value::EIGHT && !clickedDraw) {
-      displaySuitChoice();
-    }
+    
     if(!clickedDraw)
     {
-      crazyEights.nextTurn();
+      if(card.getRank() == Value::EIGHT)
+        displaySuitChoice();
       
       if (crazyEights.isGameOver()) {
         std::cout << "Game Over\n";
@@ -666,12 +678,20 @@ bool CrazyEightsScreen::onClick(Card card) {
         return true;
       }
       
+      crazyEights.nextTurn();
       aiTurn();
 			//aiThread = new MyThread([&](){aiTurn();}); // auto runs & deletes itself when finished
     }
     return true;
   }
-
+  else if(clickedDraw)
+  {
+    updateTable();
+    std::cout << "Skipping Turn...\n";
+    crazyEights.nextTurn();
+    aiTurn();
+  }
+  
   return false;
 }
 

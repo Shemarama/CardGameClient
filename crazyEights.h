@@ -15,6 +15,7 @@ private:
   std::vector<Player *> players;
   unsigned int turn; // index for player vector
   Suit currentSuit;
+  unsigned int timesDrawn; // counter for times a player has drawn
 
 public:
   CrazyEights(std::vector<Player *> &players);
