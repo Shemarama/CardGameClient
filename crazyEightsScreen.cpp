@@ -542,7 +542,7 @@ void CrazyEightsScreen::displayGameOverMessage() {
   
   GameOverDialog *gameOverDialog = new GameOverDialog(wxT("Game Over"), message);
   int i = gameOverDialog->ShowModal();
-  std::cout << i << "\n";
+  
   // if user click main menu or closed the window, go back to main menu
   if(i == wxID_CANCEL)
   {
@@ -569,13 +569,13 @@ void CrazyEightsScreen::displaySuitChoice() {
   // get suit choice from user
   Suit suitChoice = suitDialog->getSuit();
   if (suitChoice == Suit::HEARTS)
-    std::cout << "Chose Hearts\n";
+    std::cout << playerName + " chose Hearts\n";
   else if (suitChoice == Suit::SPADES)
-    std::cout << "Chose Spades\n";
+    std::cout << playerName + " chose Spades\n";
   else if (suitChoice == Suit::DIAMONDS)
-    std::cout << "Chose Diamonds\n";
+    std::cout << playerName + " chose Diamonds\n";
   else if (suitChoice == Suit::CLUBS)
-    std::cout << "Chose Clubs\n";
+    std::cout << playerName + " chose Clubs\n";
   
   crazyEights.setCurrentSuit(suitChoice);
 
@@ -617,7 +617,7 @@ void CrazyEightsScreen::aiTurn()
 
     if(skipTurn)
     {
-      std::cout << "Skipping Turn...\n";
+      std::cout << "Skipping Turn...\n\n";
       crazyEights.nextTurn();
       continue;
     }
@@ -687,7 +687,7 @@ bool CrazyEightsScreen::onClick(Card card) {
   else if(clickedDraw)
   {
     updateTable();
-    std::cout << "Skipping Turn...\n";
+    std::cout << "Skipping Turn...\n\n";
     crazyEights.nextTurn();
     aiTurn();
   }

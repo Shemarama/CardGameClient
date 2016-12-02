@@ -87,9 +87,6 @@ bool CrazyEights::isGameOver() {
 bool CrazyEights::isInHand(Card &card) {
   for (auto &&c : players[turn]->getHand()) {
     if (card == c) {
-      std::cout << "Clicked a card in " << players[turn]->getName()
-                << "'s hand\n";
-      // playCard(card);
       return true;
     }
   }
@@ -99,8 +96,6 @@ bool CrazyEights::isInHand(Card &card) {
 // check if a card is in the top of the draw pile
 bool CrazyEights::isInDrawPile(Card &card) {
   if (card == drawPile.back()) {
-    std::cout << "Clicked on the draw pile\n";
-    // return drawCard();
     return true;
   } else
     return false;

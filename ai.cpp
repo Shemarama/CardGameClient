@@ -75,22 +75,22 @@ Suit AI::chooseSuit()
 
   if( (heartsCount > spadesCount) && (heartsCount > diamondsCount) && (heartsCount > clubsCount) )
   {
-    std::cout << "Chose Hearts\n";
+    std::cout << name + " chose Hearts\n";
     return Suit::HEARTS;
   }
   else if( (spadesCount > heartsCount) && (spadesCount > diamondsCount) && (spadesCount > clubsCount) )
   {
-    std::cout << "Chose Spades\n";
+    std::cout << name + " chose Spades\n";
     return Suit::SPADES;
   }
   else if( (diamondsCount > heartsCount) && (diamondsCount > spadesCount) && (diamondsCount > clubsCount) )
   {
-    std::cout << "Chose Diamonds\n";
+    std::cout << name + " chose Diamonds\n";
     return Suit::DIAMONDS;
   }
   else
   {
-    std::cout << "Chose Clubs\n";
+    std::cout << name + " chose Clubs\n";
     return Suit::CLUBS;
   }
 }
