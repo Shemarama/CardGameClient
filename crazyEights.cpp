@@ -117,7 +117,7 @@ bool CrazyEights::isInDiscardPile(Card &card) {
 
 // check if a chosen card is valid
 bool CrazyEights::isValidMove(Card &card) {
-  card.print();
+  //card.print();
   // search each player's hand
   if (isInHand(card))
     return true;
