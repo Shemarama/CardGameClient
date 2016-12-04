@@ -1,4 +1,5 @@
 #include "crazyEightsScreen.h"
+#include "frameManager.h"
 
 // constructor
 CrazyEightsScreen::CrazyEightsScreen(const wxString &title,
@@ -175,9 +176,13 @@ CrazyEightsScreen::CrazyEightsScreen(const wxString &title,
 }
 
 void CrazyEightsScreen::updateTable() {
+  // update player info
   players = crazyEights.getPlayers();
+
+  // check if draw pile needs refilling
   if (crazyEights.getDrawPile().size() < 2)
     crazyEights.refillDeck();
+  
   // for each player
   for (unsigned int i = 0; i < players.size(); ++i) {
     playerHandSizers[i]->Clear(false); // remove all children
@@ -521,6 +526,7 @@ wxString CrazyEightsScreen::findFullImage(Card &card, bool show) {
     return wxT("../resources/pictures/cards/cardBack.png");
 }
 
+// resets the game
 void CrazyEightsScreen::reset() {
   crazyEights.reset();
   crazyEights.setDeck();
@@ -533,10 +539,22 @@ void CrazyEightsScreen::reset() {
 void CrazyEightsScreen::displayGameOverMessage() {
   Player *winner = crazyEights.getWinner();
   wxString message = winner->getName() + " Wins!";
-  wxMessageDialog *gameOverMessage =
-      new wxMessageDialog(NULL, message, wxT("Game Over"), wxOK);
-  gameOverMessage->ShowModal();
-  reset();
+  
+  GameOverDialog *gameOverDialog = new GameOverDialog(wxT("Game Over"), message);
+  int i = gameOverDialog->ShowModal();
+  
+  // if user click main menu or closed the window, go back to main menu
+  if(i == wxID_CANCEL)
+  {
+    gameOverDialog->Destroy();
+    mainMenuButton();
+    return;
+  }
+  else // play again
+  {
+    gameOverDialog->Destroy();
+    reset();
+  }
 }
 
 // dialog to choose a Suit when a player plays an 8
@@ -551,22 +569,90 @@ void CrazyEightsScreen::displaySuitChoice() {
   // get suit choice from user
   Suit suitChoice = suitDialog->getSuit();
   if (suitChoice == Suit::HEARTS)
-    std::cout << "Chose Hearts\n";
+    std::cout << playerName + " chose Hearts\n";
   else if (suitChoice == Suit::SPADES)
-    std::cout << "Chose Spades\n";
+    std::cout << playerName + " chose Spades\n";
   else if (suitChoice == Suit::DIAMONDS)
-    std::cout << "Chose Diamonds\n";
+    std::cout << playerName + " chose Diamonds\n";
   else if (suitChoice == Suit::CLUBS)
-    std::cout << "Chose Clubs\n";
+    std::cout << playerName + " chose Clubs\n";
+  
+  crazyEights.setCurrentSuit(suitChoice);
 
   suitDialog->Destroy();
+}
+
+void CrazyEightsScreen::aiTurn()
+{
+  bool skipTurn = false;
+  wxThread::Sleep(1000);
+  // update player info
+  players = crazyEights.getPlayers();
+  
+  // while ai's turn
+  while(players[0] != crazyEights.getCurrentPlayer())
+  {
+    skipTurn = false;
+    players = crazyEights.getPlayers();
+    AI* currentAI = (AI*)crazyEights.getCurrentPlayer();
+    currentAI->setDiscard(crazyEights.getDiscardPile().back());
+    currentAI->setPlayableSuit(crazyEights.getCurrentSuit());
+    int cardIndex = currentAI->play();
+
+    // draw until ai has a valid card
+    while(cardIndex == -1)
+    {
+      if(!crazyEights.getMove(crazyEights.getDrawPile().back()))
+      {
+        players = crazyEights.getPlayers();
+        skipTurn = true;
+        break;
+      }
+      players = crazyEights.getPlayers();
+      currentAI = (AI*)crazyEights.getCurrentPlayer();
+      updateTable();
+      cardIndex = currentAI->play();
+      wxThread::Sleep(1000);
+    }
+
+    if(skipTurn)
+    {
+      std::cout << "Skipping Turn...\n\n";
+      crazyEights.nextTurn();
+      continue;
+    }
+    
+    // has valid card
+    Card card = currentAI->getHand()[cardIndex];
+    crazyEights.getMove(card);
+    players = crazyEights.getPlayers();
+    currentAI = (AI*)crazyEights.getCurrentPlayer();
+    updateTable();
+    // update discard pile info for ai
+    currentAI->setDiscard(crazyEights.getDiscardPile().back());
+    currentAI->setPlayableSuit(crazyEights.getCurrentSuit());
+    // check if ai played an 8
+    if(card.getRank() == Value::EIGHT)
+      crazyEights.setCurrentSuit(currentAI->chooseSuit());
+    // get next turn
+    crazyEights.nextTurn();
+    wxThread::Sleep(1000);
+    players = crazyEights.getPlayers();
+    if (crazyEights.isGameOver()) {
+      std::cout << "Game Over\n";
+      displayGameOverMessage();
+      return;
+    }
+  }
 }
 
 // when a card gets clicked
 bool CrazyEightsScreen::onClick(Card card) {
   players = crazyEights.getPlayers();
-  // if(!players[0]->getTurn())
-  //    return;
+  // return if not the player's turn
+  if(players[0] != crazyEights.getCurrentPlayer())
+    return false;
+  
   if (crazyEights.isGameOver()) {
     std::cout << "Game Over\n";
     displayGameOverMessage();
@@ -574,59 +660,43 @@ bool CrazyEightsScreen::onClick(Card card) {
   }
   std::cout << "\n";
 
+  bool clickedDraw = false;
+  if(card == crazyEights.getDrawPile().back())
+    clickedDraw = true;
+
   if (crazyEights.getMove(card)) {
     updateTable();
-    if (card.getRank() == Value::EIGHT) {
-      displaySuitChoice();
-    }
-    crazyEights.nextTurn();
-    if (crazyEights.isGameOver()) {
-      std::cout << "Game Over\n";
-      displayGameOverMessage();
+    
+    if(!clickedDraw)
+    {
+      if(card.getRank() == Value::EIGHT)
+        displaySuitChoice();
+      
+      if (crazyEights.isGameOver()) {
+        std::cout << "Game Over\n";
+        displayGameOverMessage();
+        return true;
+      }
+      
+      crazyEights.nextTurn();
+      aiTurn();
+			//aiThread = new MyThread([&](){aiTurn();}); // auto runs & deletes itself when finished
     }
     return true;
   }
-
+  else if(clickedDraw)
+  {
+    updateTable();
+    std::cout << "Skipping Turn...\n\n";
+    crazyEights.nextTurn();
+    aiTurn();
+  }
+  
   return false;
 }
 
-/*
-void
-CrazyEightsScreen::OnExit(wxMouseEvent& event)
+void CrazyEightsScreen::mainMenuButton()
 {
-  // true forces quit
-  std::cout << "clicked exit\n";
-  //Close(true);
+  FrameManager *fm = (FrameManager*)parentFrame;
+  fm->switchScreens(wxT("main"));
 }
-
-void
-CrazyEightsScreen::OnExit(wxCommandEvent& event)
-{
-  // true forces quit
-  std::cout << "exit\n";
-  //Close(true);
-}
-
-void
-CrazyEightsScreen::OnAbout(wxCommandEvent& event)
-{
-  // pop up window
-  // body text, title, icons
-  wxMessageBox("This is a wxWidgets' Hello world sample", "About Hello World",
-               wxOK | wxICON_INFORMATION);
-}
-
-void
-CrazyEightsScreen::OnHello(wxCommandEvent& event)
-{
-  // pop up window with message
-  wxLogMessage("Hello world from wxWidgets!");
-}
-
-// maps unique identifiers to event handlers
-wxBEGIN_EVENT_TABLE(GameScreen, wxFrame)
-  EVT_MENU(ID_Hello, GameScreen::OnHello)
-  EVT_MENU(wxID_EXIT, GameScreen::OnExit)
-  EVT_MENU(wxID_ABOUT, GameScreen::OnAbout)
-wxEND_EVENT_TABLE()
-*/

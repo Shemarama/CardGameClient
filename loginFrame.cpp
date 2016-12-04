@@ -20,8 +20,8 @@ LoginFrame::LoginFrame(const wxString &title, wxFrame *parentFrame)
   userNameTextBox = new wxTextCtrl(this, userNameTextID, "");
   userPassTextBox = new wxTextCtrl(this, userPassTextID, "", wxDefaultPosition,
                                    wxDefaultSize, wxTE_PASSWORD);
-  submitButton = new wxButton(this, submitButtonID, " Submit ");
-  cancelButton = new wxButton(this, cancelButtonID, " Cancel ");
+  submitButton = new wxButton(this, submitButtonID, "Submit");
+  cancelButton = new wxButton(this, cancelButtonID, "Exit");
 
   hUserNameSizer->Add(userNameText, 0, wxALL, 10);
   hUserNameSizer->Add(userNameTextBox, 0, wxALL, 10);

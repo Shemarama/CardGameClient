@@ -32,9 +32,6 @@ SuitDialog::SuitDialog(const wxString &title)
   SetSizer(vbox);
 
   Centre();
-  // ShowModal();
-
-  // Destroy();
 }
 
 Suit SuitDialog::getSuit() {

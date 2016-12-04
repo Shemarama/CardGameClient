@@ -9,6 +9,8 @@
 #include "cardPanel.h"
 #include "crazyEights.h"
 #include "suitDialog.h"
+#include "gameOverDialog.h"
+#include "myThread.h"
 
 class CrazyEightsScreen : public wxFrame {
 
@@ -25,7 +27,9 @@ public:
   void reset();
   void displayGameOverMessage();
   void displaySuitChoice();
+  void aiTurn();
   bool onClick(Card card);
+  void mainMenuButton();
 
 private:
   wxFrame *parentFrame;
@@ -98,17 +102,20 @@ private:
   wxPanel *discardPilePanel;
   wxBoxSizer *drawPileSizer;
   wxBoxSizer *discardPileSizer;
+  
+  // ai thread
+  MyThread* aiThread;
+  
   // event handlers
-
   void OnExit(wxCommandEvent &event);
 
   // so the window can respond to events
-  // wxDECLARE_EVENT_TABLE();
+  //wxDECLARE_EVENT_TABLE();
 };
 
 // give commands unique identifiers
-/*enum TEST {
-  ID_Hello = 1,
+/*enum {
+  mainMenuID = 10;
 };
 */
 

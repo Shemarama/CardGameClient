@@ -12,16 +12,16 @@ file(GLOB SRCS *.cpp *.hpp)
 if(WIN32)
     set(SRCS ${SRCS} *.rc)
     # add '-mt' to the end of lboost_system and thread for mac, don't for linux
-    set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -lboost_system-mt -lboost_thread-mt -lpthread")
+    set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -lboost_system-mt -lboost_thread-mt -lboost_unit_test_framework-mt -lpthread")
 endif(WIN32)
 if(UNIX)
     # add '-mt' to the end of lboost_system and thread for mac, don't for linux
-    set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -lboost_system -lboost_thread -lpthread")
+    set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -lboost_system -lboost_thread -lboost_unit_test_framework -lpthread")
 endif(UNIX)
 if(APPLE)
     set(SRCS ${SRCS})
     # add '-mt' to the end of lboost_system and thread for mac, don't for linux
-    set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -lboost_system-mt -lboost_thread-mt -lpthread")
+    set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra -lboost_system-mt -lboost_thread-mt -lboost_unit_test_framework-mt -lpthread")
 endif(APPLE)
 
 #This tells CMake to run test.cpp and name it hello

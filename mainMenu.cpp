@@ -26,8 +26,8 @@ MainMenu::MainMenu(const wxString &title, wxFrame *parentFrame,
   frameGrid = new wxBoxSizer(wxVERTICAL);
   // set buttons
   crazyEightsButton =
-      new wxButton(this, crazyEightsButtonID, wxT("Play Crazy Eights"));
-  heartsButton = new wxButton(this, heartsButtonID, wxT("Play Hearts"));
+      new wxButton(this, crazyEightsButtonID, wxT("Play Crazy Eights Offline"));
+  heartsButton = new wxButton(this, heartsButtonID, wxT("Play Hearts Offline"));
   logoutButton = new wxButton(this, logoutButtonID, wxT("Logout"));
 
   // add to layout

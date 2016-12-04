@@ -15,6 +15,7 @@ private:
   std::vector<Player *> players;
   unsigned int turn; // index for player vector
   Suit currentSuit;
+  unsigned int timesDrawn; // counter for times a player has drawn
 
 public:
   CrazyEights(std::vector<Player *> &players);
@@ -32,12 +33,13 @@ public:
   bool isValidMove(Card &card);
   void nextTurn(); // decide who goes next
   void reset();
-  void playCard(Card &card);
+  bool playCard(Card &card);
   bool drawCard();
   bool getMove(Card &card);
   std::vector<Card> getDrawPile();
   std::vector<Card> getDiscardPile();
   std::vector<Player *> getPlayers();
+  Player* getCurrentPlayer();
 };
 
 #endif
